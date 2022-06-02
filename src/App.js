@@ -24,7 +24,7 @@ function App() {
     <div>
       <Header />
       <Routes>
-        <Route exacthpath="/" element={<Login />} />
+        <Route path="/login" element={<Login />} />
         <Route path="/homepage" element={<Home />} />
         <Route path="/dumps" element={<Dumps />} />
         <Route path="/gestion" element={<Gestion />} />
