@@ -15,10 +15,14 @@ export const TablaSam = () => {
     }, []); 
 
   return (
-    <>
+    <div>
 
         <div className="card">
-            <DataTable value={products} responsiveLayout="scroll">
+            <DataTable value={products} paginator responsiveLayout="scroll"
+                    paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks 
+                    NextPageLink LastPageLink RowsPerPageDropdown" 
+                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" 
+                    rows={10} rowsPerPageOptions={[10,20,50]}>
                 <Column field="id" header="id"></Column>
                 <Column field="sam" header="SAM"></Column>
                 <Column field="tarjeta" header="Tarjeta"></Column>
@@ -52,6 +56,6 @@ export const TablaSam = () => {
             </DataTable>
         </div>
 
-    </>
+    </div>
   )
 }

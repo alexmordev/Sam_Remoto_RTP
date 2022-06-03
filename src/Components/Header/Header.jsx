@@ -1,40 +1,42 @@
 import React from 'react';
-import { LogoHeader } from '../LogoHeader';
-import { Button } from 'primereact/button';
 import { LogoutButton } from '../LogoutButton';
-import { Toolbar } from 'primereact/toolbar';
-import { SplitButton } from 'primereact/splitbutton';
+import { Image } from 'primereact/image';
+import { Menubar } from 'primereact/menubar';
+import logo from '../../assets/rtp_sinlogo.png';
 
 
 
 export const Header = () => {
   const items = [
     {
-      label: 'Dumps',
-      icon: 'pi-angle-right',
+      label: 'Inicio',
     },
     {
-      label: 'Contadores',
-      icon: 'pi-angle-right',
+      label: 'Aplicación',
+    },
+    {
+      label: 'Gestión',
+      items: [
+        {
+          label: 'Dumps',
+          icon: 'pi-angle-right',
+        },
+        {
+          label: 'SAM',
+          icon: 'pi-angle-right',
+        }
+      ]
     }
   ]
 
-  const left_items = (
-    <>
-      <Button label='Inicio' className='p-button-link'/>
-      <Button label='Aplicación' className='p-button-link'/>
-      <SplitButton label='Gestión' className='p-button-link bg-white' model={items}></SplitButton>     
-    </>
-  )
+  const start =  <Image imageClassName='w-3rem' src={logo} alt="Logo RTP" />
 
     
-
-
 
   return (
     <div className="w-screen h-4rem ">
 
-      <Toolbar className='w-screen absolute top-0 right-0' left={left_items} right={<LogoutButton/>}/>
+      <Menubar className='border-3 border-green-200 w-screen absolute top-0 right-0' start={start}  model={items} end={<LogoutButton/>}/>
 
       
 
