@@ -14,10 +14,10 @@ export const SamCounter = () => {
         </p>
       </div>
 
-<br /><br />
-        <div className="flex justify-content-center align-content-center ">
+      <br /><br />
+      <div className="flex justify-content-center align-content-center ">
           <TablaSam  />
-        </div>
+      </div>
     </div>
   );
 };
