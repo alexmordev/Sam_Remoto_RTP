@@ -16,6 +16,7 @@ import { Login } from "./pages/LoginPage/Login";
 import { Gestion } from "./pages/GestionPage/Gestion";
 import { Dumps } from "./pages/DumpsPage/Dumps";
 import { SamCounter } from "./pages/SamCounters/SamCounter";
+import {Pin} from "./pages/PinPage/Pin";
 
 
 
@@ -29,7 +30,7 @@ function App() {
         <Route path="/dumps" element={<Dumps />} />
         <Route path="/gestion" element={<Gestion />} />
         <Route path="/samcounters" element={<SamCounter />} />
-
+        <Route path="/pin" element={<Pin/>} />
       </Routes>
       <Footer />
     </div>

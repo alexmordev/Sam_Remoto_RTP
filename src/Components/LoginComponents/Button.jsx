@@ -1,17 +1,20 @@
-import React from 'react'
-
-// import { useFormik } from 'formik';
-// import { InputText } from 'primereact/inputtext';
+import React from 'react';
+import { Button  } from 'primereact/button'; // importación del botón de PRIMEREACT
 
 
-export const Button = () => {
+
+
+export const Button2 = () => { 
   return (
-    <div>
-      Button
-      <h1>Hola</h1>
+    
+    <div class="flex align-items-center justify-content-center  font-bold text-gray-900 m-2 px-5 py-3 border-round col-sm-12 col-md-4 col-lg-3">
+    
+      <Button label="Enviar" icon="p-button-info"/> 
 
     </div>
+
     
   )
+  
 }
 
