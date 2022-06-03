@@ -2,7 +2,7 @@ import React from 'react'
 import { Button2 } from '../../Components/LoginComponents/Button'
 import { PassInput } from '../../Components/LoginComponents/PassInput'
 import { UserInput } from '../../Components/LoginComponents/UserInput'
-// import { Imagen } from '../../Components/LoginComponents/Imagen'
+import { Imagen } from '../../Components/LoginComponents/Imagen'
 
 export const Login = () => {
   console.log('Estas en login');
@@ -10,12 +10,10 @@ export const Login = () => {
     // <div>Login</div>
     <>
 
-    {/* <Imagen/> */}
     {/* /SECCIÓN  DE COMPONENTES/ */}
+    <Imagen/>
     <UserInput/>
-    <br/>
-    <PassInput/>
-    <br/>
+    <PassInput/>  
     <Button2/>
     </>
   )

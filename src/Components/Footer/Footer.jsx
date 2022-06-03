@@ -17,9 +17,7 @@ export const Footer = () => {
         al equipo de desarrollo de RTP
         </p>
 
-      </div>
-
-       
+      </div>   
     
     </div>
   )
