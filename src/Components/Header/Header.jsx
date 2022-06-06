@@ -3,27 +3,71 @@ import { LogoutButton } from '../LogoutButton';
 import { Image } from 'primereact/image';
 import { Menubar } from 'primereact/menubar';
 import logo from '../../assets/rtp_sinlogo.png';
-import { Link } from "react-router-dom";
-
+import { Link, Redirect } from "react-router-dom";
 
 
 
 export const Header = () => {
+
+
+  const inicioFunction = ( a ) => {
+    
+
+      switch (a) {
+        case 0:
+          <Link to="/homepage" />
+          console.log('Inicio');
+          break;
+        case 1:
+          <Link to="/app"/>
+          console.log('App');
+          break;
+        case 2:
+          <Link to="/dumps"/>
+          console.log('Dumps');
+          break;
+        case 3:
+          <Link to="/samcounters"/>
+          console.log('SamCounters');
+          break;
+        
+        default:
+          break;
+      }
+      
+  }
+
+
   const items = [
     {
       label: 'Inicio',
+      command: () => {
+        console.log('Inicio');
+        <Redirect to="/homepage"/>;
+        // const history = useHistory();
+        // console.log(history);
+      } 
     },
     {
       label: 'Aplicación',
+      command: () => {
+        inicioFunction(1);
+      } 
     },
     {
       label: 'Gestión',
       items: [
         {
           label: 'Dumps',
+          command: () => {
+            inicioFunction(2);
+          } 
         },
         {
           label: 'SAM',
+          command: () => {
+            inicioFunction(3);
+          } 
         }
       ]
     }

@@ -9,7 +9,7 @@ export const SamCounter = () => {
     <div className=" h-full w-full">
       <Header />
       <br />
-      <div className="  flex flex-column justify-content-center align-content-center" >
+      <div className="flex flex-column justify-content-center align-content-center" >
 
         <div className=" w-full h-4rem bg-green-400 flex justify-content-center align-content-center 
                 flex-wrap card-container">
