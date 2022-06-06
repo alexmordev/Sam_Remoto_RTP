@@ -3,6 +3,8 @@ import { LogoutButton } from '../LogoutButton';
 import { Image } from 'primereact/image';
 import { Menubar } from 'primereact/menubar';
 import logo from '../../assets/rtp_sinlogo.png';
+import { Link } from "react-router-dom";
+
 
 
 
@@ -19,24 +21,27 @@ export const Header = () => {
       items: [
         {
           label: 'Dumps',
-          icon: 'pi-angle-right',
         },
         {
           label: 'SAM',
-          icon: 'pi-angle-right',
         }
       ]
     }
   ]
 
-  const start =  <Image imageClassName='w-3rem' src={logo} alt="Logo RTP" />
+  const start = <a href="https://www.rtp.cdmx.gob.mx/" target="blank">
+                  <Image imageClassName='w-3rem' src={logo} alt="Logo RTP" />
+                </a>
 
+  const end = <Link to="/login">
+                <LogoutButton/>
+              </Link>
     
 
   return (
-    <div className="w-screen h-4rem ">
+    <div className="relative w-full h-4rem ">
 
-      <Menubar className='border-3 border-green-200 w-screen absolute top-0 right-0' start={start}  model={items} end={<LogoutButton/>}/>
+      <Menubar className='border-3 h-4rem border-green-200 w-screen top-0 right-0' start={start}  model={items} end={end}/>
 
       
 

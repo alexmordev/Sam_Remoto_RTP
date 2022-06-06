@@ -6,7 +6,7 @@ export const Footer = () => {
 
 
   return (
-    <div className='absolute border-3 border-green-200  w-full h-4rem  bottom-0'>
+    <div className='absolute h-4rem border-3 border-green-200  w-full  bottom-0 bg-gray-50'>
 
       <div className='flex justify-content-center align-content-center'>
 
@@ -22,3 +22,5 @@ export const Footer = () => {
     </div>
   )
 }
+
+
