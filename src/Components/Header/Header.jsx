@@ -9,48 +9,21 @@ import { Link, useNavigate } from "react-router-dom";
 
 export const Header = () => {
 
-  const history = useNavigate();
+  const navigate = useNavigate();
 
-  const inicioFunction = ( a ) => {
-    
-
-      switch (a) {
-        case 0:
-          <Link to="/homepage" />
-          console.log('Inicio');
-          break;
-        case 1:
-          <Link to="/app"/>
-          console.log('App');
-          break;
-        case 2:
-          <Link to="/dumps"/>
-          console.log('Dumps');
-          break;
-        case 3:
-          <Link to="/samcounters"/>
-          console.log('SamCounters');
-          break;
-        
-        default:
-          break;
-      }
-      
-  }
-
-
+  
   const items = [
     {
       label: 'Inicio',
       command: () => {
         console.log('Inicio');
-        history.push('/dumps');
+        navigate('/homepage');
       } 
     },
     {
       label: 'Aplicación',
       command: () => {
-        inicioFunction(1);
+        navigate('/app');
       } 
     },
     {
@@ -59,13 +32,13 @@ export const Header = () => {
         {
           label: 'Dumps',
           command: () => {
-            inicioFunction(2);
+            navigate('/dumps');
           } 
         },
         {
           label: 'SAM',
           command: () => {
-            inicioFunction(3);
+            navigate('/samcounters');
           } 
         }
       ]

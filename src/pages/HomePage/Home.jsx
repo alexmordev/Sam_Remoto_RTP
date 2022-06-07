@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Chart } from 'primereact/chart';
-import { Header } from '../../Components/Header/Header'
 
 export const Home = () => {
 
@@ -21,9 +20,9 @@ export const Home = () => {
             ]
         }
     ]
-  });
+});
 
-  const [lightOptions] = useState({
+const [lightOptions] = useState({
     plugins: {
         legend: {
             labels: {
@@ -31,13 +30,11 @@ export const Home = () => {
             }
         }
     }
-  });
+});
 
   return (
     <div className='card flex justify-content-center'>
-      <Header />
-      <Chart type="pie" data={chartData} options={lightOptions} style={{ position: 'relative', width: '40%' }} />
-
+      <Chart type="pie" data={chartData} options={lightOptions} style={{ position: 'absolute', width: '40%' }} />
 
     </div>
   )
