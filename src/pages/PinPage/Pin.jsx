@@ -63,10 +63,15 @@ export const Pin = () => {
 
 
 <Container>
-      <div className=" h-screen w-screen flex justify-content-center align-items-center ">
-        <div className='bg-red-300 h-full flex flex-column justify-content-center align-items-center'>
+      <div className=" h-screen w-full">
+
+      <div className="mt-6  w-full h-4rem flex justify-content-center align-items-center">
+        <p className="text-white-alpha-90 font-bold text-3xl">CAMBIO DE PIN</p>
+      </div>
+
+        <div className=' mt-6 flex flex-column justify-content-center align-items-center'>
           <div
-            className="p-8 bg-green-200 w-6 h-26rem card  grid  p-fluid  flex  justify-content-between
+            className="p-8 bg-green-400 w-6 h-26rem card  grid  p-fluid  flex  justify-content-between
             align-content-between flex-wrap border-round-3xl"
           >
             <div className="field col-12 md:col-3">

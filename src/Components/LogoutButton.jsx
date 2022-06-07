@@ -5,7 +5,7 @@ export const LogoutButton = () => {
   return (
     <>
 
-        <Button className="p-button-warning" >
+        <Button className="mr-3 p-button-warning" >
             <i className="pi pi-sign-out px-0"></i>
             {/* <span className="px-0">Cerrar Sesión</span> */}
         </Button>

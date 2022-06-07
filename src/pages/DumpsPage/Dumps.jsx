@@ -32,9 +32,9 @@ export const Dumps = () => {
 
 
   <Container>
-    <div className="w-screen h-screen flex flex-column  align-items-center">
+    <div className="w-full h-screen flex flex-column  align-items-center">
       <div
-        className="mt-4 w-full h-4rem bg-green-400 flex justify-content-center 
+        className="m-4 w-full h-4rem bg-green-400 flex justify-content-center 
         align-content-center flex-wrap card-container"
         >
         <p
@@ -44,7 +44,7 @@ export const Dumps = () => {
           Tabla General de Lectura de Tarjetas
         </p>
       </div>
-      <div className="mt-4 ">
+      <div className=" ">
         <TablaDumps />
       </div>
     </div>

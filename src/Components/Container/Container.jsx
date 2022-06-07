@@ -4,7 +4,7 @@ import { Header } from "./../Header/Header";
 
 export const Container = (props) => {
   return (
-    <div>
+    <div className="bg-bluegray-300">
       <Header />
       <div >
         {props.children}

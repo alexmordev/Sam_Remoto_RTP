@@ -15,6 +15,7 @@ export const Header = () => {
   const items = [
     {
       label: 'Inicio',
+      icon: 'pi pi-home',
       command: () => {
         console.log('Inicio');
         navigate('/homepage');
@@ -22,21 +23,25 @@ export const Header = () => {
     },
     {
       label: 'Aplicación',
+      icon: 'pi pi-th-large',
       command: () => {
         navigate('/app');
       } 
     },
     {
       label: 'Gestión',
+      icon: 'pi pi-list',
       items: [
         {
           label: 'Dumps',
+          icon: 'pi pi-table',
           command: () => {
             navigate('/dumps');
           } 
         },
         {
           label: 'SAM',
+          icon: 'pi pi-table',
           command: () => {
             navigate('/samcounters');
           } 
@@ -46,7 +51,7 @@ export const Header = () => {
   ]
 
   const start = <a href="https://www.rtp.cdmx.gob.mx/" target="blank">
-                  <Image imageClassName='w-3rem' src={logo} alt="Logo RTP" />
+                  <Image className='ml-3' imageClassName='w-3rem' src={logo} alt="Logo RTP" />
                 </a>
 
   const end = <Link to="/">
@@ -57,7 +62,7 @@ export const Header = () => {
   return (
     <div className="relative w-full h-4rem ">
 
-      <Menubar className='border-3 h-4rem border-green-200 w-screen top-0 right-0' start={start}  model={items} end={end}/>
+      <Menubar className='border-3 h-4rem border-green-200 w-full top-0 right-0' start={start}  model={items} end={end}/>
 
       
 
