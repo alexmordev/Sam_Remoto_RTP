@@ -6,9 +6,7 @@ export const Container = (props) => {
   return (
     <div>
       <Header />
-
       <div>{props.children}</div>
-
       <Footer />
     </div>
   );

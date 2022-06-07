@@ -21,8 +21,8 @@ import { VistaPrueba } from "./pages/VistaPrueba";
 
 function App() {
   return (
-    <div className="h-full w-full  flex align-content-center justify-content-center">
-      <div className="absolute h-full w-full  flex align-content-center justify-content-center">
+    // <div className="h-full w-full  flex align-content-center justify-content-center">
+    //   <div className="absolute h-full w-full  flex align-content-center justify-content-center">
    
         <Routes>
           <Route path="/" element={<Login />} />
@@ -32,9 +32,8 @@ function App() {
           <Route path="/app" element={<Pin/>} />
           <Route path="/prueba" element={<VistaPrueba />} />
         </Routes>
-      </div>
-      <Footer />
-    </div>
+    //   </div>
+    // </div>
   );
 }
 

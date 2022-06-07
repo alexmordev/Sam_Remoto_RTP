@@ -14,7 +14,7 @@ export const Login = () => {
           <UserInput/>
           <PassInput/>  
           <Link to="/homepage">
-          <Button2/>
+            <Button2/>
           </Link>
       </div>
     </div>
