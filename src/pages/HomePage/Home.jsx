@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Chart } from 'primereact/chart';
+import { Container } from './../../Components/Container/Container';
 
 export const Home = () => {
 
@@ -33,9 +34,9 @@ const [lightOptions] = useState({
 });
 
   return (
-    <div className='card flex justify-content-center'>
+    <Container>
       <Chart type="pie" data={chartData} options={lightOptions} style={{ position: 'absolute', width: '40%' }} />
 
-    </div>
+    </Container>
   )
 }
