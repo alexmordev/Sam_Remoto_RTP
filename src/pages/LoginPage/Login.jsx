@@ -3,6 +3,7 @@ import { Button2 } from '../../Components/LoginComponents/Button'
 import { PassInput } from '../../Components/LoginComponents/PassInput'
 import { UserInput } from '../../Components/LoginComponents/UserInput'
 import { Imagen } from '../../Components/LoginComponents/Imagen'
+import { Link } from 'react-router-dom'
 
 export const Login = () => {
   console.log('Estas en login');
@@ -12,7 +13,9 @@ export const Login = () => {
           <Imagen />
           <UserInput/>
           <PassInput/>  
+          <Link to="/homepage">
           <Button2/>
+          </Link>
       </div>
     </div>
       

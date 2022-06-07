@@ -3,12 +3,13 @@ import { LogoutButton } from '../LogoutButton';
 import { Image } from 'primereact/image';
 import { Menubar } from 'primereact/menubar';
 import logo from '../../assets/rtp_sinlogo.png';
-import { Link, Redirect } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
 export const Header = () => {
 
+  const history = useNavigate();
 
   const inicioFunction = ( a ) => {
     
@@ -43,9 +44,7 @@ export const Header = () => {
       label: 'Inicio',
       command: () => {
         console.log('Inicio');
-        <Redirect to="/homepage"/>;
-        // const history = useHistory();
-        // console.log(history);
+        history.push('/dumps');
       } 
     },
     {
@@ -77,7 +76,7 @@ export const Header = () => {
                   <Image imageClassName='w-3rem' src={logo} alt="Logo RTP" />
                 </a>
 
-  const end = <Link to="/login">
+  const end = <Link to="/">
                 <LogoutButton/>
               </Link>
     

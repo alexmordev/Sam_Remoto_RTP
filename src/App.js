@@ -23,7 +23,7 @@ function App() {
     <div className="h-full w-full  flex align-content-center justify-content-center">
       <div className="absolute h-full w-full  flex align-content-center justify-content-center">
         <Routes>
-          <Route path="/login" element={<Login />} />
+          <Route path="/" element={<Login />} />
           <Route path="/homepage" element={<Home />} />
           <Route path="/dumps" element={<Dumps />} />
           <Route path="/samcounters" element={<SamCounter />} />
