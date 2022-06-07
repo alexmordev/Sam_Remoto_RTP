@@ -32,18 +32,22 @@ export const Dumps = () => {
 
 
   <Container>
-  <div
-    className=" w-full h-4rem bg-green-400 flex justify-content-center 
-    align-content-center flex-wrap card-container"
-    >
-    <p
-      className="text-3xl font-bold text-white  flex align-content-center 
-      justify-content-center"
-      >
-      Tabla General de Lectura de Tarjetas
-    </p>
-  </div>
-  <TablaDumps />
+    <div className="w-screen h-screen flex flex-column  align-items-center">
+      <div
+        className="mt-4 w-full h-4rem bg-green-400 flex justify-content-center 
+        align-content-center flex-wrap card-container"
+        >
+        <p
+          className="text-3xl font-bold text-white  flex align-content-center 
+          justify-content-center"
+          >
+          Tabla General de Lectura de Tarjetas
+        </p>
+      </div>
+      <div className="mt-4 ">
+        <TablaDumps />
+      </div>
+    </div>
 </Container>
 
 );

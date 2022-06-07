@@ -26,12 +26,15 @@ export const Home = () => {
 
   return (
     <Container>
+      <div className="h-screen w-full flex justify-content-center align-items-center ">
+
         <Chart
           type="pie"
           data={chartData}
           options={lightOptions}
           style={{ position: 'relative', width: '40%' }}
           />
+      </div>
     </Container>
   );
 };

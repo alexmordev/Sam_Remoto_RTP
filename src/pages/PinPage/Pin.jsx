@@ -61,34 +61,40 @@ export const Pin = () => {
     //   );
     // };
 
-    <Container>
-      <div
-        className="p-8 bg-green-200 w-6 h-26rem card  grid  p-fluid  flex  justify-content-between
-         align-content-between flex-wrap border-round-3xl"
-      >
-        <div className="field col-12 md:col-3">
-          <label htmlFor="antena">Antena</label>
-          <InputText id="antena" placeholder="Antena" />
-        </div>
-        <div className="field col-12 md:col-3">
-          <label htmlFor="folio">Folio</label>
-          <InputText id="folio" placeholder="Folio" />
-        </div>
-        <div className="field col-12 md:col-3">
-          <label htmlFor="ns_card">NS Card</label>
-          <InputText id="ns_card" placeholder="NS Card" />
-        </div>
-        <div className="field col-12 md:col-3">
-          <label htmlFor="credencial">Credencial</label>
-          <InputText id="credencial" placeholder="Credencial" />
-        </div>
-        <div className="field col-12 md:col-3">
-          <label htmlFor="nombre">Nombre Trabajador</label>
-          <InputText id="nombre" placeholder="Nombre trabajdor" />
-        </div>
-        <div className="field col-12 md:col-3">
-          <label htmlFor="vigencia">PIN Vigencia</label>
-          <InputText id="vigencia" placeholder="Ingresar en meses" />
+
+<Container>
+      <div className=" h-screen w-screen flex justify-content-center align-items-center ">
+        <div className='bg-red-300 h-full flex flex-column justify-content-center align-items-center'>
+          <div
+            className="p-8 bg-green-200 w-6 h-26rem card  grid  p-fluid  flex  justify-content-between
+            align-content-between flex-wrap border-round-3xl"
+          >
+            <div className="field col-12 md:col-3">
+              <label htmlFor="antena">Antena</label>
+              <InputText id="antena" placeholder="Antena" />
+            </div>
+            <div className="field col-12 md:col-3">
+              <label htmlFor="folio">Folio</label>
+              <InputText id="folio" placeholder="Folio" />
+            </div>
+            <div className="field col-12 md:col-4">
+              <label htmlFor="ns_card">NS Card</label>
+              <InputText id="ns_card" placeholder="NS Card" />
+            </div>
+            <div className="field col-12 md:col-3">
+              <label htmlFor="credencial">Credencial</label>
+              <InputText id="credencial" placeholder="Credencial" />
+            </div>
+            <div className="field col-12 md:col-3">
+              <label htmlFor="nombre">Nombre Trabajador</label>
+              <InputText id="nombre" placeholder="Nombre trabajdor" />
+            </div>
+            <div className="field col-12 md:col-4">
+              <label htmlFor="vigencia">PIN Vigencia</label>
+              <InputText id="vigencia" placeholder="Ingresar en meses" />
+            </div>
+          </div>
+          <BtnPin />
         </div>
       </div>
     </Container>

@@ -32,14 +32,16 @@ export const SamCounter = () => {
 // };
 
 <Container>
-  <div className=" w-full h-4rem bg-green-400 flex justify-content-center align-content-center 
-        flex-wrap card-container">
-    <p className="text-3xl font-bold text-white  flex align-content-center 
-                  justify-content-center">
-      Tabla General
-    </p>
+  <div className="h-screen w-screen ">
+    <div className="mt-4 mb-4 w-full h-4rem bg-green-400 flex justify-content-center align-content-center 
+          flex-wrap card-container">
+      <p className="text-3xl font-bold text-white  flex align-content-center 
+                    justify-content-center">
+        Tabla General
+      </p>
+    </div>
+      <TablaSam  />
   </div>
-  <TablaSam  />
 </Container>
 );
 };

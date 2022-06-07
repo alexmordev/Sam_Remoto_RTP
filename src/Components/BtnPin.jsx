@@ -5,7 +5,7 @@ export const BtnPin = () => {
   return (
     <div>
 
-        <Button label='Cambiar' className=" p-button-lg p-button-success"/>
+        <Button label='Cambiar' className="mt-4 p-button-lg p-button-success"/>
 
     </div>
   )
