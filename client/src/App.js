@@ -9,7 +9,6 @@ import '/node_modules/primeflex/primeflex.css';
 
 // Importaciones de components y pages
 import { Routes, Route } from "react-router-dom";
-import { Footer } from "./Components/Footer/Footer";
 import { Home } from "./pages/HomePage/Home";
 import { Login } from "./pages/LoginPage/Login";
 import { Dumps } from "./pages/DumpsPage/Dumps";

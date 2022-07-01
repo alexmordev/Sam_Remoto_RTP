@@ -1,6 +1,5 @@
 import React from "react";
 import { Container } from "../../Components/Container/Container";
-import { Header } from "../../Components/Header/Header";
 import { TablaSam } from './../../Components/TablaSam';
 
 export const SamCounter = () => {
