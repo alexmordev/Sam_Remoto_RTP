@@ -2,14 +2,18 @@ import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { elementos } from "../Pruebas/DumpsExample";
+// import { getDumps } from './../helpers';
 
 export const TablaDumps = () => {
   const [products, setProducts] = useState([]); //Aqui se almacenará el arreglo de la SAM
 
+  
+  
   //Solo una vez se carga el state de los datos de la sam, aqui sera la peticion de la API
   // para traer la información
   useEffect(() => {
     setProducts(elementos);
+    // setProducts( getDumps() );
   }, []);
 
   return (

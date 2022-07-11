@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import {elementos} from '../Pruebas/CounterSamExample';
+// import { getSamCounters } from './../helpers';
 
 export const TablaSam = () => {
 
+  
+  
     const [products, setProducts] = useState([]);   //Aqui se almacenará el arreglo de la SAM
 
 
@@ -12,6 +15,7 @@ export const TablaSam = () => {
     // para traer la información
     useEffect(() => {
         setProducts(elementos); 
+        // setProducts(getSamCounters()); 
     }, []); 
 
   return (

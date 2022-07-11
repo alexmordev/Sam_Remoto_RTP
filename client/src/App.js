@@ -13,7 +13,7 @@ import { Home } from "./pages/HomePage/Home";
 import { Login } from "./pages/LoginPage/Login";
 import { Dumps } from "./pages/DumpsPage/Dumps";
 import { SamCounter } from "./pages/SamCounters/SamCounter";
-import {Pin} from "./pages/PinPage/Pin";
+import { Pin } from "./pages/PinPage/Pin";
 import { VistaPrueba } from "./pages/VistaPrueba";
 
 

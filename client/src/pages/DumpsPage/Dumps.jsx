@@ -2,6 +2,10 @@ import React from "react";
 import { Container } from "../../Components/Container/Container";
 import { TablaDumps } from "../../Components/TablaDumps";
 export const Dumps = () => {
+
+  // const data = getDumps;
+
+
   return (
     <Container>
       <div className="w-full h-screen flex flex-column  align-items-center">
