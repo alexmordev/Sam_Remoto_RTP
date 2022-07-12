@@ -31,7 +31,7 @@ export const GraficaPastel = () => {
           type="pie"
           data={chartData}
           options={lightOptions}
-          // style={{ position: 'relative', width: '40%' }}
+          style={{ position: 'relative', width: '35%' }}
           />
   
   )
