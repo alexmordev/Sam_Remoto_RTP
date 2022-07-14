@@ -2,27 +2,29 @@ import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import {elementos} from '../Pruebas/CounterSamExample';
-// import { getSamCounters } from './../helpers';
+import { getSamCounters } from './../helpers';
 
 export const TablaSam = () => {
 
   
   
     const [products, setProducts] = useState([]);   //Aqui se almacenará el arreglo de la SAM
+     getSamCounters();
 
-
+    
     //Solo una vez se carga el state de los datos de la sam, aqui sera la peticion de la API
     // para traer la información
     useEffect(() => {
         setProducts(elementos); 
         // setProducts(getSamCounters()); 
+        // console.log(resApi);
     }, []); 
 
   return (
     <div className="card">
 
         
-            <DataTable value={products} paginator responsiveLayout="scroll"
+            <DataTable value={products} paginator responsiveLayout="stack" breakpoint="960px"
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks 
                     NextPageLink LastPageLink RowsPerPageDropdown" 
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" 

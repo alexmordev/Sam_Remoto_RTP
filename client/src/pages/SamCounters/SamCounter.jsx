@@ -3,7 +3,8 @@ import { Container } from "../../Components/Container/Container";
 import { TablaSam } from './../../Components/TablaSam';
 
 export const SamCounter = () => {
- 
+  
+  
   
 
   return (

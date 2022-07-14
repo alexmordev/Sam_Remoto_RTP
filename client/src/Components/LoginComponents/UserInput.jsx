@@ -6,13 +6,13 @@ export const UserInput = () => {
   const [value2, setValue2] = useState('');
 
   return (
-    <div >
+    <div>
       <span className="p-float-label">
               <InputText className='w-18rem h-4rem' id="username" value={value2} onChange={(e) => setValue2(e.target.value)} />
               <label htmlFor="username">Usuario</label>
       </span>
     </div>
-  )
+  );
 }
 
 /* 

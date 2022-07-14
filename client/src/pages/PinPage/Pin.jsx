@@ -32,7 +32,7 @@ export const Pin = () => {
   return (
     <Container>
       <div className=" h-screen w-full">
-        <div className="mt-6  w-full h-4rem flex justify-content-center align-items-center">
+        <div className=" mt-6  w-full h-4rem flex justify-content-center align-items-center">
           <p className="text-white-alpha-90 font-bold text-3xl">
             CAMBIO DE PIN
           </p>
