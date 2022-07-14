@@ -3,6 +3,7 @@ import { InputText } from "primereact/inputtext";
 // import { BtnPin } from "../../Components/BtnPin";
 import { Button } from "primereact/button";
 import { Container } from "../../Components/Container/Container";
+import diversifier from './../../calypsoComands/diversifier';
 
 export const Pin = () => {
 
@@ -10,15 +11,19 @@ export const Pin = () => {
   const [device, setDevice] = useState('');
   const [card, setCard] = useState();
   
-  useEffect(() => {
-    fetch("/api").then(
-      response => response.json()
-    ).then(
-      data => {
-        setBackendData(data);
-      }
-    );
-  },[]);
+  // useEffect(() => {
+  //   fetch("/api").then(
+  //     response => response.json()
+  //   ).then(
+  //     data => {
+  //       setBackendData(data);
+  //     }
+  //   );
+  // },[]);
+
+  const respSelectAplication = "0800000000946AD0F0";
+
+  diversifier( respSelectAplication );
   
 
   const showDates = () => {

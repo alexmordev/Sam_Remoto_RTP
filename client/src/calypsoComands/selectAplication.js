@@ -2,9 +2,19 @@
 // Servidor Local
 
 
-import React from 'react'
+import React from 'react';
 
-const selectAplication = () => {
+const selectAplication = async( param ) => {
+  const url = 'urllocal';
+
+  try {
+    const resp = await fetch(url);
+    const { results } = await resp.json()
+  } catch (error) {
+    console.log(error)
+  }
+
+
   return (
     <div>selectAplication</div>
   )
