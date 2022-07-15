@@ -11,22 +11,25 @@ const diversifier = ( param ) => {
 
   const fetchData = async() => {
 
-    try {
-      const { data } = await axios.post(
-          url,
-          {
-              "applicationSN": param 
-          }
-        );
-        status = data.SelectDiversifier.Status ;
-      // console.log( data.SelectDiversifier.Status );
-    } catch (error) {
-        status =  error;
-    }
+
+    
+
+    // try {
+    //   const { data } = await axios.post(
+    //       url,
+    //       {
+    //           "applicationSN": param 
+    //       }
+    //     );
+    //     status = data.SelectDiversifier.Status ;
+    //   console.log('Status: ', data.SelectDiversifier.Status );
+    // } catch (error) {
+    //     status =  error;
+    // }
 
   }
 
-  fetchData();
+  // fetchData();
 
   console.log('Valor de status: ',status);
   

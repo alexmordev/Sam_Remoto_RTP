@@ -21,15 +21,31 @@ export const Pin = () => {
   //   );
   // },[]);
 
-  index()
-  
+  // index()
+  const url = `http://dev-node.rtp.gob.mx:5000/diversifier`;
 
-  const showDates = () => {
-    const { devices, card } = backendData;
-    setDevice(devices);
-    setCard( card.slice(18));
-    // setDevice(backendData.devices);
-    // setCard(backendData.card)
+  const PostRequest = async(url,object)=>{
+    const res = await fetch(url,{
+      method:'POST',
+      body:JSON.stringify(object),
+      headers:{
+        'Content-Type': 'application/json'
+    }
+    })
+    if(!res)
+      throw new Error("WARN", res.status);
+    const data = await res.json();
+    return data;
+  };
+
+
+  const showDates = async () => {
+    // const { devices, card } = backendData;
+    // setDevice(devices);
+    // setCard( card.slice(18));
+
+    const diversifier = await PostRequest( url, { "applicationSN": "0800000000946AD0F0" } )
+    console.log(diversifier);
   };
 
   return (
