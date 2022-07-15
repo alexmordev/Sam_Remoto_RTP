@@ -2,6 +2,9 @@ import React from "react";
 import { Container, GraficaPastel, UserCard } from "../../Components";
 
 export const Home = () => {
+
+  console.log(process.env);
+
   return (
     <Container>
       <div className="h-full w-full bg-blue-900 card-container flex">
@@ -11,7 +14,6 @@ export const Home = () => {
             text-6xl 
             font-bold
             text-white
-
           ">
             BIENVENIDO
           </p>
