@@ -2,22 +2,19 @@
 // Servidor Local
 
 
-import React from 'react';
+const selectAplication = async( url ) => {
 
-const selectAplication = async( param ) => {
-  const url = 'urllocal';
-
-  try {
-    const resp = await fetch(url);
-    const { results } = await resp.json()
-  } catch (error) {
-    console.log(error)
+  const SendRequest = async()=>{
+    const res = await fetch( url )
+    if(!res)
+      throw new Error("WARN", res.status);
+    const {serialNumber} = await res.json();
+    return serialNumber;
   }
 
+    const SNumber = await SendRequest('/selectApp');
+    return SNumber 
 
-  return (
-    <div>selectAplication</div>
-  )
 }
 
 export default selectAplication

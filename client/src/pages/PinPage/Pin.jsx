@@ -3,12 +3,10 @@ import { InputText } from "primereact/inputtext";
 // import { BtnPin } from "../../Components/BtnPin";
 import { Button } from "primereact/button";
 import { Container } from "../../Components/Container/Container";
-// import diversifier from './../../calypsoComands/diversifier';
+import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
+// import { Rehabilitate } from "../../../../server/controllers/Temp/Rehabilitate";
 
-export const Pin = () => {
-  const [startFunction, setStartFunction] = useState("");
-  
-  
+export const Pin = () => { 
   const GetRequest = async(url)=>{
     const res = await fetch(url)
     if(!res)
@@ -89,20 +87,38 @@ export const Pin = () => {
                           timer};
     // console.log(objectResponse);
     return objectResponse;
-  };
+  }
+  const selectApp = async() => {
+    const applicationSN = await GetRequest('/selectApp');
+    return applicationSN;
+  }
+  
+  // const setPin = async()=>{
+  //   const start = Date.now();
+  //   const currentDF = await GetRequest('/selectCurrentDF');
+  //   if( currentDF.applicationStatus == "00" ){
+  //     let getRehabilitate = await rehabilitate();
+  //     if( getRehabilitate.rehabilitate.rehabilitate.Response == "9000" ){
+  //       let getchangePinProcess= await changePinProcess()
+  //       let timer = Date.now() - start;
+        // let getchangePinProcess = "changePin"
 
-  const changePinProcess = ()=> "changePin"
+        // console.log(getRehabilitate, getchangePinProcess, timer);
+      // }
+    // }
+    // let getchangePinProcess= await changePinProcess()
+    // let getchangePinProcess = "changePin"
+    // let timer = Date.now() - start; 
+    // console.log( timer, getchangePinProcess);
+  // }
+
   const setPin = async()=>{
     const currentDF = await GetRequest('/selectCurrentDF');
-    if( currentDF.applicationStatus == "00" ){
-      let getRehabilitate = await rehabilitate();
-      if( getRehabilitate.rehabilitate.rehabilitate.Response == "9000" ){
-        let getchangePinProcess= await changePinProcess();
-        console.log(getRehabilitate, getchangePinProcess);
-      }
-    }
-    let getchangePinProcess= await changePinProcess();
-    console.log( getchangePinProcess);
+    const getRehabilitate = await rehabilitate();
+    // const getchangePinProcess = await changePinProcess();
+    const selectA = await selectApp();
+    console.log(currentDF, getRehabilitate, selectA);
+
   }
 
 

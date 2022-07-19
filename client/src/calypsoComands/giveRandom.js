@@ -1,29 +1,21 @@
 //Metodo POST
 // Servidor remoto
 
-import React from 'react'
-import axios from 'axios';
 
-const giveRandom = async( param ) => {
+const giveRandom = async( url, object ) => {
 
-  const url = 'http://dev-node.rtp.gob.mx:5000/random'; 
-
-
-  try {
-    const { data } = await axios.post(
-        url,
-        {
-            "challange": param 
-        }
-    );
-    console.log( data.SelectDiversifier.Status );
-  } catch (error) {
-    console.log(error)
+  const res = await fetch(url,{
+    method:'POST',
+    body:JSON.stringify(object),
+    headers:{
+      'Content-Type': 'application/json'
   }
+  })
+  if(!res)
+    throw new Error("WARN", res.status);
+  const {GiveRandom} = await res.json();
+  return GiveRandom.Status;
 
-  return (
-    <div>giveRandom</div>
-  )
 }
 
 export default giveRandom
