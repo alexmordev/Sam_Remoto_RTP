@@ -1,5 +1,5 @@
 'use strict';
-const { Devices,SendCommand} = require('../utils/Dependencies');
+const { Devices,SendCommand, response} = require('../utils/Dependencies');
 
 const SendingCommand= async ( card )=>{
   try{
@@ -13,7 +13,7 @@ const SendingCommand= async ( card )=>{
     throw err
   }
 }
-const SelectCurrentDF = ()=>{
+const SelectCurrentDF = (req, res = response)=>{
   const devices = new Devices();
   devices.on('device-activated', (event) => {
     const samReader = event.devices[0];
@@ -21,6 +21,7 @@ const SelectCurrentDF = ()=>{
       const card = event.card;
       SendingCommand( card )
       .then(success => {
+          res.json( success );
           console.group('Success!');
           console.log(success)
           console.groupEnd();
@@ -33,7 +34,7 @@ const SelectCurrentDF = ()=>{
     });           
   });
 };
-SelectCurrentDF();
+// SelectCurrentDF();
 module.exports = {SelectCurrentDF};
 
 //85 17 00 02 00 00 00 10 10 00 00 01 03 01 01 00 79 79 79 21 27 30 00 20 00 9000

@@ -31,16 +31,80 @@ export const Pin = () => {
     return data;
   }
 
-  const setPin = async() => {
+  const rehabilitate = async() => {
+    const start = Date.now();
     const applicationSN = await GetRequest('/selectApp');
     const diversifier = await PostRequest('http://dev-node.rtp.gob.mx:5000/diversifier',
-                                          {"applicationSN": `${applicationSN.serialNumber}`});
+                                        {
+                                          "applicationSN": `${applicationSN.serialNumber}`
+                                        });
     const challenge = await GetRequest('http://dev-node.rtp.gob.mx:5000/samChallenge');
-    // const openSecure = await PostRequest('/openSecureSession', {"challenge":`${challenge.SamChallenge}` })
+    const cleanChallenge = challenge.SamChallenge.Response.slice(0,-4);
+    const oppenSecure = await PostRequest('/oppenSecureSession', 
+                                        {
+                                          "challenge":`${cleanChallenge}` 
+                                        });
+    const cleanOppenSecure = oppenSecure.OpenSecureSession.Response.slice(0,-4);                                  
+    const digestInit = await PostRequest('http://dev-node.rtp.gob.mx:5000/digestInit',
+                                        {
+                                          "secureSession":`${cleanOppenSecure}`
+                                        });
+    const rehabilitate = await GetRequest('/rehabilitate');
+    // const cleanRehabilitate = rehabilitate.
+    const digestUpdate1 =  await PostRequest('http://dev-node.rtp.gob.mx:5000/digestUpdate',
+                                        {
+                                          "digestData":`0044000000`
+                                        });
+    const digestUpdate2 =  await PostRequest('http://dev-node.rtp.gob.mx:5000/digestUpdate',
+                                        {
+                                          "digestData":`${digestUpdate1.DigestUpdate.Response.slice(-4)}`
+                                        });
+    const digestClose = await GetRequest('http://dev-node.rtp.gob.mx:5000/digestClose');
+    const cleanCloseDigest = digestClose.DigestClose.Response.slice(0,-4);
+    const closeSecure = await PostRequest('/closeSecureSession', 
+                                        {
+                                          "digestClose":`${cleanCloseDigest}`
+                                        });
+    const authenticate = await PostRequest('http://dev-node.rtp.gob.mx:5000/digestAuthenticate', 
+                                        {
+                                          "signature":`${closeSecure.CloseSecureSession.Response.slice(0,-4)}`
+                                        });
+                                                                            
+    const ratificaton = await GetRequest( '/ratification' )                                  
 
-    // console.log(selectApp.serialNumber);
-    return {applicationSN, diversifier, challenge}
+    const timer = Date.now() - start;
+
+    const objectResponse = {applicationSN, 
+                          diversifier, 
+                          challenge, 
+                          oppenSecure, 
+                          digestInit, 
+                          rehabilitate,
+                          digestUpdate1, 
+                          digestUpdate2,
+                          digestClose,
+                          closeSecure, 
+                          authenticate,
+                          ratificaton,
+                          timer};
+    // console.log(objectResponse);
+    return objectResponse;
   };
+
+  const changePinProcess = ()=> "changePin"
+  const setPin = async()=>{
+    const currentDF = await GetRequest('/selectCurrentDF');
+    if( currentDF.applicationStatus == "00" ){
+      let getRehabilitate = await rehabilitate();
+      if( getRehabilitate.rehabilitate.rehabilitate.Response == "9000" ){
+        let getchangePinProcess= await changePinProcess();
+        console.log(getRehabilitate, getchangePinProcess);
+      }
+    }
+    let getchangePinProcess= await changePinProcess();
+    console.log( getchangePinProcess);
+  }
+
 
   return (
     <Container>
@@ -85,12 +149,12 @@ export const Pin = () => {
           <div className=" w-2 flex justify-content-between">
             <Button
               label="Leer"
-              onClick={setPin}
               className="mt-4 w-5 p-button-lg p-button-success"
             />
             <Button
               label="Cambiar"
               className="mt-4 w-5 p-button-lg p-button-success"
+              onClick={setPin}
             />
           </div>
         </div>

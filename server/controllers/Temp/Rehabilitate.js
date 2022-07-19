@@ -4,15 +4,15 @@ const {response,Devices,SendCommand} = require('../utils/Dependencies');
 const SendingCommand = async ( sam )=>{
     try{
       const start = Date.now();
-      const rehablitate = await SendCommand( sam, `0044000000`);
+      const rehabilitate = await SendCommand( sam, `0044000000`);
       const timer = Date.now() - start;
-      return ({rehablitate,Time: timer})
+      return ({rehabilitate,Time: timer})
     }
     catch(err){
       throw err
     }
 }
-const Rehabilitate = ()=>{
+const Rehabilitate = (req, res = response)=>{
     const devices = new Devices();
     devices.on('device-activated', (event) => {
         const samReader = event.devices[0];
@@ -20,6 +20,7 @@ const Rehabilitate = ()=>{
             const sam = event.card;
             SendingCommand( sam)
             .then(success => {
+                res.json( success )
                 console.log(success)
                 console.groupEnd();
             })
@@ -30,5 +31,5 @@ const Rehabilitate = ()=>{
         });      
     });
 };
-Rehabilitate();
-module.exports = Rehabilitate;
+// Rehabilitate();s
+module.exports = {Rehabilitate}

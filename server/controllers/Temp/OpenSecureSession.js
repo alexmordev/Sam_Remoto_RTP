@@ -36,5 +36,5 @@ const OppenSecureSession=( req, res=response )=>{
     });
   });
 }
-OppenSecureSession( "986F4207" );
-module.exports = OppenSecureSession;
+// OppenSecureSession( "986F4207" );
+module.exports = { OppenSecureSession } 
