@@ -9,6 +9,7 @@
     "@testing-library/user-event": "^13.5.0",
     "axios": "^0.27.2",
     "chart.js": "^3.8.0",
+    "dotenv": "^16.0.1",
     "primeflex": "^3.2.1",
     "primeicons": "^5.0.0",
     "primereact": "^8.1.1",
