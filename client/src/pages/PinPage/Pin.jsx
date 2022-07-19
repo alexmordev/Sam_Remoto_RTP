@@ -4,6 +4,7 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Container } from "../../Components/Container/Container";
 import index from './../../calypsoComands/changePinProcess/index';
+import selectAplication from './../../calypsoComands/selectAplication';
 
 export const Pin = () => {
 
@@ -11,10 +12,14 @@ export const Pin = () => {
   const [device, setDevice] = useState('');
   const [card, setCard] = useState();
   
-  
-
-  const url = `http://dev-node.rtp.gob.mx:5000/diversifier`;
-
+  const GetRequest = async(url)=>{
+    const res = await fetch(url)
+    if(!res)
+      throw new Error("WARN", res.status);
+    const data = await res.json();
+    return data;
+  }
+    
   const PostRequest = async(url,object)=>{
     const res = await fetch(url,{
       method:'POST',
@@ -30,13 +35,22 @@ export const Pin = () => {
   };
 
 
+
+  const setNewPin = async() => {
+    const selectApp = await selectAplication
+  }
+
+
+
+
+
+
+
+
   const showDates = async () => {
     // const { devices, card } = backendData;
     // setDevice(devices);
     // setCard( card.slice(18));
-
-    const diversifier = await PostRequest( url, { "applicationSN": "0800000000946AD0F0" } )
-    console.log(diversifier);
   };
 
   return (
