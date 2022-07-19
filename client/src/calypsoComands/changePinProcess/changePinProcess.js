@@ -17,6 +17,16 @@ import changePin from '../changePin';
 // se ejecuta changePin al local serve es un metodo POST y se manda el response de cardCipherPinUpdate
 
 
+  // const newPin  = '1013';
+  // const value_0 = newPin.charCodeAt(0);
+  // const value_1 = newPin.charCodeAt(1);
+  // const value_2 = newPin.charCodeAt(2);
+  // const value_3 = newPin.charCodeAt(3);
+  // const ascii_pin = `${value_0}${value_1}${value_2}${value_3}`
+  // console.log('New Pin Decimal: ', newPin);
+  // console.log('New Pin ASCII: ', ascii_pin);
+
+
 const changePinProcess = async() => {
   const start = Date.now();
 
