@@ -3,7 +3,7 @@ import { InputText } from "primereact/inputtext";
 // import { BtnPin } from "../../Components/BtnPin";
 import { Button } from "primereact/button";
 import { Container } from "../../Components/Container/Container";
-import diversifier from './../../calypsoComands/diversifier';
+import index from './../../calypsoComands/changePinProcess/index';
 
 export const Pin = () => {
 
@@ -21,17 +21,31 @@ export const Pin = () => {
   //   );
   // },[]);
 
-  const respSelectAplication = "0800000000946AD0F0";
+  // index()
+  const url = `http://dev-node.rtp.gob.mx:5000/diversifier`;
 
-  diversifier( respSelectAplication );
-  
+  const PostRequest = async(url,object)=>{
+    const res = await fetch(url,{
+      method:'POST',
+      body:JSON.stringify(object),
+      headers:{
+        'Content-Type': 'application/json'
+    }
+    })
+    if(!res)
+      throw new Error("WARN", res.status);
+    const data = await res.json();
+    return data;
+  };
 
-  const showDates = () => {
-    const { devices, card } = backendData;
-    setDevice(devices);
-    setCard( card.slice(18));
-    // setDevice(backendData.devices);
-    // setCard(backendData.card)
+
+  const showDates = async () => {
+    // const { devices, card } = backendData;
+    // setDevice(devices);
+    // setCard( card.slice(18));
+
+    const diversifier = await PostRequest( url, { "applicationSN": "0800000000946AD0F0" } )
+    console.log(diversifier);
   };
 
   return (

@@ -5,7 +5,7 @@ import diversifier from '../diversifier';
 import getChallenge from '../getChallenge';
 import giveRandom from '../giveRandom';
 import cardCipherPinUpdate from '../cardCipherPinUpdate';
-import changePin from '../changePin';
+import changePin from '.';
 
 
 
@@ -19,11 +19,15 @@ import changePin from '../changePin';
 
 const index = () => {
 
-  const respSelectAplication = "0800000000946AD0F0";
+  console.log('Aqui ando')
 
-  const respSelectionAp = selectAplication();
+  const respSelectAplication = () => {
 
-  diversifier( respSelectAplication );
+    return ( "0800000000946AD0F0");
+  } 
+
+  const diver = diversifier( respSelectAplication() );
+  console.log( 'Valor de diver: ',diver ); 
   
   
   return (
