@@ -3,9 +3,9 @@
 import getChallenge from '../getChallenge';
 import giveRandom from '../giveRandom';
 import cardCipherPinUpdate from '../cardCipherPinUpdate';
-import selectAplication from './../selectAplication';
-import diversifier from './../diversifier';
-import changePin from './../changePin';
+import selectAplication from '../selectAplication';
+import diversifier from '../diversifier';
+import changePin from '../changePin';
 
 
 
@@ -17,12 +17,13 @@ import changePin from './../changePin';
 // se ejecuta changePin al local serve es un metodo POST y se manda el response de cardCipherPinUpdate
 
 
-const index = () => {
+const changePinProcess = async() => {
+  const start = Date.now();
 
   const dominio = process.env.REACT_APP_DOMINIO;
   const newPin = '48454845';
 
-  const change = async () => {
+  // const change = async () => {
 
     const selectApp = await selectAplication('/selectApp');
     console.log('SelectApp: ',selectApp);
@@ -42,12 +43,13 @@ const index = () => {
 
     const changeP = await changePin(`/changePin`, {'newPin': `${cardCipher}` })
     console.log('Change Pin: ',changeP)
-
-  }
+    let timer = Date.now() - start; 
+    console.log(timer);
+  // }
   
-  change();
+  // change();
 }
 
-export default index
+export default changePinProcess;
 
 

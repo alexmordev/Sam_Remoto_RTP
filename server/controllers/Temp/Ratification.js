@@ -1,5 +1,5 @@
 'use strict';
-const { Devices,SendCommand} = require('../utils/Dependencies');
+const { Devices,SendCommand, response} = require('../utils/Dependencies');
 
 const SendingCommand= async ( card )=>{
     try{
@@ -12,7 +12,7 @@ const SendingCommand= async ( card )=>{
       throw err
   }
 }
-const Ratification=(  )=>{
+const Ratification=( req, res = response )=>{
   const devices = new Devices();
   devices.on('device-activated', (event) => {
     const samReader = event.devices[0];
@@ -20,6 +20,7 @@ const Ratification=(  )=>{
         const card = event.card;
         SendingCommand( card )
         .then(success => {
+            res.json( success )
             console.group('Success!');
             console.log(success)
             console.groupEnd();
@@ -32,5 +33,5 @@ const Ratification=(  )=>{
     });
   });
 }
-Ratification(  );
-module.exports = Ratification;
+// Ratification(  );
+module.exports = {Ratification};

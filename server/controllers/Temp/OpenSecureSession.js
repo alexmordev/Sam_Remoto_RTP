@@ -1,5 +1,6 @@
 'use strict';
-const { Devices,SendCommand} = require('../utils/Dependencies');
+const {response, Devices,SendCommand} = require('../utils/Dependencies');
+// const { response } = require('../utils/StatusCodes');
 
 const SendingCommand= async ( card, challenge )=>{
     try{
@@ -13,7 +14,8 @@ const SendingCommand= async ( card, challenge )=>{
       throw err
   }
 }
-const OppenSecureSession=( challenge )=>{
+const OppenSecureSession=( req, res=response )=>{
+  const challenge = req.body.challenge;
   const devices = new Devices();
   devices.on('device-activated', (event) => {
     const samReader = event.devices[0];
@@ -21,6 +23,7 @@ const OppenSecureSession=( challenge )=>{
         const card = event.card;
         SendingCommand( card, challenge)
         .then(success => {
+            res.json(success);
             console.group('Success!');
             console.log(success)
             console.groupEnd();
@@ -33,5 +36,5 @@ const OppenSecureSession=( challenge )=>{
     });
   });
 }
-OppenSecureSession( "986F4207" );
-module.exports = OppenSecureSession;
+// OppenSecureSession( "986F4207" );
+module.exports = { OppenSecureSession } 

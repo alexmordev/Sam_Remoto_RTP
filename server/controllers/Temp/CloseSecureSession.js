@@ -1,5 +1,5 @@
 'use strict';
-const { Devices,SendCommand} = require('../utils/Dependencies');
+const { Devices,SendCommand, response} = require('../utils/Dependencies');
 
 const SendingCommand= async ( card, signature )=>{
     try{
@@ -13,7 +13,8 @@ const SendingCommand= async ( card, signature )=>{
       throw err
   }
 }
-const CloseSecureSession=( signature )=>{
+const CloseSecureSession=( req, res = response  )=>{
+  const signature = req.body.digestClose;
   const devices = new Devices();
   devices.on('device-activated', (event) => {
     const samReader = event.devices[0];
@@ -21,6 +22,7 @@ const CloseSecureSession=( signature )=>{
         const card = event.card;
         SendingCommand( card, signature)
         .then(success => {
+            res.json( success )
             console.group('Success!');
             console.log(success)
             console.groupEnd();
@@ -33,5 +35,5 @@ const CloseSecureSession=( signature )=>{
     });
   });
 }
-CloseSecureSession( "2E8BEB74" );
-module.exports = CloseSecureSession;
+// CloseSecureSession( "2E8BEB74" );
+module.exports = {CloseSecureSession};
