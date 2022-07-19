@@ -3,7 +3,7 @@ import { Container, GraficaPastel, UserCard } from "../../Components";
 
 export const Home = () => {
 
-  console.log(process.env);
+  
 
   return (
     <Container>

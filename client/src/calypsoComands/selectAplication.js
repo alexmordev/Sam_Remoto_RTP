@@ -1,27 +1,20 @@
 // Metodo GET
 // Servidor Local
 
-import React from 'react';
 
-const selectAplication = ( param ) => {
+const selectAplication = async( url ) => {
 
   const SendRequest = async()=>{
-    const res = await fetch( param )
+    const res = await fetch( url )
     if(!res)
       throw new Error("WARN", res.status);
-    const data = await res.json();
-    return data;
+    const {serialNumber} = await res.json();
+    return serialNumber;
   }
 
-  const setPin = async() => {
-    const selectApp = await SendRequest('/selectApp');
-    console.log(selectApp.serialNumber);
-    return {selectApp}
-  };
+    const SNumber = await SendRequest('/selectApp');
+    return SNumber 
 
-  return (
-    <div>selectAplication</div>
-  )
 }
 
 export default selectAplication

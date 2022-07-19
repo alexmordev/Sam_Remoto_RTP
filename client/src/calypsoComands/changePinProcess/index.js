@@ -1,11 +1,11 @@
 //Logica para el cambio del PIN de la tarjeta
 
-import selectAplication from '../selectAplication';
-import diversifier from '../diversifier';
 import getChallenge from '../getChallenge';
 import giveRandom from '../giveRandom';
 import cardCipherPinUpdate from '../cardCipherPinUpdate';
-import changePin from '.';
+import selectAplication from './../selectAplication';
+import diversifier from './../diversifier';
+import changePin from './../changePin';
 
 
 
@@ -19,23 +19,33 @@ import changePin from '.';
 
 const index = () => {
 
-  console.log('Aqui ando')
+  const dominio = process.env.REACT_APP_DOMINIO;
+  const newPin = '48454845';
 
-  const respSelectAplication = () => {
+  const change = async () => {
 
-    return ( "0800000000946AD0F0");
-  } 
+    const selectApp = await selectAplication('/selectApp');
+    console.log('SelectApp: ',selectApp);
 
-  const diver = diversifier( respSelectAplication() );
-  console.log( 'Valor de diver: ',diver ); 
+
+    const diversif = await diversifier(`${dominio}/diversifier`, {"applicationSN" : `${selectApp}`})
+    console.log('Diversifier: ',diversif);
+
+    const getChal = await getChallenge('/getChallenge');
+    console.log('Get Challenge: ',getChal)
+
+    const giveRan = await giveRandom(`${dominio}/random`, {'challenge': `${getChal}`});
+    console.log('GiveRandom: ',giveRan);
+
+    const cardCipher = await cardCipherPinUpdate(`${dominio}/cipherUpdate`, { "pin": `${newPin}` })
+    console.log('CardCipher: ',cardCipher);
+
+    const changeP = await changePin(`/changePin`, {'newPin': `${cardCipher}` })
+    console.log('Change Pin: ',changeP)
+
+  }
   
-  
-  return (
-    <div>
-      
-    </div>
-  )
-  
+  change();
 }
 
 export default index

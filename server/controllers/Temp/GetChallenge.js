@@ -13,7 +13,7 @@ const SendingCommand= async ( card )=>{
       throw err
     }
 };
-const GetChallenge = ()=>{
+const GetChallenge = (req, res = response)=>{
     const devices = new Devices();
     devices.on('device-activated', (event) => {
         const samReader = event.devices[0];
@@ -21,6 +21,7 @@ const GetChallenge = ()=>{
             const card = event.card;
             SendingCommand( card )
             .then(success => {
+                res.json(success);
                 console.group('Success!');
                 console.log(success)
                 console.groupEnd();
@@ -33,5 +34,5 @@ const GetChallenge = ()=>{
         });           
     });
 }
-GetChallenge();
-module.exports= GetChallenge;
+// GetChallenge();
+module.exports= {GetChallenge};

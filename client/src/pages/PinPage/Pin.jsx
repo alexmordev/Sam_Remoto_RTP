@@ -11,17 +11,8 @@ export const Pin = () => {
   const [device, setDevice] = useState('');
   const [card, setCard] = useState();
   
-  // useEffect(() => {
-  //   fetch("/api").then(
-  //     response => response.json()
-  //   ).then(
-  //     data => {
-  //       setBackendData(data);
-  //     }
-  //   );
-  // },[]);
+  
 
-  // index()
   const url = `http://dev-node.rtp.gob.mx:5000/diversifier`;
 
   const PostRequest = async(url,object)=>{
@@ -97,6 +88,7 @@ export const Pin = () => {
             <Button
               label="Cambiar"
               className="mt-4 w-5 p-button-lg p-button-success"
+              onClick={index}
             />
           </div>
         </div>

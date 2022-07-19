@@ -1,39 +1,20 @@
 // Metodo POST
 // Servidor Remoto
 
-import axios from 'axios';
 
-const diversifier = ( param ) => {
+const diversifier = async( url, object ) => {
 
-  const url = `${process.env.REACT_APP_DOMINIO}/diversifier`;
-  // const url = `http://dev-node.rtp.gob.mx:5000/diversifier`;
-  let status;
-
-  const fetchData = async() => {
-
-
-    
-
-    // try {
-    //   const { data } = await axios.post(
-    //       url,
-    //       {
-    //           "applicationSN": param 
-    //       }
-    //     );
-    //     status = data.SelectDiversifier.Status ;
-    //   console.log('Status: ', data.SelectDiversifier.Status );
-    // } catch (error) {
-    //     status =  error;
-    // }
-
-  }
-
-  // fetchData();
-
-  console.log('Valor de status: ',status);
-  
-  return status
+    const res = await fetch(url,{
+      method:'POST',
+      body:JSON.stringify(object),
+      headers:{
+        'Content-Type': 'application/json'
+    }
+    })
+    if(!res)
+      throw new Error("WARN", res.status);
+    const {SelectDiversifier} = await res.json();
+    return SelectDiversifier.Status;
 }
 
 export default diversifier
