@@ -35,14 +35,23 @@
 const changePinProcess = async() => {
 
   const start = Date.now();
-  console.log('Si entró')
+
+    console.log('***Convirtiendo en ASCII***');
+    const newPin  = '0000';
+    const value_0 = newPin.charCodeAt(0);
+    const value_1 = newPin.charCodeAt(1);
+    const value_2 = newPin.charCodeAt(2);
+    const value_3 = newPin.charCodeAt(3);
+    const ascii_pin = `${value_0}${value_1}${value_2}${value_3}`
+    console.log('New Pin Decimal: ', newPin);
+    console.log('New Pin ASCII: ', ascii_pin);
 
     const applicationSN = await GetRequest("/selectApp");
     console.log("Select Aplication: ", applicationSN.serialNumber);
     const { SelectDiversifier } = await PostRequest(
       "http://dev-node.rtp.gob.mx:5000/diversifier",
       {
-        applicationSN: `${applicationSN.serialNumber}`,
+        "applicationSN": `${applicationSN.serialNumber}`,
       }
     );
     console.log("Diversifier: ", SelectDiversifier.Status);
@@ -52,55 +61,43 @@ const changePinProcess = async() => {
 
     const { GiveRandom } = await PostRequest(
       `http://dev-node.rtp.gob.mx:5000/random`,
-      { challenge: `${getChal.GetChallenge.Response.slice(0, -4)}` }
+      { "challenge": `${getChal.GetChallenge.Response.slice(0, -4)}` }
     );
     console.log("Give Random: ", GiveRandom.Status);
 
     const cardCipher = await PostRequest(
       `http://dev-node.rtp.gob.mx:5000/cipherUpdate`,
-      { pin: "48454845" }
+      { "pin": `${ascii_pin}` }
     );
     console.log("CardCipher: ", cardCipher.response.Status);
 
     const { changePinResponse } = await PostRequest(`/changePin`, {
-      newPin: `${cardCipher.response.Response.slice(0, -4)}`,
+      "newPin": `${cardCipher.response.Response.slice(0, -4)}`,
     });
     console.log("Change Pin: ", changePinResponse.Status);
 
+    console.log('********Verificar Pin *********');
+
+    const getChal2 = await GetRequest("/getChallenge");
+    console.log("Get challenge2: ", getChal2.GetChallenge.Status);
+
+    const data = await PostRequest(
+      `http://dev-node.rtp.gob.mx:5000/random`,
+      { "challenge": `${getChal2.GetChallenge.Response.slice(0, -4)}` }
+    );
+    console.log("Give Random2: ", data.GiveRandom.Status);
+
+
+    const cipherVerify = await PostRequest(
+      `http://dev-node.rtp.gob.mx:5000/cipherVerify`,
+      {"pin": `${ascii_pin}`}
+    );
+    console.log('cipherVerify: ', cipherVerify.response.Status );
+
+    
     let timer = Date.now() - start;
     console.log(timer);
 
-
-
-
-
-  // const start = Date.now();
-
-  // const dominio = process.env.REACT_APP_DOMINIO;
-  // const newPin = '48454845';
-
-  // // const change = async () => {
-
-  //   const selectApp = await selectAplication('/selectApp');
-  //   console.log('SelectApp: ',selectApp);
-
-
-  //   const diversif = await diversifier(`${dominio}/diversifier`, {"applicationSN" : `${selectApp}`})
-  //   console.log('Diversifier: ',diversif);
-
-  //   const getChal = await getChallenge('/getChallenge');
-  //   console.log('Get Challenge: ',getChal)
-
-  //   const giveRan = await giveRandom(`${dominio}/random`, {'challenge': `${getChal}`});
-  //   console.log('GiveRandom: ',giveRan);
-
-  //   const cardCipher = await cardCipherPinUpdate(`${dominio}/cipherUpdate`, { "pin": `${newPin}` })
-  //   console.log('CardCipher: ',cardCipher);
-
-  //   const changeP = await changePin(`/changePin`, {'newPin': `${cardCipher}` })
-  //   console.log('Change Pin: ',changeP)
-  //   let timer = Date.now() - start; 
-  //   console.log(timer);
 }
 
 export default changePinProcess;
