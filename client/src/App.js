@@ -17,7 +17,6 @@ import { Pin } from "./pages/PinPage/Pin";
 import { VistaPrueba } from "./pages/VistaPrueba";
 
 
-
 function App() {
   return (
         <Routes>  //Route 1

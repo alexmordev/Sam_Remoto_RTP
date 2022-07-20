@@ -2,12 +2,17 @@ import React, { useState, useEffect } from "react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Container } from "../../Components/Container/Container";
+import { InputNumber } from 'primereact/inputnumber';
 import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
 
 export const Pin = () => {
   const [backendData, setBackendData] = useState([{}]);
   const [device, setDevice] = useState("");
   const [card, setCard] = useState();
+  const [folio, setFolio] = useState('')
+  const [credencial, setCredencial] = useState('');
+  const [nomTrabajador, setnomTrabajador] = useState('');
+  const [pinValue, setPinValue] = useState('')
 
   // import { Rehabilitate } from "../../../../server/controllers/Temp/Rehabilitate";
 
@@ -124,7 +129,9 @@ export const Pin = () => {
 
     const ratificaton = await GetRequest("/ratification");
 
-    const showDates = async () => {
+    
+
+    const showDates =  () => {
       // const { devices, card } = backendData;
       // setDevice(devices);
       // setCard( card.slice(18));
@@ -146,13 +153,13 @@ export const Pin = () => {
       ratificaton,
       timer,
     };
-    // console.log(objectResponse);
+    console.log(objectResponse);
     return objectResponse;
   };
-  const selectApp = async () => {
-    const applicationSN = await GetRequest("/selectApp");
-    return applicationSN;
-  };
+
+  const verifyIndex = async() => {
+    await changePinProcess( pinValue )
+  }
 
   // const setPin = async()=>{
   //   const start = Date.now();
@@ -176,9 +183,9 @@ export const Pin = () => {
   const setPin = async () => {
     const currentDF = await GetRequest("/selectCurrentDF");
     const getRehabilitate = await rehabilitate();
-    // const getchangePinProcess = await changePinProcess();
-    const selectA = await selectApp();
-    console.log(currentDF, getRehabilitate, selectA);
+    const getchangePinProcess = await setNewPin();
+    // const selectA = await selectApp();
+    // console.log(currentDF, getRehabilitate, selectA);
   };
 
   return (
@@ -197,26 +204,29 @@ export const Pin = () => {
           >
             <div className="field col-12 md:col-3">
               <label htmlFor="antena">Antena</label>
-              <InputText id="antena" placeholder="Antena" value={"ACS"} />
+              <InputText id="antena" placeholder="Antena" value={"ACS"} readOnly={true}/>
             </div>
             <div className="field col-12 md:col-3">
               <label htmlFor="folio">Folio</label>
               <InputText
                 id="folio"
                 placeholder="Folio"
-                value={"FOLIOTEST/RTP/2022"}
+                value={folio}
+                onChange={(e) => setFolio(e.target.value)}
+                
               />
             </div>
             <div className="field col-12 md:col-4">
               <label htmlFor="ns_card">NS Card</label>
-              <InputText id="ns_card" placeholder="NS Card" value={"card"} />
+              <InputText id="ns_card" placeholder="NS Card" value={"card"} readOnly={true}/>
             </div>
             <div className="field col-12 md:col-3">
               <label htmlFor="credencial">Credencial</label>
               <InputText
                 id="credencial"
                 placeholder="Credencial"
-                value={"9607"}
+                value={credencial}
+                onChange={ (e) => setCredencial(e.target.value) }
               />
             </div>
             <div className="field col-12 md:col-3">
@@ -224,15 +234,21 @@ export const Pin = () => {
               <InputText
                 id="nombre"
                 placeholder="Nombre trabajdor"
-                value={"Alejandro Morales"}
+                value={nomTrabajador}
+                onChange={ (e) => setnomTrabajador( e.target.value ) }
               />
             </div>
             <div className="field col-12 md:col-4">
               <label htmlFor="vigencia">PIN </label>
               <InputText
                 id="vigencia"
+                value={pinValue}
                 placeholder="Ingresa un Pin de 4 digitos"
-                value={"1010"}
+                // onValueChange={ (e) => setPinValue( e.target.value )}
+                onChange={ (e) => setPinValue( e.target.value )}
+                maxLength= {4}
+                // mode="decimal"
+                required={true}
               />
             </div>
           </div>
@@ -245,7 +261,7 @@ export const Pin = () => {
             <Button
               label="Cambiar"
               className="mt-4 w-5 p-button-lg p-button-success"
-              onClick={setNewPin}
+              onClick={setPin}
             />
           </div>
         </div>
