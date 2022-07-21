@@ -4,7 +4,7 @@ import { Button } from "primereact/button";
 import { Container } from "../../Components/Container/Container";
 import { InputNumber } from 'primereact/inputnumber';
 import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
-// import Swal from 'sweetalert2';
+import Swal from 'sweetalert2';
 
 
 export const Pin = () => {
@@ -16,7 +16,90 @@ export const Pin = () => {
   const [nomTrabajador, setnomTrabajador] = useState('');
   const [pinValue, setPinValue] = useState('')
 
+  const validateDates = () => {
+    
+    if (folio === "") {
+      console.log("Folio vacio");
+      // document.getElementById("aviso_folio").innerText=" LLENAR CAMPO";
+      Swal.fire({
+        title: "Error",
+        text: "Es necesario colocar un folio ",
+        //text: "Bienvenido Mario",
+        icon: 'error',
+      });
+
+    } else if (credencial === "") {
+      console.log("Credencial vacio");
+      // document.getElementById("aviso_credencial").innerText = " LLENAR CAMPO";
+      Swal.fire({
+        title: "Error",
+        text: "Es necesario colocar una Credencial ",
+        //text: "Bienvenido Mario",
+        icon: 'error',
+      });
+      
+    } else if (pinValue === "") {
+      console.log("PIN vacio");
+      // document.getElementById("aviso_pin").innerText = " LLENAR CAMPO ";
+      Swal.fire({
+        title: "Error",
+        text: "Es necesario colocar un Pin ",
+        //text: "Bienvenido Mario",
+        icon: 'error',
+      });
+
+    } else{
+
+      const Toast = Swal.mixin({ // SPINNER
+        toast: true,
+        position: 'center',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+          toast.addEventListener('mouseenter', Swal.stopTimer)
+          toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+      })
+      
+      Toast.fire({
+        icon: 'success',
+        title: 'Restableciendo PIN'
+      })
+      
+      
+      validarLongitud();
+    }
+  }
+
+
   // import { Rehabilitate } from "../../../../server/controllers/Temp/Rehabilitate";
+
+  const validarLongitud = () =>{
+        
+    if (credencial.length < 4 ){
+      // console.log('PIN invalido')
+
+      Swal.fire({
+        title: "Error",
+        text: "Es necesario colocar una credencial de 4 o 5 dígitos  ",
+        //text: "Bienvenido Mario",
+        icon: 'error',
+      });
+      
+    }
+    
+    if (pinValue.length < 4 ){
+      Swal.fire({
+        title: "Error",
+        text: "Es necesario colocar un Pin de 4 dígitos  ",
+        //text: "Bienvenido Mario",
+        icon: 'error',
+      });
+    }
+    
+    
+  }
 
 
   const GetRequest = async (url) => {
@@ -258,6 +341,7 @@ export const Pin = () => {
                 placeholder="Credencial"
                 value={credencial}
                 onChange={ (e) => setCredencial(e.target.value) }
+                maxLength={5}
               />
             </div>
             <div className="field col-12 md:col-4">
