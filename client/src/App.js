@@ -15,18 +15,44 @@ import { Dumps } from "./pages/DumpsPage/Dumps";
 import { SamCounter } from "./pages/SamCounters/SamCounter";
 import { Pin } from "./pages/PinPage/Pin";
 import { VistaPrueba } from "./pages/VistaPrueba";
+import { PrivateRoute } from "./auth/PrivateRoute";
 
 
 function App() {
   return (
-        <Routes>  //Route 1
-          <Route path="/" element={<Login />} />
-          <Route path="/homepage" element={<Home />} />
-          <Route path="/dumps" element={<Dumps />} />
-          <Route path="/samcounters" element={<SamCounter />} />
-          <Route path="/app" element={<Pin/>} />
-          <Route path="/prueba" element={<VistaPrueba />} />
-        </Routes>
+    <Routes>  //Route 1
+      <Route path="/" element={<Login />} />
+
+      <Route path="/homepage" element={
+        <PrivateRoute>
+          <Home />
+        </PrivateRoute>
+      } />
+
+      <Route path="/dumps" element={
+        <PrivateRoute>
+          <Dumps />
+        </PrivateRoute>
+      } />
+
+      <Route path="/samcounters" element={
+        <PrivateRoute>
+          <SamCounter />
+        </PrivateRoute>
+      } />
+
+      <Route path="/app" element={
+        <PrivateRoute>
+          <Pin />
+        </PrivateRoute>
+      } />
+
+      <Route path="/prueba" element={
+        <PrivateRoute>
+          <VistaPrueba />
+        </PrivateRoute>
+      } />
+    </Routes>
   );
 }
 
