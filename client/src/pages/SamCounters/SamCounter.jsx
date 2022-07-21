@@ -1,21 +1,24 @@
 import React from "react";
 import { Container } from "../../Components/Container/Container";
+import { Header } from "../../Components/Header/Header";
 import { TablaSam } from './../../Components/TablaSam';
 
 export const SamCounter = () => {
-  
-  
-  
+ 
 
   return (
 
+
 <Container>
-  <div className="w-full h-screen">
+  <div className="w-screen h-screen">
     <div className="mt-4 mb-5 bg-green-300 w-full h-4rem flex justify-content-center align-items-center">
       <p className="text-white-alpha-90 font-bold text-3xl">Tabla General</p>
     </div>
     <div className="flex  justify-content-center ">
-      <TablaSam  />
+      {/* <TablaSam  /> */}
+    </div>
+    <div>
+      <TablaSam/>
     </div>
   </div>
 </Container>

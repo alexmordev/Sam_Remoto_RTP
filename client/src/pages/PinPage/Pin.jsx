@@ -4,6 +4,8 @@ import { Button } from "primereact/button";
 import { Container } from "../../Components/Container/Container";
 import { InputNumber } from 'primereact/inputnumber';
 import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
+// import Swal from 'sweetalert2';
+
 
 export const Pin = () => {
   const [backendData, setBackendData] = useState([{}]);
@@ -219,23 +221,23 @@ export const Pin = () => {
 
   return (
     <Container>
-      <div className=" h-screen w-full">
-        <div className=" mt-6  w-full h-4rem flex justify-content-center align-items-center">
+      <div className=" h-screen w-full flex flex-column justify-content-center">
+        <div className=" mt-5  w-full h-1rem flex justify-content-center align-items-center">
           <p className="text-white-alpha-90 font-bold text-3xl">
             CAMBIO DE PIN
           </p>
         </div>
 
-        <div className=" mt-6 flex flex-column justify-content-center align-items-center">
+        <div className=" mt-8 flex flex-column justify-content-center align-items-center">
           <div
-            className="p-8 bg-green-400 w-6 h-26rem card  grid  p-fluid  flex  justify-content-between
+            className="p-4 bg-green-400 w-8  h-auto card  grid  p-fluid  flex flex-wrap  justify-content-between
             align-content-between flex-wrap border-round-3xl"
           >
-            <div className="field col-12 md:col-3">
+            <div className="field col-12 md:col-4">
               <label htmlFor="antena">Antena</label>
               <InputText id="antena" placeholder="Antena" value={"ACS"} readOnly={true}/>
             </div>
-            <div className="field col-12 md:col-3">
+            <div className="field col-12 md:col-4">
               <label htmlFor="folio">Folio</label>
               <InputText
                 id="folio"
@@ -249,7 +251,7 @@ export const Pin = () => {
               <label htmlFor="ns_card">NS Card</label>
               <InputText id="ns_card" placeholder="NS Card" value={"card"} readOnly={true}/>
             </div>
-            <div className="field col-12 md:col-3">
+            <div className="field col-12 md:col-4">
               <label htmlFor="credencial">Credencial</label>
               <InputText
                 id="credencial"
@@ -258,7 +260,7 @@ export const Pin = () => {
                 onChange={ (e) => setCredencial(e.target.value) }
               />
             </div>
-            <div className="field col-12 md:col-3">
+            <div className="field col-12 md:col-4">
               <label htmlFor="nombre">Nombre Trabajador</label>
               <InputText
                 id="nombre"
@@ -281,15 +283,16 @@ export const Pin = () => {
               />
             </div>
           </div>
-          {/* <BtnPin /> */}
-          <div className=" w-2 flex justify-content-between">
+          
+          <div className=" w-5 flex justify-content-around">
             <Button
               label="Leer"
-              className="mt-4 w-5 p-button-lg p-button-success"
+              className="mt-4 w-5 p-button-sm p-button-success flex justify-content-around"
             />
+
             <Button
               label="Cambiar"
-              className="mt-4 w-5 p-button-lg p-button-success"
+              className="mt-4 w-5 p-button-sm p-button-success flex justify-content-around"
               onClick={setPin}
             />
           </div>
