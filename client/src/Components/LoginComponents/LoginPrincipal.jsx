@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Button } from "primereact/button";
 import { InputText } from "primereact/inputtext";
 import { Password } from "primereact/password";
@@ -6,50 +6,52 @@ import { Imagen } from "./Imagen";
 import { getAuthorization } from "../../helpers/GetAuthorization";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from "../../auth/context/AuthContext";
 
 export const LoginPrincipal = () => {
+  const { login } = useContext(AuthContext)
 
-  const url = 'http://dev-node.rtp.gob.mx:5000/api/login';
+  const url = 'http://localhost:5000/api/login';
 
-  const navegacion = useNavigate();
+  const navigate = useNavigate();
 
-  const [userValue, setUserValue] = useState( "" ); //Aqui se almacenará el valor del correo de usuario
-  const [passValue, setPassValue] = useState( "" ); //Aqui se almacenará el valor de la contraseña
-  const [sendData, setSendData]   = useState( true ); //Esta unicamente es una condición para que 
-  const [timer, setTimer] = useState( true );
-   
+  const [userValue, setUserValue] = useState(""); //Aqui se almacenará el valor del correo de usuario
+  const [passValue, setPassValue] = useState(""); //Aqui se almacenará el valor de la contraseña
+  const [sendData, setSendData] = useState(true); //Esta unicamente es una condición para que 
+  const [timer, setTimer] = useState(true);
+
   useEffect(() => {
     fetchData()
   }, [sendData])
-  
+
   useEffect(() => {
     setTimer(false);
   }, [])
-  
 
-  const fetchData = async() => {
+  const fetchData = async () => {
 
     try {
       const { data } = await axios.post(
         url,
         {
-          // "email": user,
+
           "email": userValue,
           "password": passValue
-          // "password": passUser
+       
         }
       );
+      login("email", "password")
       localStorage.setItem('token', JSON.stringify(data.token));
-      navegacion( '/homepage' );
+      navigate('/homepage');
     } catch (error) {
       console.log('Algo salio mal');
-      navegacion( '/' );
-      
+      navigate('/')
+
     }
   }
-  
+
   const validacion = () => {
-    setSendData( !sendData );
+    setSendData(!sendData);
   };
 
   if (timer === true) {
@@ -84,7 +86,7 @@ export const LoginPrincipal = () => {
           label="Ingresar"
           icon="pi pi-sign-in"
           className="p-button-success"
-          onClick={ validacion }
+          onClick={validacion}
         />
       </div>
     </div>

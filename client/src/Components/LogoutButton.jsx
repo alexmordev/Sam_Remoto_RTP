@@ -1,16 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Button } from 'primereact/button';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../auth/context/AuthContext'
 
 export const LogoutButton = () => {
   
-    const navegar = useNavigate();
+  const { logout } = useContext( AuthContext )
+  const navigate = useNavigate();
 
-    const action = () => {
-      localStorage.removeItem("token")
-      navegar('/');
-    }
-    
+  const action = () => {
+    localStorage.removeItem("token")
+    navigate('/');
+    logout();
+  }
     
   return (
     <>

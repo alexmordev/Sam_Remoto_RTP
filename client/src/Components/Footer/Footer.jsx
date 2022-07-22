@@ -3,7 +3,7 @@ import React from 'react';
 export const Footer = () => {
 
   return (
-    <div className='relative h-4rem border-3 border-green-200  w-full  bottom-0 bg-gray-50'>
+    <div className='relative border-3 border-green-200  w-full  bottom-0 bg-gray-50'>
       <div className='flex justify-content-center align-content-center'>
         <p className='font-normal text-900 text-center'>
           El uso indebido de este software puede representar un delito

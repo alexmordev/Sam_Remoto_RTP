@@ -2,40 +2,36 @@ import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import {elementos} from '../Pruebas/CounterSamExample';
-import { getSamCounters } from './../helpers';
+
+
 
 export const TablaSam = () => {
 
-  
-  
     const [products, setProducts] = useState([]);   //Aqui se almacenará el arreglo de la SAM
-     getSamCounters();
 
-    
+
     //Solo una vez se carga el state de los datos de la sam, aqui sera la peticion de la API
     // para traer la información
     useEffect(() => {
         setProducts(elementos); 
-        // setProducts(getSamCounters()); 
-        // console.log(resApi);
     }, []); 
 
   return (
     <div className="card">
 
         
-            <DataTable value={products} paginator responsiveLayout="stack" breakpoint="960px"
+            <DataTable value={products} paginator responsiveLayout="scroll" breakpoint="960px"
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks 
                     NextPageLink LastPageLink RowsPerPageDropdown" 
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" 
                     rows={10} rowsPerPageOptions={[8,10,12]}
-                    className	="w-full" >
-                <Column field="id"       header="id"></Column>
-                <Column field="sam"      header="SAM"></Column>
-                <Column field="tarjeta"  header="Tarjeta"></Column>
-                <Column field="c00"      header="C00"></Column>
-                <Column field="c01"      header="C01"></Column>
-                <Column field="c02"      header="C02"></Column>
+                    className	="w-auto" >
+                <Column field="id"      style={{with: '25%'}}   header="id"></Column>
+                <Column field="sam"     style={{with: '25%'}}   header="SAM"></Column>
+                <Column field="tarjeta" style={{with: '25%'}}   header="Tarjeta"></Column>
+                <Column field="c00"     style={{with: '25%'}}   header="C00"></Column>
+                <Column field="c01"     style={{with: '25%'}}   header="C01"></Column>
+                <Column field="c02"     style={{with: '25%'}}   header="C02"></Column>
                 <Column field="c03"      header="C03"></Column>
                 <Column field="c04"      header="C04"></Column>
                 <Column field="c05"      header="C05"></Column>

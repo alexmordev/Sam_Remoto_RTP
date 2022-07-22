@@ -1,11 +1,10 @@
 import React from "react";
 import { Container, GraficaPastel, UserCard } from "../../Components";
+import { AuthProvider } from "../../auth/context/AuthProvider";
 
 export const Home = () => {
-
-  
-
   return (
+    <AuthProvider>
     <Container>
       <div className="h-full w-full bg-blue-900 card-container flex">
         <div className="border-2 border-white w-5 flex 
@@ -14,6 +13,7 @@ export const Home = () => {
             text-6xl 
             font-bold
             text-white
+
           ">
             BIENVENIDO
           </p>
@@ -49,5 +49,6 @@ export const Home = () => {
         </div>
       </div>
     </Container>
+    </AuthProvider>
   );
 };
