@@ -1,124 +1,14 @@
 import React, { useState,useEffect } from "react";
 import { InputText } from "primereact/inputtext";
-// import { BtnPin } from "../../Components/BtnPin";
 import { Button } from "primereact/button";
 import { Container } from "../../Components/Container/Container";
-import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
-// import { Rehabilitate } from "../../../../server/controllers/Temp/Rehabilitate";
+import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate";
+import GetRequest from "../../calypsoComands/utils/GetRequest";
 
 export const Pin = () => { 
-  const GetRequest = async(url)=>{
-    const res = await fetch(url)
-    if(!res)
-      throw new Error("WARN", res.status);
-    const data = await res.json();
-    return data;
-  }
-    
-  const PostRequest = async(url,object)=>{
-    const res = await fetch(url,{
-      method:'POST',
-      body:JSON.stringify(object),
-      headers:{
-        'Content-Type': 'application/json'
-    }
-    })
-    if(!res)
-      throw new Error("WARN", res.status);
-    const data = await res.json();
-    return data;
-  }
-
-  const rehabilitate = async() => {
-    const start = Date.now();
-    const applicationSN = await GetRequest('/selectApp');
-    const diversifier = await PostRequest('http://dev-node.rtp.gob.mx:5000/diversifier',
-                                        {
-                                          "applicationSN": `${applicationSN.serialNumber}`
-                                        });
-    const challenge = await GetRequest('http://dev-node.rtp.gob.mx:5000/samChallenge');
-    const cleanChallenge = challenge.SamChallenge.Response.slice(0,-4);
-    const oppenSecure = await PostRequest('/oppenSecureSession', 
-                                        {
-                                          "challenge":`${cleanChallenge}` 
-                                        });
-    const cleanOppenSecure = oppenSecure.OpenSecureSession.Response.slice(0,-4);                                  
-    const digestInit = await PostRequest('http://dev-node.rtp.gob.mx:5000/digestInit',
-                                        {
-                                          "secureSession":`${cleanOppenSecure}`
-                                        });
-    const rehabilitate = await GetRequest('/rehabilitate');
-    // const cleanRehabilitate = rehabilitate.
-    const digestUpdate1 =  await PostRequest('http://dev-node.rtp.gob.mx:5000/digestUpdate',
-                                        {
-                                          "digestData":`0044000000`
-                                        });
-    const digestUpdate2 =  await PostRequest('http://dev-node.rtp.gob.mx:5000/digestUpdate',
-                                        {
-                                          "digestData":`${digestUpdate1.DigestUpdate.Response.slice(-4)}`
-                                        });
-    const digestClose = await GetRequest('http://dev-node.rtp.gob.mx:5000/digestClose');
-    const cleanCloseDigest = digestClose.DigestClose.Response.slice(0,-4);
-    const closeSecure = await PostRequest('/closeSecureSession', 
-                                        {
-                                          "digestClose":`${cleanCloseDigest}`
-                                        });
-    const authenticate = await PostRequest('http://dev-node.rtp.gob.mx:5000/digestAuthenticate', 
-                                        {
-                                          "signature":`${closeSecure.CloseSecureSession.Response.slice(0,-4)}`
-                                        });
-                                                                            
-    const ratificaton = await GetRequest( '/ratification' )                                  
-
-    const timer = Date.now() - start;
-
-    const objectResponse = {applicationSN, 
-                          diversifier, 
-                          challenge, 
-                          oppenSecure, 
-                          digestInit, 
-                          rehabilitate,
-                          digestUpdate1, 
-                          digestUpdate2,
-                          digestClose,
-                          closeSecure, 
-                          authenticate,
-                          ratificaton,
-                          timer};
-    // console.log(objectResponse);
-    return objectResponse;
-  }
-  const selectApp = async() => {
-    const applicationSN = await GetRequest('/selectApp');
-    return applicationSN;
-  }
-  
-  // const setPin = async()=>{
-  //   const start = Date.now();
-  //   const currentDF = await GetRequest('/selectCurrentDF');
-  //   if( currentDF.applicationStatus == "00" ){
-  //     let getRehabilitate = await rehabilitate();
-  //     if( getRehabilitate.rehabilitate.rehabilitate.Response == "9000" ){
-  //       let getchangePinProcess= await changePinProcess()
-  //       let timer = Date.now() - start;
-        // let getchangePinProcess = "changePin"
-
-        // console.log(getRehabilitate, getchangePinProcess, timer);
-      // }
-    // }
-    // let getchangePinProcess= await changePinProcess()
-    // let getchangePinProcess = "changePin"
-    // let timer = Date.now() - start; 
-    // console.log( timer, getchangePinProcess);
-  // }
-
   const setPin = async()=>{
     const currentDF = await GetRequest('/selectCurrentDF');
-    const getRehabilitate = await rehabilitate();
-    // const getchangePinProcess = await changePinProcess();
-    const selectA = await selectApp();
-    console.log(currentDF, getRehabilitate, selectA);
-
+    const getRehabilitate =  await Rehabilitate();
   }
 
 
