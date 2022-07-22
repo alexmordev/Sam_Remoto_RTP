@@ -4,9 +4,9 @@ module.exports = {
 
   // Configuracion de DB
   username: process.env.DB_USERNAME || "postgres",
-  password: process.env.DB_PASSWORD ||12345,
-  database: process.env.DB_DATABASE || "RTP",
-  host: process.env.DB_HOST ||"localhost",
+  password: process.env.DB_PASSWORD ||"postgres",
+  database: process.env.DB_DATABASE || "calypso_app",
+  host: process.env.DB_HOST || "10.10.31.179",
   dialect: process.env.DB_DIALECT || "postgres",
 
   // Configurar Seeds

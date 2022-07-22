@@ -7,10 +7,10 @@ module.exports = {
 
     return Promise.all([
       
-      user.create({
+      user.create({ 
         name: "Mario Israel Jiménez Amaro",
-        email: "mjimenez@rtp.cdmx.gob.mx",
-        password: bcrypt.hashSync("mjimenez", +authConfig.rounds),
+        email: "omarsc97nuevo@gmail.com",
+        password: bcrypt.hashSync("rtp2019++", +authConfig.rounds),
     
       }),
 

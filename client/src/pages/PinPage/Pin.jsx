@@ -16,6 +16,9 @@ export const Pin = () => {
   const [nomTrabajador, setnomTrabajador] = useState('');
   const [pinValue, setPinValue] = useState('')
 
+
+  // FUNCION PARA VALIDAR EL LLENADO DE LOS CAMPOS
+
   const validateDates = () => {
     
     if (folio === "") {
@@ -34,7 +37,7 @@ export const Pin = () => {
       Swal.fire({
         title: "Error",
         text: "Es necesario colocar una Credencial ",
-        //text: "Bienvenido Mario",
+        //text: "Bienvenido Marios",
         icon: 'error',
       });
       
@@ -68,12 +71,13 @@ export const Pin = () => {
       })
       
       
-      validarLongitud();
+      validarLongitud(); //SI TODOS ESTAN LLENOS SE MANDA LLAMAR ESTA FUNCION
     }
   }
 
 
-  // import { Rehabilitate } from "../../../../server/controllers/Temp/Rehabilitate";
+
+  // VALIDAR LA LONGITUD DE LOS CAMPOS DEL PIN Y CREDENCIAL DEL PINPAGE
 
   const validarLongitud = () =>{
         
