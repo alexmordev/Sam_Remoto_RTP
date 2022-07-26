@@ -198,14 +198,14 @@ export const Pin = () => {
 
   return (
     <Container>
-      <div className=" h-screen w-full flex flex-column justify-content-center">
+      <div className=" pb-5 h-screen w-full flex flex-column justify-content-center">
         <div className=" mt-5  w-full h-1rem flex justify-content-center align-items-center">
           <p className="text-white-alpha-90 font-bold text-3xl">
             CAMBIO DE PIN
           </p>
         </div>
 
-        <div className=" mt-8 flex flex-column justify-content-center align-items-center">
+        <div className=" mt-8 mb-8 flex flex-column justify-content-center align-items-center">
           <div
             className="p-4 bg-green-400 w-8  h-auto card  grid  p-fluid  flex flex-wrap  justify-content-between
             align-content-between flex-wrap border-round-3xl"
@@ -262,15 +262,15 @@ export const Pin = () => {
             </div>
           </div>
           
-          <div className=" w-5 flex justify-content-around">
+          <div className="mt-0 mb-6 w-5 flex justify-content-around">
             <Button
               label="Leer"
-              className="mt-4 w-5 p-button-sm p-button-success flex justify-content-around"
+              className="mt-1 w-5 p-button-sm p-button-success flex justify-content-around"
             />
 
             <Button
               label="Cambiar"
-              className="mt-4 w-5 p-button-sm p-button-success flex justify-content-around"
+              className="mt-1 w-5 p-button-sm p-button-success flex justify-content-around"
               onClick={setPin}
             />
           </div>
