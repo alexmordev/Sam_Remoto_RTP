@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState} from "react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Container } from "../../Components/Container/Container";
 import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate";
-import GetRequest from "../../calypsoComands/utils/GetRequest";
-import { InputNumber } from 'primereact/inputnumber';
+// import GetRequest from "../../calypsoComands/utils/GetRequest";
+// import { InputNumber } from 'primereact/inputnumber';
 import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
 import Swal from 'sweetalert2';
 
@@ -13,9 +13,6 @@ import Swal from 'sweetalert2';
 //     const currentDF = await GetRequest('/selectCurrentDF');
 //     const getRehabilitate =  await Rehabilitate();
 //   }
-
-
-
 
 export const Pin = () => {
   const [backendData, setBackendData] = useState([{}]);
@@ -44,7 +41,7 @@ export const Pin = () => {
       Swal.fire({
         title: "Error",
         text: "Es necesario colocar una Credencial ",
-        //text: "Bienvenido Mario",
+        //text: "Bienvenido Marios",
         icon: 'error',
       });
       
@@ -78,7 +75,7 @@ export const Pin = () => {
       })
       
       
-      validarLongitud();
+      validarLongitud(); //SI TODOS ESTAN LLENOS SE MANDA LLAMAR ESTA FUNCION
     }
   }
   const validarLongitud = () =>{
@@ -106,15 +103,12 @@ export const Pin = () => {
     
     
   }
-
-
   const GetRequest = async (url) => {
     const res = await fetch(url);
     if (!res) throw new Error("WARN", res.status);
     const data = await res.json();
     return data;
   };
-
   const PostRequest = async (url, object) => {
     const res = await fetch(url, {
       method: "POST",
@@ -127,11 +121,10 @@ export const Pin = () => {
     const data = await res.json();
     return data;
   };
-
   const setNewPin = async () => {
     const start = Date.now();
-    const currentDF = await GetRequest("/selectCurrentDF");
-    const getRehabilitate = await Rehabilitate();
+    // const currentDF = await GetRequest("/selectCurrentDF");
+    // const getRehabilitate = await Rehabilitate();
 
     console.log('***Convirtiendo en ASCII***');
     const newPin  = pinValue;
@@ -194,14 +187,9 @@ export const Pin = () => {
     let timer = Date.now() - start;
     console.log(timer);
   };
-
-  
-
   const verifyIndex = async() => {
     await changePinProcess( pinValue )
   }
-
- 
   const setPin = async () => {
    
     const getchangePinProcess = await setNewPin();
@@ -283,7 +271,7 @@ export const Pin = () => {
             <Button
               label="Cambiar"
               className="mt-4 w-5 p-button-sm p-button-success flex justify-content-around"
-              onClick={setNewPin}
+              onClick={setPin}
             />
           </div>
         </div>

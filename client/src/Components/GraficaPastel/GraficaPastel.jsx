@@ -15,6 +15,8 @@ export const GraficaPastel = () => {
         ],
       });
 
+      
+
     const [lightOptions] = useState({
         plugins: {
             legend: {

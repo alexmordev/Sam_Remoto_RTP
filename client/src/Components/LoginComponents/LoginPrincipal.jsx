@@ -7,11 +7,12 @@ import { getAuthorization } from "../../helpers/GetAuthorization";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from "../../auth/context/AuthContext";
+import Swal from 'sweetalert2';
 
 export const LoginPrincipal = () => {
   const { login } = useContext(AuthContext)
 
-  const url = 'http://localhost:5000/api/login';
+  const url = `${process.env.REACT_APP_DOMINIO}/api/login`;
 
   const navigate = useNavigate();
 
@@ -44,8 +45,14 @@ export const LoginPrincipal = () => {
       localStorage.setItem('token', JSON.stringify(data.token));
       navigate('/homepage');
     } catch (error) {
-      console.log('Algo salio mal');
-      navigate('/')
+      Swal.fire({
+        title: `Error ${error.response.data.error_Http}`,
+        text: `${error.response.data.message}`,
+        //text: "Bienvenido Mario",
+        icon: 'error',
+      });
+      console.log(error.response.data);
+      // navigate('/')
 
     }
   }

@@ -6,7 +6,6 @@ const logger = require('./utils/logger')
 
 
 class Server {
-
   constructor() {
     this.app = express();
     this.port = process.env.PORT;
