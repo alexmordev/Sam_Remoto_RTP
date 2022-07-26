@@ -21,9 +21,7 @@ export const LoginPrincipal = () => {
   const [sendData, setSendData] = useState(true); //Esta unicamente es una condición para que 
   const [timer, setTimer] = useState(true);
 
-  useEffect(() => {
-    fetchData()
-  }, [sendData])
+  
 
   useEffect(() => {
     setTimer(false);
@@ -57,45 +55,52 @@ export const LoginPrincipal = () => {
     }
   }
 
-  const validacion = () => {
-    setSendData(!sendData);
-  };
 
   if (timer === true) {
     return <p> Cargando </p>
   }
+
+  const handleSubmit = ( e ) => {
+    e.preventDefault();
+    fetchData();
+  }
+
   return (
     <div className="bg-bluegray-300 h-screen w-screen flex align-items-center justify-content-center ">
-      <div className=" h-30rem w-30rem flex  align-items-center  flex-column justify-content-around">
-        <Imagen />
-        <span className="p-float-label">
-          <InputText
-            className="w-18rem h-4rem"
-            id="username"
-            value={userValue}
-            onChange={(e) => setUserValue(e.target.value)}
-          />
-          <label htmlFor="username">Usuario</label>
-        </span>
 
-        <span className="p-float-label">
-          <Password
-            inputClassName="w-18rem h-4rem"
-            feedback={false}
-            value={passValue}
-            onChange={(e) => setPassValue(e.target.value)}
-            toggleMask
-          />
-          <label htmlFor="password">Contraseña</label>
-        </span>
+      <form onSubmit={handleSubmit}>
 
-        <Button
-          label="Ingresar"
-          icon="pi pi-sign-in"
-          className="p-button-success"
-          onClick={validacion}
-        />
-      </div>
+        <div className=" h-30rem w-30rem flex  align-items-center  flex-column justify-content-around">
+          <Imagen />
+          <span className="p-float-label">
+            <InputText
+              className="w-18rem h-4rem"
+              id="username"
+              value={userValue}
+              onChange={(e) => setUserValue(e.target.value)}
+            />
+            <label htmlFor="username">Usuario</label>
+          </span>
+
+          <span className="p-float-label">
+            <Password
+              inputClassName="w-18rem h-4rem"
+              feedback={false}
+              value={passValue}
+              onChange={(e) => setPassValue(e.target.value)}
+              toggleMask
+            />
+            <label htmlFor="password">Contraseña</label>
+          </span>
+
+          <Button
+            label="Ingresar"
+            icon="pi pi-sign-in"
+            className="p-button-success"
+            onClick={fetchData}
+          />
+        </div>
+      </form> 
     </div>
   );
 };
