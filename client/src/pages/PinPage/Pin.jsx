@@ -3,16 +3,9 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Container } from "../../Components/Container/Container";
 import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate";
-// import GetRequest from "../../calypsoComands/utils/GetRequest";
-// import { InputNumber } from 'primereact/inputnumber';
+import GetRequest from "../../calypsoComands/utils/GetRequest";
 import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
 import Swal from 'sweetalert2';
-
-// export const Pin = () => { 
-//   const setPin = async()=>{
-//     const currentDF = await GetRequest('/selectCurrentDF');
-//     const getRehabilitate =  await Rehabilitate();
-//   }
 
 export const Pin = () => {
   const [backendData, setBackendData] = useState([{}]);
@@ -191,9 +184,17 @@ export const Pin = () => {
     await changePinProcess( pinValue )
   }
   const setPin = async () => {
-    const rehabilitate = await Rehabilitate();
-    const getchangePinProcess = await setNewPin();
-
+    const currentDF = await GetRequest('/selectCurrentDF');
+    if(currentDF.applicationStatus !== "00"){
+      /**
+       * Indicar que se corre comando de rehabilitacion;
+       */
+      await Rehabilitate();
+    }
+    /**
+     * Indicar que se corre PIN
+     */
+    await setNewPin();
   };
 
   return (
