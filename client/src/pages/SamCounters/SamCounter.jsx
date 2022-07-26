@@ -10,14 +10,14 @@ export const SamCounter = () => {
 
 
 <Container>
-  <div className="w-screen h-screen">
+  <div className="w-screen h-screen mb-8">
     <div className="mt-4 mb-5 bg-green-300 w-full h-4rem flex justify-content-center align-items-center">
       <p className="text-white-alpha-90 font-bold text-3xl">Tabla General</p>
     </div>
-    <div className="flex  justify-content-center ">
+    <div className="flex  justify-content-center  ">
       {/* <TablaSam  /> */}
     </div>
-    <div>
+    <div className="mb-8">
       <TablaSam/>
     </div>
   </div>
