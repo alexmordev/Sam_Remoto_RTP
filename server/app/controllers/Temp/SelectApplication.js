@@ -1,82 +1,38 @@
 'use strict';
+const {response, Devices,SendCommand} = require('../utils/Dependencies');
 
-const { response } = require('express');
-const smartcard = require('smartcard');
-const Devices = smartcard.Devices;
-const devices = new Devices();
-
-// DE BYTES A HEXA
-function toHexString(byteArray) {
-    return Array.from(byteArray, function(byte) {
-      return ('0' + (byte & 0xFF).toString(16)).slice(-2);
-    }).join('')
-}
-const SelectApplication=( card )=>{
-    return new Promise( (resolve, reject)=>{
-        const CLA = '00';
-        const INS = 'A4';
-        const P1 = '04';
-        const P2 = '00'; //Select the first occurence
-        const AID_Transport = '315449432E494341D48401019101'// AID Transport
-        const lc = '02'; 
-        const request = `${CLA}${INS}${P1}${P2}${lc}${AID_Transport}`;
-
-        card.issueCommand(request, (err, res)=>{
-            const response = toHexString(res).toLocaleUpperCase()
-            const status = response.slice(-4);
-            const findSerialNumber = response.indexOf( 'C7' );
-            const serialNumber = response.slice(findSerialNumber + 2, findSerialNumber + 20);
-            const objectResponse  = 
-                {
-                    request,
-                    response,
-                    status,
-                    serialNumber
-                };
-            ( status == '9000')
-                ? resolve( objectResponse )
-                : reject( status )
-        } )
-    } )
-}
-const SendAPDU= async ( card )=>{
-    try{
-      const start = Date.now();
-      const objectResponse = await SelectApplication( card );
-      const timer = Date.now() - start;
-      return (
-          {
-            SelectApplication: objectResponse,
-            Time: timer
-          }
-      )
-    }
-    catch(err){
-      throw err
+const SendingCommand= async ( card )=>{
+  try{
+    const start = Date.now();
+    const selectApp = await SendCommand( card, "00A4040002315449432E494341D48401019101" );
+    const getSerialNumber = selectApp.Response.indexOf( 'C7' );
+    const serialNumber = selectApp.Response.slice(getSerialNumber + 2,  getSerialNumber+ 20)
+    const timer = Date.now() - start;
+    return ({serialNumber, selectApp,Time: timer})
+  }
+  catch(err){
+    throw err
   }
 }
-
-devices.on('device-activated', (event) => {
-    if (event.devices.length >=2){
-        const samReader = event.devices[0];
-        samReader.on('card-inserted', (event) => {
-            const card = event.card;
-            console.log(`\nCARD Inserted:  ${card.getAtr()} `);
-            
-            SendAPDU( card )
-                .then(success => {
-                    console.group('Success!');
-                    console.log(success)
-                    console.groupEnd();
-                })
-                .catch(error =>{
-                    console.group('Eror')
-                    console.log(error);
-                    console.groupEnd();
-                })
-        });           
-    }
-});
-
-
-
+const SelectApplication = (req, res = response)=>{
+  const devices = new Devices();
+  devices.on('device-activated', (event) => {
+    const samReader = event.devices[0];
+    samReader.on('card-inserted', (event) => {
+      const card = event.card;
+      SendingCommand( card )
+      .then(success => {
+          res.json(success);
+      })
+      .catch(error =>{
+          console.group('Eror')
+          console.log(error);
+          console.groupEnd();
+      })
+    });           
+  });
+};
+module.exports = {
+  SelectApplication
+};
+//6F 28 84 0E 315449432E494341D48401019101A516BF0C13C70800000000946AD0F053070A2D23C01010029000

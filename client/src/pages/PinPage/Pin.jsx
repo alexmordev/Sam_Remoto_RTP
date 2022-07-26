@@ -191,7 +191,7 @@ export const Pin = () => {
     await changePinProcess( pinValue )
   }
   const setPin = async () => {
-   
+    const rehabilitate = await Rehabilitate();
     const getchangePinProcess = await setNewPin();
 
   };

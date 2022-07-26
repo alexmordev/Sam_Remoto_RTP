@@ -1,10 +1,10 @@
 'use strict';
-const { Devices,SendCommand, response} = require('../utils/Dependencies');
+const { Devices,SendCommand} = require('../utils/Dependencies');
 
 const SendingCommand = async ( card, cipher )=>{
     try{
       const start = Date.now();
-      const changePinResponse = await SendCommand( card, `00D800FF10${cipher}`)
+      const changePinResponse = await SendCommand( card, `0020000008${cipher}`)
       const timer = Date.now() - start;
       return ({changePinResponse,Time: timer})
     }
@@ -12,8 +12,7 @@ const SendingCommand = async ( card, cipher )=>{
       throw err
   }
 }
-const ChangePin= ( req, res = response )=>{
-    const cipher = req.body.newPin;
+const VerifyPin= ( cipher )=>{
     const devices = new Devices();
     devices.on('device-activated', (event) => {
         const samReader = event.devices[0];
@@ -21,7 +20,6 @@ const ChangePin= ( req, res = response )=>{
             const card = event.card;                
             SendingCommand( card, cipher )
             .then(success => {
-                res.json(success )
                 console.group('Success!');
                 console.log(success)
                 console.groupEnd();
@@ -34,5 +32,5 @@ const ChangePin= ( req, res = response )=>{
         });           
     });
 }
-// ChangePin( "E571051F5CA9F7212B87D7C289B979D3" );
-module.exports = { ChangePin };
+VerifyPin( "1E78DCB8FFC3EC3D" );
+module.exports = {VerifyPin};
