@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
     c25: DataTypes.STRING,
     c26: DataTypes.STRING,
     estatus: DataTypes.STRING,
-    comando: DataTypes.STRING,
+    movimiento: DataTypes.STRING,
     folio: DataTypes.STRING,
     fecha_hora: DataTypes.DATE
   }, {

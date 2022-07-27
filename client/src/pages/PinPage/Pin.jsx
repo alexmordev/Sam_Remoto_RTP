@@ -22,11 +22,9 @@ export const Pin = () => {
     
     if (folio === "") {
       console.log("Folio vacio");
-      // document.getElementById("aviso_folio").innerText=" LLENAR CAMPO";
       Swal.fire({
         title: "Error",
         text: "Es necesario colocar un folio ",
-        //text: "Bienvenido Mario",
         icon: 'error',
       });
 
@@ -36,8 +34,7 @@ export const Pin = () => {
       Swal.fire({
         title: "Error",
         text: "Es necesario colocar una Credencial ",
-        //text: "Bienvenido Marios",
-        icon: 'error',
+        icon: 'info',
       });
       
     } else if (pinValue === "") {

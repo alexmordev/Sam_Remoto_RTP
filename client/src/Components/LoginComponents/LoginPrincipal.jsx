@@ -42,15 +42,13 @@ export const LoginPrincipal = () => {
       login("email", "password")
       localStorage.setItem('token', JSON.stringify(data.token));
       navigate('/homepage');
-    } catch (error) {
+    } catch (e) {
       Swal.fire({
-        title: `Error ${error.response.data.error_Http}`,
-        text: `${error.response.data.message}`,
-        //text: "Bienvenido Mario",
+        title: `Error`,
+        text: `${e.response.data.message}`,
         icon: 'error',
       });
-      console.log(error.response.data);
-      // navigate('/')
+      console.log(e.response.data);
 
     }
   }

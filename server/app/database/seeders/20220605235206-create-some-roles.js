@@ -17,11 +17,9 @@ module.exports = {
 
       queryInterface.bulkInsert('user_role',[
 
-      
-
         { user_id: 1,role_id: 1, createdAt: new Date(),updatedAt: new Date() },//Usuario admin
         { user_id: 1,role_id: 2, createdAt: new Date(),updatedAt: new Date() },//Aparte tendra el user id_2
-        { user_id: 2,role_id: 2, createdAt: new Date(),updatedAt: new Date() },//Mau solo sera el usuario
+        { user_id: 2,role_id: 2, createdAt: new Date(),updatedAt: new Date() },//El usuario normal solo tendra permisos generales
 
     ],{}),
 

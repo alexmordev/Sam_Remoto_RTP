@@ -5,8 +5,6 @@ const {error_Http} = require('../helpers/erroresHttp')
 
 module.exports = (req,res, next) => {
 
-    // console.log(req.headers);
-
     //Comprobaremos que existe el token
 
     if(!req.headers.authorization){
@@ -23,19 +21,14 @@ module.exports = (req,res, next) => {
                 res.status(500).json({ message: "There was a problem generating the token!, contact the administrator", err })
                 
             }else{
-                // req.user = decoded.user;
+                req.user = decoded.user;
                 user.findByPk(decoded.user.id, { include: "roles" }).then(user => {
 
                     // console.log(user.roles);
                     req.user = user;
                     next();
                 })
-
             }
         })
-
-
-       
     }
-
 }

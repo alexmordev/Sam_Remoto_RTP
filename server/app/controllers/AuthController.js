@@ -25,7 +25,7 @@ module.exports = {
             }
         }).then(user => {
             if (!user) {
-                res.status(406).json({ message: 'User not found', error_Http:error_Http.not_acceptable })
+                res.status(406).json({ message: `El correo *${email}* no existe`, error_Http:error_Http.not_acceptable })
                 logger.error( ` Usuario no encontrado ${email}` )
 
             } else {
@@ -39,7 +39,7 @@ module.exports = {
                     logger.info( ` Usuario con id '${user.id}'*** autenticado  ` )
 
                 } else {
-                    res.status(401).json({ msg: 'Incorrect password',error_Http:error_Http.unauthorized })
+                    res.status(401).json({ message: 'Contraseña incorrecta',error_Http:error_Http.unauthorized })
                     logger.error( ` Usuario con id '${user.id}'*** Ingreso una contraseña no valida` )
                 }
             }
@@ -63,7 +63,6 @@ module.exports = {
         })
         res.redirect('/')
     },
-
 
     //Funcion para registro
     check_in(req, res) {
