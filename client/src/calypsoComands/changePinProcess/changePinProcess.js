@@ -3,32 +3,10 @@
 
 import GetRequest from "../utils/GetRequest";
 import PostRequest from "../utils/PostRequest";
+import MakeRequest from "../utils/MakeRequest";
 
-// const GetRequest = async (url) => {
-//     const res = await fetch(url);
-//     if (!res) throw new Error("WARN", res.status);
-//     const data = await res.json();
-//     return data;
-//   };
-
-//   const PostRequest = async (url, object) => {
-//     const res = await fetch(url, {
-//         method: "POST",
-//         body: JSON.stringify(object),
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
-//     if (!res) throw new Error("WARN", res.status);
-//     const data = await res.json();
-//     return data;
-//   };
-  
-  
 const changePinProcess = async(newPin) => {
-
   const start = Date.now();
-
     console.log('***Convirtiendo en ASCII***');
     const value_0 = newPin.charCodeAt(0);
     const value_1 = newPin.charCodeAt(1);
@@ -85,12 +63,15 @@ const changePinProcess = async(newPin) => {
       {"pin": `${ascii_pin}`}
     );
     console.log('cipherVerify: ', cipherVerify.response.Status );
-
-    
+  
+    const saveCounters = await MakeRequest( 'http://dev-node.rtp.gob.mx:5000/insert/counters', 
+                                        {
+                                          "command": "Set PIN",
+                                          "cardSN": `${applicationSN.serialNumber.slice(2)}`,
+                                          "folio": "FOLIORTP/OFICIO/231"
+                                        } );  
+    console.log("Save Counters: ",saveCounters);
     let timer = Date.now() - start;
     console.log(timer);
-
 }
-
 export default changePinProcess;
-

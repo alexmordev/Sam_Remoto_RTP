@@ -1,5 +1,6 @@
 import GetRequest from "../utils/GetRequest";
 import PostRequest from "../utils/PostRequest";
+import MakeRequest from "../utils/MakeRequest";
 
 const Rehabilitate = async() => {
     const start = Date.now();
@@ -40,7 +41,13 @@ const Rehabilitate = async() => {
                                           "signature":`${closeSecure.CloseSecureSession.Response.slice(0,-4)}`
                                         });
                                                                             
-    const ratificaton = await GetRequest( '/ratification' )                                  
+    const ratificaton = await GetRequest( '/ratification' )   
+    const saveCounters = await MakeRequest( 'http://dev-node.rtp.gob.mx:5000/insert/counters', 
+                                        {
+                                          "command": "Rehabilitate",
+                                          "cardSN": `${applicationSN.serialNumber.slice(2)}`,
+                                          "folio": "FOLIORTP/OFICIO/231"
+                                        } );                              
 
     const timer = Date.now() - start;
 
@@ -56,6 +63,7 @@ const Rehabilitate = async() => {
                           closeSecure, 
                           authenticate,
                           ratificaton,
+                          saveCounters,
                           timer};
     console.log(objectResponse);
     return objectResponse;
