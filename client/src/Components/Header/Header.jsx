@@ -17,7 +17,6 @@ export const Header = () => {
       label: 'Inicio',
       icon: 'pi pi-home',
       command: () => {
-        console.log('Inicio');
         navigate('/homepage');
       } 
     },
@@ -57,14 +56,12 @@ export const Header = () => {
   const end = <Link to="/">
                 <LogoutButton/>
               </Link>
-    
+  const customStyle = "border-radius: 0px;"
 
   return (
     <div className="relative w-full h-4rem ">
 
-      <Menubar className='border-3 h-4rem border-green-200 w-full top-0 right-0' start={start}  model={items} end={end}/>
-
-      
+      <Menubar className='surface-overlay py-3 px-6 shadow-2 flex align-items-center justify-content-between relative lg:static' start={start}  model={items} end={end}/>
 
     </div>
   )
