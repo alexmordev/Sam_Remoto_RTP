@@ -13,16 +13,11 @@ export const LogoutButton = () => {
     navigate('/');
     logout();
   }
+
     
   return (
     <>
-
-        <Button className="mr-3 p-button-warning" onClick={action} >
-            <i className="pi pi-sign-out px-0"></i>
-            {/* <span className="px-0">Cerrar Sesión</span> */}
-
-        </Button>
-
+      <Button className="p-button-text p-button-plain pi pi-power-off" onClick={action}/>
     </>
   )
 }

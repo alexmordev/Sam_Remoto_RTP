@@ -4,11 +4,9 @@ import { Header } from "./../Header/Header";
 
 export const Container = (props) => {
   return (
-    <div className="bg-bluegray-300">
+    <div className="surface-ground">
       <Header />
-      <div >
         {props.children}
-      </div>
       <Footer />
     </div>
   );
