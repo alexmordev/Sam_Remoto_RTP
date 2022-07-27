@@ -3,7 +3,7 @@ export const getSamCounters = async() => {
     
 
     const token = JSON.parse( localStorage.getItem( 'token' ));
-    const url = `${process.env.REACT_APP_DOMINIO}/api/consultaSams`;
+    const url = `${process.env.REACT_APP_DOMINIO}/api/consultaContador`;
 
         const resp = await fetch(url, {
             method: 'get',
@@ -12,7 +12,6 @@ export const getSamCounters = async() => {
             })
         });
     const result = await resp.json();
-    console.log(result);
-    return result.categories
+    return result
    
 };

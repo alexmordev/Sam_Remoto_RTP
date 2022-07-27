@@ -1,3 +1,5 @@
+// http://app.rtp.gob.mx/api/get_card/946ABD4C
+
 import React, { useState} from "react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
@@ -24,13 +26,37 @@ export const Pin = () => {
       /**
        * Indicar que se corre comando de rehabilitacion;
        */
+       Swal.fire({
+        title: `Rehabilitando`,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading()
+        }
+      });
       const rehabilitate = await Rehabilitate();
     }
     /**
      * Indicar que se corre PIN
      */
+     Swal.fire({
+      title: `Cambiando Pin`,
+      timer: 1000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading()
+      }
+    });
     // const rehabilitate = await Rehabilitate();
     const getchangePinProcess = await changePinProcess(pinValue);
+  }
+
+
+  const readDates = async () => {
+
+    const data = await readDeviceCard();
+    await setDevice(data.device.slice(0,-2));
+    await setCard(data.serialNumber.slice(10));
   }
   const validateData = () => {
     

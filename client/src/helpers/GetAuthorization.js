@@ -3,7 +3,7 @@
 export const getAuthorization = async() => {
 
   const token = JSON.parse( localStorage.getItem( 'token' ));
-    const url = `${process.env.REACT_APP_DOMINIO}/api/consultaSams`;
+    const url = `${process.env.REACT_APP_DOMINIO}/api/consultaContador`;
         
         const resp = await fetch(url, {
             method: 'get',
@@ -12,12 +12,14 @@ export const getAuthorization = async() => {
             })
         });
         const result = await resp.json();
-        const success = result.Tabla_Sam 
-        if (success) {
-          return true
-        } else {
-          return false
-        }
+        return result;
+        // console.log(result)
+        // const success = result.Tabla_Sam 
+        // if (success) {
+        //   return true
+        // } else {
+        //   return false
+        // }
 
 }
 
