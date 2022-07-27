@@ -1,43 +1,13 @@
 
 // ********Funcion para convertir pin de 4 numeros a ascii ********
 
-  // const newPin  = '1013';
-  // const value_0 = newPin.charCodeAt(0);
-  // const value_1 = newPin.charCodeAt(1);
-  // const value_2 = newPin.charCodeAt(2);
-  // const value_3 = newPin.charCodeAt(3);
-  // const ascii_pin = `${value_0}${value_1}${value_2}${value_3}`
-  // console.log('New Pin Decimal: ', newPin);
-  // console.log('New Pin ASCII: ', ascii_pin);
+import GetRequest from "../utils/GetRequest";
+import PostRequest from "../utils/PostRequest";
+import MakeRequest from "../utils/MakeRequest";
 
-  const GetRequest = async (url) => {
-    const res = await fetch(url);
-    if (!res) throw new Error("WARN", res.status);
-    const data = await res.json();
-    return data;
-  };
-
-  const PostRequest = async (url, object) => {
-    const res = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify(object),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!res) throw new Error("WARN", res.status);
-    const data = await res.json();
-    return data;
-  };
-
-
-
-const changePinProcess = async() => {
-
+const changePinProcess = async(newPin) => {
   const start = Date.now();
-
     console.log('***Convirtiendo en ASCII***');
-    const newPin  = '0000';
     const value_0 = newPin.charCodeAt(0);
     const value_1 = newPin.charCodeAt(1);
     const value_2 = newPin.charCodeAt(2);
@@ -49,7 +19,7 @@ const changePinProcess = async() => {
     const applicationSN = await GetRequest("/selectApp");
     console.log("Select Aplication: ", applicationSN.serialNumber);
     const { SelectDiversifier } = await PostRequest(
-      "http://dev-node.rtp.gob.mx:5000/diversifier",
+      `${process.env.REACT_APP_DOMINIO}/diversifier`,
       {
         "applicationSN": `${applicationSN.serialNumber}`,
       }
@@ -60,13 +30,13 @@ const changePinProcess = async() => {
     console.log("Get challenge: ", getChal.GetChallenge.Status);
 
     const { GiveRandom } = await PostRequest(
-      `http://dev-node.rtp.gob.mx:5000/random`,
+      `${process.env.REACT_APP_DOMINIO}/random`,
       { "challenge": `${getChal.GetChallenge.Response.slice(0, -4)}` }
     );
     console.log("Give Random: ", GiveRandom.Status);
 
     const cardCipher = await PostRequest(
-      `http://dev-node.rtp.gob.mx:5000/cipherUpdate`,
+      `${process.env.REACT_APP_DOMINIO}/cipherUpdate`,
       { "pin": `${ascii_pin}` }
     );
     console.log("CardCipher: ", cardCipher.response.Status);
@@ -82,24 +52,26 @@ const changePinProcess = async() => {
     console.log("Get challenge2: ", getChal2.GetChallenge.Status);
 
     const data = await PostRequest(
-      `http://dev-node.rtp.gob.mx:5000/random`,
+      `${process.env.REACT_APP_DOMINIO}/random`,
       { "challenge": `${getChal2.GetChallenge.Response.slice(0, -4)}` }
     );
     console.log("Give Random2: ", data.GiveRandom.Status);
 
 
     const cipherVerify = await PostRequest(
-      `http://dev-node.rtp.gob.mx:5000/cipherVerify`,
+      `${process.env.REACT_APP_DOMINIO}/cipherVerify`,
       {"pin": `${ascii_pin}`}
     );
     console.log('cipherVerify: ', cipherVerify.response.Status );
-
-    
+  
+    const saveCounters = await MakeRequest( 'http://dev-node.rtp.gob.mx:5000/insert/counters', 
+                                        {
+                                          "command": "Set PIN",
+                                          "cardSN": `${applicationSN.serialNumber.slice(2)}`,
+                                          "folio": "FOLIORTP/OFICIO/231"
+                                        } );  
+    console.log("Save Counters: ",saveCounters);
     let timer = Date.now() - start;
     console.log(timer);
-
 }
-
 export default changePinProcess;
-
-
