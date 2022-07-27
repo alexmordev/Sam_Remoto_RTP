@@ -6,6 +6,8 @@ import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate"
 import GetRequest from "../../calypsoComands/utils/GetRequest";
 import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
 import Swal from 'sweetalert2';
+// import MakeRequest from "../../calypsoComands/utils/MakeRequest";
+
 
 export const Pin = () => {
   const [backendData, setBackendData] = useState([{}]);
@@ -183,6 +185,15 @@ export const Pin = () => {
   const verifyIndex = async() => {
     await changePinProcess( pinValue )
   }
+// const token = JSON.parse( localStorage.getItem( 'token' ));
+// const object = {
+//   "command": "OpenSecureSession",
+//   "cardSN": "00000000946AD0F0",
+//   "folio": "FOLIORTP/OFICIO/231"
+// };
+// const request = await MakeRequest('http://dev-node.rtp.gob.mx:5000/insert/counters', object);
+    // console.log(request);
+    // console.log(token);
   const setPin = async () => {
     const currentDF = await GetRequest('/selectCurrentDF');
     if(currentDF.applicationStatus !== "00"){
@@ -190,11 +201,14 @@ export const Pin = () => {
        * Indicar que se corre comando de rehabilitacion;
        */
       await Rehabilitate();
+      // await MakeRequest('http://dev-node.rtp.gob.mx:5000/insert/counters', object);
     }
     /**
      * Indicar que se corre PIN
      */
     await setNewPin();
+    // await MakeRequest('http://dev-node.rtp.gob.mx:5000/insert/counters', object);
+
   };
 
   return (
