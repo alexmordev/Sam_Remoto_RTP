@@ -3,7 +3,7 @@ import axios from 'axios';
 export const getAuthorization = (user, passUser) => {
 
 
-  const url = 'http://dev-node.rtp.gob.mx:5000/api/login';
+  const url = `${process.env.REACT_APP_DOMINIO}/api/login`;
 
   const fetchData = async() => {
 

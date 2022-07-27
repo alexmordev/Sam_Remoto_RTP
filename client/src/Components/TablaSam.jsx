@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import {elementos} from '../Pruebas/CounterSamExample';
+import { getSamCounters } from './../helpers/getSamCounters';
 
 
 
@@ -13,8 +14,14 @@ export const TablaSam = () => {
     //Solo una vez se carga el state de los datos de la sam, aqui sera la peticion de la API
     // para traer la información
     useEffect(() => {
-        setProducts(elementos); 
+      // getData();
+      setProducts(elementos); 
     }, []); 
+
+    const getData = async() => {
+      const datos = await getSamCounters();
+      setProducts(datos)
+    }
 
   return (
     <div className="card">
