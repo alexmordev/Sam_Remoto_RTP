@@ -11,8 +11,8 @@ export const getSamCounters = async() => {
                 'Authorization': `jwt ${token}`
             })
         });
-        const result = await resp.json();
-        console.log(result);
-        return result.categories
+    const result = await resp.json();
+    console.log(result);
+    return result.categories
    
 };

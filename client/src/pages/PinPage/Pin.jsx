@@ -7,6 +7,7 @@ import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate"
 // import { InputNumber } from 'primereact/inputnumber';
 import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
 import Swal from 'sweetalert2';
+import { readDeviceCard } from './../../calypsoComands/readDeviceCard/readDeviceCard';
 
 
 export const Pin = () => {
@@ -124,6 +125,13 @@ export const Pin = () => {
 
   };
 
+  const readDates = async () => {
+
+    const data = await readDeviceCard();
+    await setDevice(data.device.slice(0,-2));
+    await setCard(data.serialNumber.slice(10));
+  }
+
   return (
     <Container>
       <div className=" pb-5 h-screen w-full flex flex-column justify-content-center">
@@ -140,7 +148,7 @@ export const Pin = () => {
           >
             <div className="field col-12 md:col-4">
               <label htmlFor="antena">Antena</label>
-              <InputText id="antena" placeholder="Antena" value={"ACS"} readOnly={true}/>
+              <InputText id="antena" placeholder="Antena" value={device} readOnly={true}/>
             </div>
             <div className="field col-12 md:col-4">
               <label htmlFor="folio">Folio</label>
@@ -154,7 +162,7 @@ export const Pin = () => {
             </div>
             <div className="field col-12 md:col-4">
               <label htmlFor="ns_card">NS Card</label>
-              <InputText id="ns_card" placeholder="NS Card" value={"card"} readOnly={true}/>
+              <InputText id="ns_card" placeholder="NS Card" value={card} readOnly={true}/>
             </div>
             <div className="field col-12 md:col-4">
               <label htmlFor="credencial">Credencial</label>
@@ -194,6 +202,7 @@ export const Pin = () => {
             <Button
               label="Leer"
               className="mt-1 w-5 p-button-sm p-button-success flex justify-content-around"
+              onClick={readDates}
             />
 
             <Button

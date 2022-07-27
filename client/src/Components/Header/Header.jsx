@@ -4,6 +4,8 @@ import { Image } from 'primereact/image';
 import { Menubar } from 'primereact/menubar';
 import logo from '../../assets/rtp_sinlogo.png';
 import { Link, useNavigate } from "react-router-dom";
+import Swal from 'sweetalert2';
+import { getAuthorization } from '../../helpers/GetAuthorization';
 
 
 
@@ -32,10 +34,28 @@ export const Header = () => {
       label: 'Sam Counters',
       icon: 'pi pi-table',
       command: () => {
-        navigate('/samcounters');
+        validarRol();
       } 
     }
-  ]
+  ];
+
+  const validarRol = async() => {
+    let condicion = await getAuthorization();
+    // let condicion = false;
+
+    if (condicion === false) {
+      Swal.fire({
+        title: `Acceso Denegado`,
+        text: `Se necesita perfil de administrador`,
+        //text: "Bienvenido Mario",
+        icon: 'error',
+      });
+      navigate('/homepage');
+    } else if (condicion === true) {
+        navigate('/samcounters');
+    }
+  };
+
 
   const start = <a href="https://www.rtp.cdmx.gob.mx/" target="blank">
                   <Image className='ml-3' imageClassName='w-3rem' src={logo} alt="Logo RTP" />

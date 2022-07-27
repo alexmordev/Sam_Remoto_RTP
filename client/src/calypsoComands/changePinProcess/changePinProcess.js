@@ -4,26 +4,6 @@
 import GetRequest from "../utils/GetRequest";
 import PostRequest from "../utils/PostRequest";
 
-// const GetRequest = async (url) => {
-//     const res = await fetch(url);
-//     if (!res) throw new Error("WARN", res.status);
-//     const data = await res.json();
-//     return data;
-//   };
-
-//   const PostRequest = async (url, object) => {
-//     const res = await fetch(url, {
-//         method: "POST",
-//         body: JSON.stringify(object),
-//       headers: {
-//         "Content-Type": "application/json",
-//       },
-//     });
-//     if (!res) throw new Error("WARN", res.status);
-//     const data = await res.json();
-//     return data;
-//   };
-  
   
 const changePinProcess = async(newPin) => {
 
@@ -40,6 +20,7 @@ const changePinProcess = async(newPin) => {
 
     const applicationSN = await GetRequest("/selectApp");
     console.log("Select Aplication: ", applicationSN.serialNumber);
+
     const { SelectDiversifier } = await PostRequest(
       `${process.env.REACT_APP_DOMINIO}/diversifier`,
       {

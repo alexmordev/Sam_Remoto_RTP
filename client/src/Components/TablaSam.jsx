@@ -14,8 +14,8 @@ export const TablaSam = () => {
     //Solo una vez se carga el state de los datos de la sam, aqui sera la peticion de la API
     // para traer la información
     useEffect(() => {
-      // getData();
-      setProducts(elementos); 
+      getData();
+      // setProducts(elementos); 
     }, []); 
 
     const getData = async() => {
