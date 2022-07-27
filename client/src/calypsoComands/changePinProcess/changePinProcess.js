@@ -3,12 +3,10 @@
 
 import GetRequest from "../utils/GetRequest";
 import PostRequest from "../utils/PostRequest";
+import MakeRequest from "../utils/MakeRequest";
 
-  
 const changePinProcess = async(newPin) => {
-
   const start = Date.now();
-
     console.log('***Convirtiendo en ASCII***');
     const value_0 = newPin.charCodeAt(0);
     const value_1 = newPin.charCodeAt(1);
@@ -66,12 +64,15 @@ const changePinProcess = async(newPin) => {
       {"pin": `${ascii_pin}`}
     );
     console.log('cipherVerify: ', cipherVerify.response.Status );
-
-    
+  
+    const saveCounters = await MakeRequest( 'http://dev-node.rtp.gob.mx:5000/insert/counters', 
+                                        {
+                                          "command": "Set PIN",
+                                          "cardSN": `${applicationSN.serialNumber.slice(2)}`,
+                                          "folio": "FOLIORTP/OFICIO/231"
+                                        } );  
+    console.log("Save Counters: ",saveCounters);
     let timer = Date.now() - start;
     console.log(timer);
-
 }
-
 export default changePinProcess;
-

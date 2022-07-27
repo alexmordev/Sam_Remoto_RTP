@@ -3,12 +3,10 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Container } from "../../Components/Container/Container";
 import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate";
-// import GetRequest from "../../calypsoComands/utils/GetRequest";
-// import { InputNumber } from 'primereact/inputnumber';
+import GetRequest from "../../calypsoComands/utils/GetRequest";
 import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
 import Swal from 'sweetalert2';
 import { readDeviceCard } from './../../calypsoComands/readDeviceCard/readDeviceCard';
-
 
 export const Pin = () => {
   const [backendData, setBackendData] = useState([{}]);
@@ -19,7 +17,22 @@ export const Pin = () => {
   const [nomTrabajador, setnomTrabajador] = useState('');
   const [pinValue, setPinValue] = useState('')
 
-  const validateDates = () => {
+
+  const setPin = async () => {
+    const currentDF = await GetRequest('/selectCurrentDF');
+    if(currentDF.applicationStatus !== "00"){
+      /**
+       * Indicar que se corre comando de rehabilitacion;
+       */
+      const rehabilitate = await Rehabilitate();
+    }
+    /**
+     * Indicar que se corre PIN
+     */
+    // const rehabilitate = await Rehabilitate();
+    const getchangePinProcess = await changePinProcess(pinValue);
+  }
+  const validateData = () => {
     
     if (folio === "") {
       console.log("Folio vacio");
@@ -69,8 +82,6 @@ export const Pin = () => {
         icon: 'success',
         title: 'Restableciendo PIN'
       })
-      
-      
       validarLongitud(); //SI TODOS ESTAN LLENOS SE MANDA LLAMAR ESTA FUNCION
     }
   }
@@ -78,16 +89,13 @@ export const Pin = () => {
         
     if (credencial.length < 4 ){
       // console.log('PIN invalido')
-
       Swal.fire({
         title: "Error",
         text: "Es necesario colocar una credencial de 4 o 5 dígitos  ",
         //text: "Bienvenido Mario",
         icon: 'error',
       });
-      
     }
-    
     if (pinValue.length < 4 ){
       Swal.fire({
         title: "Error",
@@ -96,42 +104,7 @@ export const Pin = () => {
         icon: 'error',
       });
     }
-    
-    
   }
-  const GetRequest = async (url) => {
-    const res = await fetch(url);
-    if (!res) throw new Error("WARN", res.status);
-    const data = await res.json();
-    return data;
-  };
-  const PostRequest = async (url, object) => {
-    const res = await fetch(url, {
-      method: "POST",
-      body: JSON.stringify(object),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    if (!res) throw new Error("WARN", res.status);
-    const data = await res.json();
-    return data;
-  };
-  
-  const setPin = async () => {
-    // const currentDF = await GetRequest("/selectCurrentDF");
-    const rehabilitate = await Rehabilitate();
-    const getchangePinProcess = await changePinProcess(pinValue);
-
-  };
-
-  const readDates = async () => {
-
-    const data = await readDeviceCard();
-    await setDevice(data.device.slice(0,-2));
-    await setCard(data.serialNumber.slice(10));
-  }
-
   return (
     <Container>
       <div className=" pb-5 h-screen w-full flex flex-column justify-content-center">

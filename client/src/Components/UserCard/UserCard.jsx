@@ -19,47 +19,8 @@ export const UserCard = () => {
   // }, [])
 
   return (
-    <div
-      className="
-      flex justify-content-evenly flex-column 
-      align-items-center  
-    "
-    >
-      <Image
-        //  src={ image }
-        src={foto_perfil}
-        alt="Foto Usuario"
-        imageClassName="w-14rem border-round"
-      />
-
-      <div className="flex flex-column align-items-center ">
-        <p id="nombre_p" 
-          className="
-            text-3xl 
-            font-medium 
-            text-white
-        ">
-          {/* { nombre } */}
-          Alfredo Jiménez
-        </p>
-        <p id="correo_p" 
-          className="
-            text-3xl 
-            font-medium 
-            text-white
-        ">
-          {/* { correo } */}
-          ejemplo@ejemplo.com
-        </p>
-        <p id="worker_p" 
-          className="
-            text-3xl font-medium 
-            text-white
-        ">
-          {/* { worker }  */}
-          012345678
-        </p>
-      </div>
+    <div>
+      
     </div>
   );
 };
