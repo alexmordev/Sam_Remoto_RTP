@@ -1,9 +1,4 @@
 import React from 'react'
-import { Button2 } from '../../Components/LoginComponents/Button'
-import { PassInput } from '../../Components/LoginComponents/PassInput'
-import { UserInput } from '../../Components/LoginComponents/UserInput'
-import { Imagen } from '../../Components/LoginComponents/Imagen'
-import { Link } from 'react-router-dom'
 import { LoginPrincipal } from './../../Components/LoginComponents/LoginPrincipal';
 
 export const Login = () => {

@@ -6,6 +6,7 @@ import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate"
 import GetRequest from "../../calypsoComands/utils/GetRequest";
 import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
 import Swal from 'sweetalert2';
+import { Card } from 'primereact/card';
 
 export const Pin = () => {
   const [backendData, setBackendData] = useState([{}]);
@@ -106,8 +107,28 @@ export const Pin = () => {
   }
   return (
     <Container>
-      <div className=" pb-5 h-screen w-full flex flex-column justify-content-center">
-        <div className=" mt-5  w-full h-1rem flex justify-content-center align-items-center">
+      <div className="flex justify-content-center">
+        <Card title="CAMBIO DE PIN" className="flex justify-content-center col-12 md:col-12 lg:col-6">
+          <div class="formgrid grid">
+            <div class="field col">
+                <label for="firstname2">Firstname</label>
+                <input id="firstname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+            </div>
+            <div class="field col">
+                <label for="lastname2">Lastname</label>
+                <input id="lastname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+            </div>
+            <div class="field col">
+                <label for="lastname2">Lastname</label>
+                <input id="lastname2" type="text" class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"/>
+            </div>
+          </div>
+        </Card>
+      </div>
+
+
+      {/* <div className=" pb-5 flex flex-column justify-content-center">
+        <div className=" mt-5 h-1rem flex justify-content-center align-items-center">
           <p className="text-white-alpha-90 font-bold text-3xl">
             CAMBIO DE PIN
           </p>
@@ -150,7 +171,7 @@ export const Pin = () => {
               <label htmlFor="nombre">Nombre Trabajador</label>
               <InputText
                 id="nombre"
-                placeholder="Nombre trabajdor"
+                placeholder="Nombre trabajador"
                 value={nomTrabajador}
                 onChange={ (e) => setnomTrabajador( e.target.value ) }
               />
@@ -183,7 +204,7 @@ export const Pin = () => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
     </Container>
   );
 };

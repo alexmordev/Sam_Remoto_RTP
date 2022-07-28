@@ -2,18 +2,28 @@ import React from 'react';
 
 export const Footer = () => {
 
-  return (
-    <div className='relative border-3 border-green-200  w-full  bottom-0 bg-gray-50'>
-      <div className='flex justify-content-center align-content-center'>
-        <p className='font-normal text-900 text-center'>
-          El uso indebido de este software puede representar un delito
-          y es responsabilidad completa del usuario que lo lleve a cabo. 
-          En caso de tener dudas sobre sus funciones favor de contactar
-          al equipo de desarrollo de RTP
-        </p>
-      </div>   
-    </div>
-  );
+  const style = {
+    backgroundColor: "#F8F8F8",
+    borderTop: "1px solid #E7E7E7",
+    textAlign: "center",
+    padding: "10px",
+    position: "fixed",
+    left: "0",
+    bottom: "0",
+    height: "40px",
+    width: "100%"
+  };
+  
+    return (      
+      <div style={style}>El uso indebido de este software puede representar un delito
+            y es responsabilidad completa del usuario que lo lleve a cabo. 
+            En caso de tener dudas sobre sus funciones favor de contactar
+            al equipo de desarrollo de RTP</div>
+      
+    );
+  
+
+  
 };
 
 
