@@ -72,7 +72,7 @@ export const LineChart = () => {
     return (
         <div>
             <div className="card">
-                <h5>Line Styles</h5>
+                <h5 className='text-800'>Line Styles</h5>
                 <Chart type="line" data={lineStylesData} options={basicOptions} />
             </div>
         </div>

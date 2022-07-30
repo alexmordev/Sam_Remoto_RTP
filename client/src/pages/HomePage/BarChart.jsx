@@ -95,7 +95,7 @@ export const BarChart = () => {
     return (
         <div>
             <div className="card">
-                <h5>Multi Axis</h5>
+                <h5 className='text-800'>Multi Axis</h5>
                 <Chart type="bar" data={multiAxisData} options={multiAxisOptions} />
             </div>
         </div>
