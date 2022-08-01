@@ -19,19 +19,30 @@ export const Pin = () => {
 
 
   const setPin = async () => {
-    const currentDF = await GetRequest('/selectCurrentDF');
-    if(currentDF.applicationStatus !== "00"){
+    try{
+      // const currentDF = await GetRequest('/selectCurrentDF');
+      // if(currentDF.CurrentDF.Response.slice(-4) !== "9000"){
+        // return console.log("error");
+      // }
+      // if(currentDF.applicationStatus !== "00"){
+      // if(currentDF.applicationStatus === "00"){
+        /**
+         * Indicar que se corre comando de rehabilitacion;
+         */
+        // console.log(currentDF);
+        const rehabilitate = await Rehabilitate();
+      // }
       /**
-       * Indicar que se corre comando de rehabilitacion;
+       * Indicar que se corre PIN
        */
-      const rehabilitate = await Rehabilitate();
+      const getchangePinProcess = await changePinProcess(pinValue);
+
     }
-    /**
-     * Indicar que se corre PIN
-     */
-    // const rehabilitate = await Rehabilitate();
-    const getchangePinProcess = await changePinProcess(pinValue);
+    catch(error){
+      console.log(error);
+    }
   }
+    
   const validateData = () => {
     
     if (folio === "") {
