@@ -11,11 +11,8 @@ import '/node_modules/primeflex/primeflex.css';
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/HomePage/Home";
 import { Login } from "./pages/LoginPage/Login";
-// import { Dumps } from "./pages/DumpsPage/Dumps";
 import { SamCounter } from "./pages/SamCounters/SamCounter";
-import { SamCounter2 } from "./pages/SamCounters/SamCounter2";
 import { Pin } from "./pages/PinPage/Pin";
-import { VistaPrueba } from "./pages/VistaPrueba";
 import { PrivateRoute } from "./auth/PrivateRoute";
 
 
@@ -25,18 +22,14 @@ function App() {
       <Route path="/" element={<Login />} />
 
       <Route path="/homepage" element={
-          <Home />
-      } />
-
-      {/* <Route path="/dumps" element={
         <PrivateRoute>
-          <Dumps />
+          <Home />
         </PrivateRoute>
-      } /> */}
+      } />
 
       <Route path="/samcounters" element={
         
-          <SamCounter2 />
+          <SamCounter />
         
       } />
 
@@ -46,11 +39,6 @@ function App() {
         
       } />
 
-      <Route path="/prueba" element={
-        <PrivateRoute>
-          <VistaPrueba />
-        </PrivateRoute>
-      } />
     </Routes>
   );
 }

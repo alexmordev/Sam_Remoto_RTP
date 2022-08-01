@@ -55,11 +55,11 @@ export const Pin = () => {
 
   const readDates = async () => {
 
-    // const data = await readDeviceCard();
-    // await setDevice(data.device.slice(0,-2));
-    // const snumber = data.serialNumber.slice(10)
-    // await setCard(snumber);
-    const snumber = '946ABD4D';
+    const data = await readDeviceCard();
+    await setDevice(data.device.slice(0,-2));
+    const snumber = data.serialNumber.slice(10);
+    console.log(snumber);
+    await setCard(snumber);
     const wdates = await getWorker(snumber);
     console.log(wdates);
     await setCredencial(wdates.trab_credencial);
