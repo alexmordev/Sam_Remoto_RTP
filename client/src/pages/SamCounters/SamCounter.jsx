@@ -7,37 +7,33 @@ import Swal from 'sweetalert2';
 
 
 export const SamCounter = () => {  
-  
-  const validar = () => {
 
-    // const token = JSON.parse( localStorage.getItem( 'token' ));
-    // const url = `${process.env.REACT_APP_DOMINIO}/api/consultaContador`;
+  const [condicion, setCondicion] = useState(false);
+
+  const validar = async() => {
+
+    const token = JSON.parse( localStorage.getItem( 'token' ));
+    const url = `${process.env.REACT_APP_DOMINIO}/api/consultaContador`;
         
-    // const resp = await fetch(url, {
-    //   method: 'get',
-    //   headers: new Headers ({
-    //     'Authorization': `jwt ${token}`
-    //   })
-    // });
-    // const result = await resp.json();
-    // console.log(result.categories);
+    const resp = await fetch(url, {
+      method: 'get',
+      headers: new Headers ({
+        'Authorization': `jwt ${token}`
+      })
+    });
+    const result = await resp.json();
+    console.log('Result: ',result);
+    const {categories} = result
 
-
-
-    // const {categories} = result
-    // const categories = null
-
-    const categorie = 'MAU';
-
-    if (categorie) {
-      return true
+    if (categories) {
+      setCondicion(true);
       
-    } 
-    return false
-
-    
-
+    } else {
+      setCondicion(false);
+    }
   }
+
+  
 
   useEffect(() => {
     validar()
@@ -56,7 +52,7 @@ export const SamCounter = () => {
       <p className="text-white-alpha-90 font-bold text-3xl">Tabla General</p>
     </div>
     <div className="flex  justify-content-center  ">
-      {(validar()===true)? <TablaSam /> : <p className="text-red-600 text-base text-center">No eres administrador </p>}
+      {(condicion === true)?  <TablaSam /> : <p className="text-red-600 text-base text-center">No eres administrador </p>}
     </div>
     <div className="mb-8">
      
