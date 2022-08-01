@@ -1,3 +1,5 @@
+// http://app.rtp.gob.mx/api/get_card/946ABD4C
+
 import React, { useState} from "react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
@@ -6,12 +8,14 @@ import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate"
 import GetRequest from "../../calypsoComands/utils/GetRequest";
 import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
 import Swal from 'sweetalert2';
+import { readDeviceCard } from './../../calypsoComands/readDeviceCard/readDeviceCard';
+import { getWorker } from "../../helpers/getWorker";
 import { Card } from 'primereact/card';
 
 export const Pin = () => {
   const [backendData, setBackendData] = useState([{}]);
   const [device, setDevice] = useState("");
-  const [card, setCard] = useState();
+  const [card, setCard] = useState('');
   const [folio, setFolio] = useState('')
   const [credencial, setCredencial] = useState('');
   const [nomTrabajador, setnomTrabajador] = useState('');
@@ -32,17 +36,46 @@ export const Pin = () => {
         // console.log(currentDF);
         const rehabilitate = await Rehabilitate();
       // }
-      /**
-       * Indicar que se corre PIN
-       */
-      const getchangePinProcess = await changePinProcess(pinValue);
-
+      
+       Swal.fire({
+        title: `Rehabilitando`,
+        timer: 1000,
+        timerProgressBar: true,
+        didOpen: () => {
+          Swal.showLoading()
+        }
+      });
+      const rehabilitate = await Rehabilitate();
     }
-    catch(error){
-      console.log(error);
-    }
+     Swal.fire({
+      title: `Cambiando Pin`,
+      timer: 1000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading()
+      }
+    });
+    // const rehabilitate = await Rehabilitate();
+    const getchangePinProcess = await changePinProcess(pinValue);
   }
-    
+
+
+  const readDates = async () => {
+
+    const data = await readDeviceCard();
+    await setDevice(data.device.slice(0,-2));
+    const snumber = data.serialNumber.slice(10);
+    console.log(snumber);
+    await setCard(snumber);
+    const wdates = await getWorker(snumber);
+    console.log(wdates);
+    await setCredencial(wdates.trab_credencial);
+    await setnomTrabajador(wdates.nombre);
+    await setPinValue(wdates.trab_tarjeta_pin);
+    await setCard(wdates.trab_ser_tarjeta.slice(8));
+
+  }
+
   const validateData = () => {
     
     if (folio === "") {
@@ -96,6 +129,9 @@ export const Pin = () => {
       validarLongitud(); //SI TODOS ESTAN LLENOS SE MANDA LLAMAR ESTA FUNCION
     }
   }
+  
+  
+  
   const validarLongitud = () =>{
         
     if (credencial.length < 4 ){
@@ -116,6 +152,8 @@ export const Pin = () => {
       });
     }
   }
+  
+  
   return (
     <Container>
       <div className="flex justify-content-center pb-6">
@@ -184,7 +222,7 @@ export const Pin = () => {
           >
             <div className="field col-12 md:col-4">
               <label htmlFor="antena">Antena</label>
-              <InputText id="antena" placeholder="Antena" value={"ACS"} readOnly={true}/>
+              <InputText id="antena" placeholder="Antena" value={device} readOnly={true}/>
             </div>
             <div className="field col-12 md:col-4">
               <label htmlFor="folio">Folio</label>
@@ -198,7 +236,7 @@ export const Pin = () => {
             </div>
             <div className="field col-12 md:col-4">
               <label htmlFor="ns_card">NS Card</label>
-              <InputText id="ns_card" placeholder="NS Card" value={"card"} readOnly={true}/>
+              <InputText id="ns_card" placeholder="NS Card" value={card} readOnly={true}/>
             </div>
             <div className="field col-12 md:col-4">
               <label htmlFor="credencial">Credencial</label>
@@ -206,8 +244,9 @@ export const Pin = () => {
                 id="credencial"
                 placeholder="Credencial"
                 value={credencial}
-                onChange={ (e) => setCredencial(e.target.value) }
+                // onChange={ (e) => setCredencial(e.target.value) }
                 maxLength={5}
+                readOnly={true}
               />
             </div>
             <div className="field col-12 md:col-4">
@@ -216,7 +255,8 @@ export const Pin = () => {
                 id="nombre"
                 placeholder="Nombre trabajador"
                 value={nomTrabajador}
-                onChange={ (e) => setnomTrabajador( e.target.value ) }
+                // onChange={ (e) => setnomTrabajador( e.target.value ) }
+                readOnly={true}
               />
             </div>
             <div className="field col-12 md:col-4">
@@ -226,10 +266,11 @@ export const Pin = () => {
                 value={pinValue}
                 placeholder="Ingresa un Pin de 4 digitos"
                 // onValueChange={ (e) => setPinValue( e.target.value )}
-                onChange={ (e) => setPinValue( e.target.value )}
+                // onChange={ (e) => setPinValue( e.target.value )}
                 maxLength= {4}
                 // mode="decimal"
                 required={true}
+                readOnly={true}
               />
             </div>
           </div>
@@ -238,6 +279,7 @@ export const Pin = () => {
             <Button
               label="Leer"
               className="mt-1 w-5 p-button-sm p-button-success flex justify-content-around"
+              onClick={readDates}
             />
 
             <Button
