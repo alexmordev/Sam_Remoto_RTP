@@ -42,7 +42,7 @@ export const Header = () => {
   const end = <LogoutButton/>
 
   return (
-    <div className="px-3 py-3">
+    <div className="px-3 py-2">
       <Menubar className='surface-overlay' start={start}  model={items} end={end}/>
     </div>
   )

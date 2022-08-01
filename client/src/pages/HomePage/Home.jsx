@@ -1,16 +1,17 @@
 import React from "react";
 import { Container, GraficaPastel, UserCard } from "../../Components";
 import { AuthProvider } from "../../auth/context/AuthProvider";
-import { Divider } from 'primereact/divider';
-import { Card } from 'primereact/card';
-import { Chart } from 'primereact/chart';
+
+import { BarChart } from "./BarChart";
+import { LineChart } from "./LineChart";
+
 
 export const Home = () => {
+
   return (
     <AuthProvider>
     <Container>
-      <div className="content-section implementation container px-3 py-1">
-        <div className="grid">
+        <div className="grid pb-6">
           <div className="col-12 md:col-6 lg:col-3">
               <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
                   <div className="flex justify-content-between mb-3">
@@ -72,18 +73,16 @@ export const Home = () => {
               </div>
           </div>
           <div className="col-12 md:col-6 lg:col-6">
-            <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
-
+            <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round p-4">
+            <BarChart />
             </div>
           </div>
-          
           <div className="col-12 md:col-6 lg:col-6">
-            <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
-
+            <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round p-4">
+              <LineChart />
             </div>
           </div>
         </div>
-      </div>
     </Container>
     </AuthProvider>
   );
