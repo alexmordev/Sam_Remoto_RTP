@@ -1,12 +1,8 @@
 import React from 'react';
 import { LogoutButton } from '../LogoutButton';
-import { Image } from 'primereact/image';
 import { Avatar } from 'primereact/avatar';
 import { Menubar } from 'primereact/menubar';
-import logo from '../../assets/rtp_sinlogo.png';
-import { Link, useNavigate } from "react-router-dom";
-
-
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
 
