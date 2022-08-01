@@ -9,11 +9,12 @@ import GetRequest from "../../calypsoComands/utils/GetRequest";
 import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
 import Swal from 'sweetalert2';
 import { readDeviceCard } from './../../calypsoComands/readDeviceCard/readDeviceCard';
+import { getWorker } from "../../helpers/getWorker";
 
 export const Pin = () => {
   const [backendData, setBackendData] = useState([{}]);
   const [device, setDevice] = useState("");
-  const [card, setCard] = useState();
+  const [card, setCard] = useState('');
   const [folio, setFolio] = useState('')
   const [credencial, setCredencial] = useState('');
   const [nomTrabajador, setnomTrabajador] = useState('');
@@ -54,10 +55,22 @@ export const Pin = () => {
 
   const readDates = async () => {
 
-    const data = await readDeviceCard();
-    await setDevice(data.device.slice(0,-2));
-    await setCard(data.serialNumber.slice(10));
+    // const data = await readDeviceCard();
+    // await setDevice(data.device.slice(0,-2));
+    // const snumber = data.serialNumber.slice(10)
+    // await setCard(snumber);
+    const snumber = '946ABD4D';
+    const wdates = await getWorker(snumber);
+    console.log(wdates);
+    await setCredencial(wdates.trab_credencial);
+    await setnomTrabajador(wdates.nombre);
+    await setPinValue(wdates.trab_tarjeta_pin);
+    await setCard(wdates.trab_ser_tarjeta.slice(8));
+
   }
+
+
+
   const validateData = () => {
     
     if (folio === "") {
@@ -169,8 +182,9 @@ export const Pin = () => {
                 id="credencial"
                 placeholder="Credencial"
                 value={credencial}
-                onChange={ (e) => setCredencial(e.target.value) }
+                // onChange={ (e) => setCredencial(e.target.value) }
                 maxLength={5}
+                readOnly={true}
               />
             </div>
             <div className="field col-12 md:col-4">
@@ -179,7 +193,8 @@ export const Pin = () => {
                 id="nombre"
                 placeholder="Nombre trabajdor"
                 value={nomTrabajador}
-                onChange={ (e) => setnomTrabajador( e.target.value ) }
+                // onChange={ (e) => setnomTrabajador( e.target.value ) }
+                readOnly={true}
               />
             </div>
             <div className="field col-12 md:col-4">
@@ -189,10 +204,11 @@ export const Pin = () => {
                 value={pinValue}
                 placeholder="Ingresa un Pin de 4 digitos"
                 // onValueChange={ (e) => setPinValue( e.target.value )}
-                onChange={ (e) => setPinValue( e.target.value )}
+                // onChange={ (e) => setPinValue( e.target.value )}
                 maxLength= {4}
                 // mode="decimal"
                 required={true}
+                readOnly={true}
               />
             </div>
           </div>

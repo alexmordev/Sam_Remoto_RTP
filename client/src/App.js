@@ -13,6 +13,7 @@ import { Home } from "./pages/HomePage/Home";
 import { Login } from "./pages/LoginPage/Login";
 // import { Dumps } from "./pages/DumpsPage/Dumps";
 import { SamCounter } from "./pages/SamCounters/SamCounter";
+import { SamCounter2 } from "./pages/SamCounters/SamCounter2";
 import { Pin } from "./pages/PinPage/Pin";
 import { VistaPrueba } from "./pages/VistaPrueba";
 import { PrivateRoute } from "./auth/PrivateRoute";
@@ -24,9 +25,7 @@ function App() {
       <Route path="/" element={<Login />} />
 
       <Route path="/homepage" element={
-        <PrivateRoute>
           <Home />
-        </PrivateRoute>
       } />
 
       {/* <Route path="/dumps" element={
@@ -36,15 +35,15 @@ function App() {
       } /> */}
 
       <Route path="/samcounters" element={
-        <PrivateRoute>
-          <SamCounter />
-        </PrivateRoute>
+        
+          <SamCounter2 />
+        
       } />
 
       <Route path="/app" element={
-        <PrivateRoute>
+        
           <Pin />
-        </PrivateRoute>
+        
       } />
 
       <Route path="/prueba" element={
