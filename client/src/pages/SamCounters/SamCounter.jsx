@@ -48,16 +48,10 @@ export const SamCounter = () => {
 
 <Container>
   <Card title="Contadores del SAM">
-    <TablaSam/>
+    {(condicion === true)? <TablaSam/> : <p>No tienes permiso de administrador</p> }
+    
   </Card>
-  {/* <div className="mb-8">
-    <div className="flex  justify-content-center  ">
-
-    </div>
-    <div className="mb-8">
-     
-    </div>
-  </div> */}
+  
 </Container>
 );
 };
