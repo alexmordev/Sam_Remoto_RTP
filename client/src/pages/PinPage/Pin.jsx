@@ -34,7 +34,7 @@ export const Pin = () => {
          * Indicar que se corre comando de rehabilitacion;
          */
         // console.log(currentDF);
-        const rehabilitate = await Rehabilitate();
+        // const rehabilitate = await Rehabilitate();
       // }
       
        Swal.fire({
@@ -46,6 +46,13 @@ export const Pin = () => {
         }
       });
       const rehabilitate = await Rehabilitate();
+    }catch(error){
+      Swal.fire({
+        title: `Error`,
+        text: "Error al rehabilitar",
+        icon: error,
+      });
+
     }
      Swal.fire({
       title: `Cambiando Pin`,
