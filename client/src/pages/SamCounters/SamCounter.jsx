@@ -4,6 +4,7 @@ import { Container } from "../../Components/Container/Container";
 import { TablaSam } from './../../Components/TablaSam';
 import { getAuthorization } from './../../helpers/GetAuthorization';
 import Swal from 'sweetalert2';
+import { Card } from 'primereact/card';
 
 
 export const SamCounter = () => {  
@@ -46,18 +47,17 @@ export const SamCounter = () => {
 
 
 <Container>
-  <div className="w-screen h-screen mb-8">
-    
-    <div className="mt-4 mb-5 bg-green-300 w-full h-4rem flex justify-content-center align-items-center">
-      <p className="text-white-alpha-90 font-bold text-3xl">Tabla General</p>
-    </div>
+  <Card title="Contadores del SAM">
+    <TablaSam/>
+  </Card>
+  {/* <div className="mb-8">
     <div className="flex  justify-content-center  ">
-      {(condicion === true)?  <TablaSam /> : <p className="text-red-600 text-base text-center">No eres administrador </p>}
+
     </div>
     <div className="mb-8">
      
     </div>
-  </div>
+  </div> */}
 </Container>
 );
 };

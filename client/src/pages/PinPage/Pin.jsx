@@ -10,6 +10,7 @@ import changePinProcess from "../../calypsoComands/changePinProcess/changePinPro
 import Swal from 'sweetalert2';
 import { readDeviceCard } from './../../calypsoComands/readDeviceCard/readDeviceCard';
 import { getWorker } from "../../helpers/getWorker";
+import { Card } from 'primereact/card';
 
 export const Pin = () => {
   const [backendData, setBackendData] = useState([{}]);
@@ -22,11 +23,20 @@ export const Pin = () => {
 
 
   const setPin = async () => {
-    const currentDF = await GetRequest('/selectCurrentDF');
-    if(currentDF.applicationStatus !== "00"){
-      /**
-       * Indicar que se corre comando de rehabilitacion;
-       */
+    try{
+      // const currentDF = await GetRequest('/selectCurrentDF');
+      // if(currentDF.CurrentDF.Response.slice(-4) !== "9000"){
+        // return console.log("error");
+      // }
+      // if(currentDF.applicationStatus !== "00"){
+      // if(currentDF.applicationStatus === "00"){
+        /**
+         * Indicar que se corre comando de rehabilitacion;
+         */
+        // console.log(currentDF);
+        const rehabilitate = await Rehabilitate();
+      // }
+      
        Swal.fire({
         title: `Rehabilitando`,
         timer: 1000,
@@ -37,9 +47,6 @@ export const Pin = () => {
       });
       const rehabilitate = await Rehabilitate();
     }
-    /**
-     * Indicar que se corre PIN
-     */
      Swal.fire({
       title: `Cambiando Pin`,
       timer: 1000,
@@ -68,8 +75,6 @@ export const Pin = () => {
     await setCard(wdates.trab_ser_tarjeta.slice(8));
 
   }
-
-
 
   const validateData = () => {
     
@@ -124,6 +129,9 @@ export const Pin = () => {
       validarLongitud(); //SI TODOS ESTAN LLENOS SE MANDA LLAMAR ESTA FUNCION
     }
   }
+  
+  
+  
   const validarLongitud = () =>{
         
     if (credencial.length < 4 ){
@@ -144,10 +152,64 @@ export const Pin = () => {
       });
     }
   }
+  
+  
   return (
     <Container>
-      <div className=" pb-5 h-screen w-full flex flex-column justify-content-center">
-        <div className=" mt-5  w-full h-1rem flex justify-content-center align-items-center">
+      <div className="flex justify-content-center pb-6">
+        <Card title="CAMBIO DE PIN" className="flex justify-content-center col-12 md:col-12 lg:col-6 px-0 pb-0 pt-0">
+          <div class="grid p-fluid">
+          <div className="field col-12 md:col-4 py-0">
+              <label htmlFor="antena">Antena</label>
+              <InputText id="antena" placeholder="Antena" value={device} readOnly={true}/>
+            </div>
+            <div className="field col-12 md:col-4 py-0">
+              <label htmlFor="ns_card">NS Card</label>
+              <InputText id="ns_card" placeholder="NS Card" value={card} readOnly={true}/>
+            </div>
+            <div className="field col-12 md:col-4 py-0">
+              <label htmlFor="credencial">Credencial</label>
+              <InputText
+                id="credencial"
+                placeholder="Credencial"
+                value={credencial}
+                onChange={ (e) => setCredencial(e.target.value) }
+                maxLength={5}
+              />
+            </div>
+            <div className="field col-12 md:col-8 py-0">
+              <label htmlFor="nombre">Trabajador</label>
+              <InputText
+                id="nombre"
+                placeholder="Nombre trabajador"
+                value={nomTrabajador}
+                onChange={ (e) => setnomTrabajador( e.target.value ) }
+              />
+            </div>
+            <div className="field col-12 md:col-4 py-0">
+              <label htmlFor="vigencia">PIN</label>
+              <InputText
+                id="vigencia"
+                value={pinValue}
+                placeholder="Ingresa un Pin de 4 digitos"
+                // onValueChange={ (e) => setPinValue( e.target.value )}
+                onChange={ (e) => setPinValue( e.target.value )}
+                maxLength= {4}
+                // mode="decimal"
+                required={true}
+              />
+            </div>
+          </div>
+          <div className="flex justify-content-center">
+            <Button label="Leer" className="p-button-raised border-round m-2" icon="pi pi-id-card" />
+            <Button label="Cambiar" className="p-button-raised border-round m-2" onClick={setPin} icon="pi pi-check"/>
+          </div>
+        </Card>
+      </div>
+
+
+      {/* <div className=" pb-5 flex flex-column justify-content-center">
+        <div className=" mt-5 h-1rem flex justify-content-center align-items-center">
           <p className="text-white-alpha-90 font-bold text-3xl">
             CAMBIO DE PIN
           </p>
@@ -191,7 +253,7 @@ export const Pin = () => {
               <label htmlFor="nombre">Nombre Trabajador</label>
               <InputText
                 id="nombre"
-                placeholder="Nombre trabajdor"
+                placeholder="Nombre trabajador"
                 value={nomTrabajador}
                 // onChange={ (e) => setnomTrabajador( e.target.value ) }
                 readOnly={true}
@@ -227,7 +289,7 @@ export const Pin = () => {
             />
           </div>
         </div>
-      </div>
+      </div> */}
     </Container>
   );
 };
