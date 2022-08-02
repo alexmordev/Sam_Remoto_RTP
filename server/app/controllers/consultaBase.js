@@ -5,14 +5,10 @@ const { sam_card } = require('../models/index');
 
 const consultaContador = async (req, res) => {
 
-  const { page = 0, size = 5 } = req.query;
-
-  let options = {
-    limit: +size,
-    offset: (+page) * (+size)
-  }
-  const { count, rows } = await contadores.findAndCountAll(options)
-  res.json({ Contadores: 'success', total: count, categories: rows });
+  const contadores = await sequelize.query('SELECT * FROM contadores', {
+    model: contadores,
+    mapToModel: true
+  });
 
 }
 
@@ -32,5 +28,4 @@ const consultSam = async (req, res) => {
 module.exports = {
   consultaContador,
   consultSam,
-  // index
 }
