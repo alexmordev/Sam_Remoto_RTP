@@ -25,7 +25,7 @@ const validarRole = (req, res, next) => {
                 //Comprobar la valides de este token
                 user.findByPk(decoded.user.id, { include: "roles" }).then(user => {
 
-                    // console.log(user.roles);
+                    // console.log(user.roles);    
 
                     if (user.id !== 1) {
                         return res.send({ msg: 'Lo sentimos, no tienes permisos de administrador!!' })
