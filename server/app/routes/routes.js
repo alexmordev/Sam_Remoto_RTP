@@ -11,6 +11,7 @@ const { Ratification } = require ('../controllers/Temp/Ratification');
 const { SelectCurrentDF } = require ('../controllers/Temp/SelectCurrentDF');
 const { GetChallenge } = require ('../controllers/Temp/GetChallenge');
 const { ChangePin } = require ('../controllers/Temp/SetPin');
+const { VerifyDevice } = require ('../controllers/Temp/VerifyDevice');
 
 //Ruta Home
 router.get('/', (req, res) => { res.json({ Welcome:'user!' }) })
@@ -21,6 +22,7 @@ router.get('/api/logout', AuthController.logout);
 router.get('/api/coockie', AuthController.coockie);
 router.post('/api/check_in', AuthController.check_in);
 
+router.get('/api/checkDevice', VerifyDevice);
 router.get('/selectApp', SelectApplication);
 router.post('/oppenSecureSession', OppenSecureSession );
 router.get('/rehabilitate', Rehabilitate );

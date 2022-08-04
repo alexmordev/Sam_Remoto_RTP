@@ -12,6 +12,7 @@ export const getSamCounters = async() => {
             })
         });
     const result = await resp.json();
+    console.log('Resultado contadores: ', result)
     return result
    
 };

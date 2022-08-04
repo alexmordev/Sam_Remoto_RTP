@@ -18,7 +18,6 @@ export const TablaSam = () => {
 
     const getData = async() => {
       const datos = await getSamCounters();
-      console.log(datos);
       setProducts(datos.categories)
     }
 
