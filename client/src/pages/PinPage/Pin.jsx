@@ -1,42 +1,36 @@
 // http://app.rtp.gob.mx/api/get_card/946ABD4C
 
-import React, { useState} from "react";
+import React, { useState } from "react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Container } from "../../Components/Container/Container";
 import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate";
 import GetRequest from "../../calypsoComands/utils/GetRequest";
 import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
-import Swal from 'sweetalert2';
-import { readDeviceCard } from './../../calypsoComands/readDeviceCard/readDeviceCard';
+import Swal from "sweetalert2";
+import { readDeviceCard } from "./../../calypsoComands/readDeviceCard/readDeviceCard";
 import { getWorker } from "../../helpers/getWorker";
-import { Card } from 'primereact/card';
+import { Card } from "primereact/card";
+import isLoading from "../../calypsoComands/rehabilitateProcess/Rehabilitate";
 
 export const Pin = () => {
-  const [backendData, setBackendData] = useState([{}]);
   const [device, setDevice] = useState("");
-  const [card, setCard] = useState('');
-  const [folio, setFolio] = useState('')
-  const [credencial, setCredencial] = useState('');
-  const [nomTrabajador, setnomTrabajador] = useState('');
-  const [pinValue, setPinValue] = useState('')
-
+  const [card, setCard] = useState("");
+  const [credencial, setCredencial] = useState("");
+  const [nomTrabajador, setnomTrabajador] = useState("");
+  const [pinValue, setPinValue] = useState("");
 
   const setPin = async () => {
+    // isLoading();
+    Rehabilitate();
+    // changePinProcesss();
+  };
+
+
+    /*
     try{
-      // const currentDF = await GetRequest('/selectCurrentDF');
-      // if(currentDF.CurrentDF.Response.slice(-4) !== "9000"){
-        // return console.log("error");
-      // }
-      // if(currentDF.applicationStatus !== "00"){
-      // if(currentDF.applicationStatus === "00"){
-        /**
-         * Indicar que se corre comando de rehabilitacion;
-         */
-        // console.log(currentDF);
-        // const rehabilitate = await Rehabilitate();
-      // }
-      
+      const rehabilitate = await Rehabilitate();
+
        Swal.fire({
         title: `Rehabilitando`,
         timer: 1000,
@@ -45,7 +39,6 @@ export const Pin = () => {
           Swal.showLoading()
         }
       });
-      const rehabilitate = await Rehabilitate();
     }catch(error){
       Swal.fire({
         title: `Error`,
@@ -59,18 +52,24 @@ export const Pin = () => {
       timer: 1000,
       timerProgressBar: true,
       didOpen: () => {
-        Swal.showLoading()
-      }
+        Swal.showLoading();
+      },
     });
-    // const rehabilitate = await Rehabilitate();
     const getchangePinProcess = await changePinProcess(pinValue);
-  }
+    Swal.fire({
+      title: `Cambiando Pin`,
+      timer: 1000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+    });
+    */
 
 
   const readDates = async () => {
-
     const data = await readDeviceCard();
-    await setDevice(data.device.slice(0,-2));
+    await setDevice(data.device.slice(0, -2));
     const snumber = data.serialNumber.slice(10);
     console.log(snumber);
     await setCard(snumber);
@@ -80,31 +79,18 @@ export const Pin = () => {
     await setnomTrabajador(wdates.nombre);
     await setPinValue(wdates.trab_tarjeta_pin);
     await setCard(wdates.trab_ser_tarjeta.slice(8));
-
-  }
+  };
 
   const validateData = () => {
-    
-    if (folio === "") {
-      console.log("Folio vacio");
-      // document.getElementById("aviso_folio").innerText=" LLENAR CAMPO";
-      Swal.fire({
-        title: "Error",
-        text: "Es necesario colocar un folio ",
-        //text: "Bienvenido Mario",
-        icon: 'error',
-      });
-
-    } else if (credencial === "") {
+    if (credencial === "") {
       console.log("Credencial vacio");
       // document.getElementById("aviso_credencial").innerText = " LLENAR CAMPO";
       Swal.fire({
         title: "Error",
         text: "Es necesario colocar una Credencial ",
         //text: "Bienvenido Marios",
-        icon: 'error',
+        icon: "error",
       });
-      
     } else if (pinValue === "") {
       console.log("PIN vacio");
       // document.getElementById("aviso_pin").innerText = " LLENAR CAMPO ";
@@ -112,67 +98,77 @@ export const Pin = () => {
         title: "Error",
         text: "Es necesario colocar un Pin ",
         //text: "Bienvenido Mario",
-        icon: 'error',
+        icon: "error",
       });
-
-    } else{
-
-      const Toast = Swal.mixin({ // SPINNER
+    } else {
+      const Toast = Swal.mixin({
+        // SPINNER
         toast: true,
-        position: 'center',
+        position: "center",
         showConfirmButton: false,
         timer: 3000,
         timerProgressBar: true,
         didOpen: (toast) => {
-          toast.addEventListener('mouseenter', Swal.stopTimer)
-          toast.addEventListener('mouseleave', Swal.resumeTimer)
-        }
-      })
-      
+          toast.addEventListener("mouseenter", Swal.stopTimer);
+          toast.addEventListener("mouseleave", Swal.resumeTimer);
+        },
+      });
+
       Toast.fire({
-        icon: 'success',
-        title: 'Restableciendo PIN'
-      })
+        icon: "success",
+        title: "Restableciendo PIN",
+      });
       validarLongitud(); //SI TODOS ESTAN LLENOS SE MANDA LLAMAR ESTA FUNCION
     }
-  }
-  
-  
-  
-  const validarLongitud = () =>{
-        
-    if (credencial.length < 4 ){
+  };
+
+  const validarLongitud = () => {
+    if (credencial.length < 4) {
       // console.log('PIN invalido')
       Swal.fire({
         title: "Error",
         text: "Es necesario colocar una credencial de 4 o 5 dígitos  ",
         //text: "Bienvenido Mario",
-        icon: 'error',
+        icon: "error",
       });
     }
-    if (pinValue.length < 4 ){
+    if (pinValue.length < 4) {
       Swal.fire({
         title: "Error",
         text: "Es necesario colocar un Pin de 4 dígitos  ",
         //text: "Bienvenido Mario",
-        icon: 'error',
+        icon: "error",
       });
     }
-  }
-  
-  
+  };
+
+
+
   return (
     <Container>
       <div className="flex justify-content-center pb-6">
-        <Card title="CAMBIO DE PIN" className="flex justify-content-center col-12 md:col-12 lg:col-6 px-0 pb-0 pt-0">
+        <Card
+          title="CAMBIO DE PIN"
+          className="flex justify-content-center col-12 md:col-12 lg:col-6 px-0 pb-0 pt-0"
+        >
           <div class="grid p-fluid">
-          <div className="field col-12 md:col-4 py-0">
+            <div className="field col-12 md:col-4 py-0">
               <label htmlFor="antena">Antena</label>
-              <InputText id="antena" placeholder="Antena" value={device} readOnly={true}/>
+              <InputText
+                id="antena"
+                placeholder="Antena"
+                value={device}
+                readOnly={true}
+              />
             </div>
             <div className="field col-12 md:col-4 py-0">
               <label htmlFor="ns_card">NS Card</label>
-              <InputText id="ns_card" placeholder="NS Card" value={card} readOnly={true}/>
+              <InputText
+                id="ns_card"
+                placeholder="NS Card"
+                value={card}
+                readOnly={true}
+              />
             </div>
             <div className="field col-12 md:col-4 py-0">
               <label htmlFor="credencial">Credencial</label>
@@ -180,7 +176,7 @@ export const Pin = () => {
                 id="credencial"
                 placeholder="Credencial"
                 value={credencial}
-                onChange={ (e) => setCredencial(e.target.value) }
+                onChange={(e) => setCredencial(e.target.value)}
                 maxLength={5}
               />
             </div>
@@ -190,7 +186,7 @@ export const Pin = () => {
                 id="nombre"
                 placeholder="Nombre trabajador"
                 value={nomTrabajador}
-                onChange={ (e) => setnomTrabajador( e.target.value ) }
+                onChange={(e) => setnomTrabajador(e.target.value)}
               />
             </div>
             <div className="field col-12 md:col-4 py-0">
@@ -200,103 +196,41 @@ export const Pin = () => {
                 value={pinValue}
                 placeholder="Ingresa un Pin de 4 digitos"
                 // onValueChange={ (e) => setPinValue( e.target.value )}
-                onChange={ (e) => setPinValue( e.target.value )}
-                maxLength= {4}
+                onChange={(e) => setPinValue(e.target.value)}
+                maxLength={4}
                 // mode="decimal"
                 required={true}
               />
             </div>
           </div>
           <div className="flex justify-content-center">
-            <Button label="Leer" className="p-button-raised border-round m-2" icon="pi pi-id-card" />
-            <Button label="Cambiar" className="p-button-raised border-round m-2" onClick={setPin} icon="pi pi-check"/>
+            <Button
+              label="Leer"
+              className="p-button-raised border-round m-2"
+              onClick={readDates}
+              icon="pi pi-id-card"
+            />
+            <Button
+              label="Cambiar"
+              className="p-button-raised border-round m-2"
+              onClick={setPin}
+              icon="pi pi-check"
+            />
           </div>
         </Card>
       </div>
-
-
-      {/* <div className=" pb-5 flex flex-column justify-content-center">
-        <div className=" mt-5 h-1rem flex justify-content-center align-items-center">
-          <p className="text-white-alpha-90 font-bold text-3xl">
-            CAMBIO DE PIN
-          </p>
-        </div>
-
-        <div className=" mt-8 mb-8 flex flex-column justify-content-center align-items-center">
-          <div
-            className="p-4 bg-green-400 w-8  h-auto card  grid  p-fluid  flex flex-wrap  justify-content-between
-            align-content-between flex-wrap border-round-3xl"
-          >
-            <div className="field col-12 md:col-4">
-              <label htmlFor="antena">Antena</label>
-              <InputText id="antena" placeholder="Antena" value={device} readOnly={true}/>
-            </div>
-            <div className="field col-12 md:col-4">
-              <label htmlFor="folio">Folio</label>
-              <InputText
-                id="folio"
-                placeholder="Folio"
-                value={folio}
-                onChange={(e) => setFolio(e.target.value)}
-                
-              />
-            </div>
-            <div className="field col-12 md:col-4">
-              <label htmlFor="ns_card">NS Card</label>
-              <InputText id="ns_card" placeholder="NS Card" value={card} readOnly={true}/>
-            </div>
-            <div className="field col-12 md:col-4">
-              <label htmlFor="credencial">Credencial</label>
-              <InputText
-                id="credencial"
-                placeholder="Credencial"
-                value={credencial}
-                // onChange={ (e) => setCredencial(e.target.value) }
-                maxLength={5}
-                readOnly={true}
-              />
-            </div>
-            <div className="field col-12 md:col-4">
-              <label htmlFor="nombre">Nombre Trabajador</label>
-              <InputText
-                id="nombre"
-                placeholder="Nombre trabajador"
-                value={nomTrabajador}
-                // onChange={ (e) => setnomTrabajador( e.target.value ) }
-                readOnly={true}
-              />
-            </div>
-            <div className="field col-12 md:col-4">
-              <label htmlFor="vigencia">PIN </label>
-              <InputText
-                id="vigencia"
-                value={pinValue}
-                placeholder="Ingresa un Pin de 4 digitos"
-                // onValueChange={ (e) => setPinValue( e.target.value )}
-                // onChange={ (e) => setPinValue( e.target.value )}
-                maxLength= {4}
-                // mode="decimal"
-                required={true}
-                readOnly={true}
-              />
-            </div>
-          </div>
-          
-          <div className="mt-0 mb-6 w-5 flex justify-content-around">
-            <Button
-              label="Leer"
-              className="mt-1 w-5 p-button-sm p-button-success flex justify-content-around"
-              onClick={readDates}
-            />
-
-            <Button
-              label="Cambiar"
-              className="mt-1 w-5 p-button-sm p-button-success flex justify-content-around"
-              onClick={setPin}
-            />
-          </div>
-        </div>
-      </div> */}
     </Container>
   );
 };
+      // const currentDF = await GetRequest('/selectCurrentDF');
+      // if(currentDF.CurrentDF.Response.slice(-4) !== "9000"){
+        // return console.log("error");
+      // }
+      // if(currentDF.applicationStatus !== "00"){
+      // if(currentDF.applicationStatus === "00"){
+        /**
+         * Indicar que se corre comando de rehabilitacion;
+         */
+        // console.log(currentDF);
+        // const rehabilitate = await Rehabilitate();
+      // }
