@@ -5,10 +5,19 @@ const { sam_card } = require('../models/index');
 
 const consultaContador = async (req, res) => {
 
-  const contadores = await sequelize.query('SELECT * FROM contadores', {
-    model: contadores,
-    mapToModel: true
-  });
+  const { page = 0, size = 10 } = req.query;
+
+  let options = {
+    limit: +size,
+    offset: (+page) * (+size)
+  }
+  const { count, rows } = await contadores.findAndCountAll(options)
+  res.json({ Contadores: 'success', total: 'Omar', categories: rows });
+
+
+  // const { count, rows } = await contadores.findAndCountAll()
+  // res.json({ Contadores: 'success', total: count, categories: rows });
+
 }
 
 const consultSam = async (req, res) => {
@@ -20,7 +29,7 @@ const consultSam = async (req, res) => {
     offset: (+page) * (+size)
   }
   const { count, rows } = await sam_card.findAndCountAll(options)
-  res.json({ Tabla_Sam: 'success', total: count, categories: rows });
+  res.json({ Tabla_Sam: 'success', total: 'Omar', categories: rows });
 
 }
 

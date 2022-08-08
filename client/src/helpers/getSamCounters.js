@@ -8,11 +8,11 @@ export const getSamCounters = async() => {
         const resp = await fetch(url, {
             method: 'get',
             headers: new Headers ({
-                'Authorization': `jwt ${token}`
+                'Authorization': `jwt ${token}`,
+                
             })
         });
     const result = await resp.json();
-    console.log('Resultado contadores: ', result)
     return result
    
 };

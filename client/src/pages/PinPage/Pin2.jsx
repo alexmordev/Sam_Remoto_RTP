@@ -40,9 +40,8 @@ export const Pin2 = () => {
       </div>
       )
 
-
     const setPin = async () => {
-        // const rehabilitate = await Rehabilitate();
+        const rehabilitate = await Rehabilitate();
         // Swal.fire({
         //   title: `Rehabilitando`,
         //   timer: 1000,

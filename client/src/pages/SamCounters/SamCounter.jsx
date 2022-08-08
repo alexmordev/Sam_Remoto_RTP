@@ -5,6 +5,7 @@ import { TablaSam } from './../../Components/TablaSam';
 import { getAuthorization } from './../../helpers/GetAuthorization';
 import Swal from 'sweetalert2';
 import { Card } from 'primereact/card';
+import TablaSam2 from "../../Components/TablaSam/TablaSam2";
 
 
 export const SamCounter = () => {  
@@ -14,7 +15,7 @@ export const SamCounter = () => {
   const validar = async() => {
 
     const token = JSON.parse( localStorage.getItem( 'token' ));
-    const url = `${process.env.REACT_APP_DOMINIO}/api/consultaContador`;
+    const url = `http://localhost:5000/api/consultaContador`;
         
     const resp = await fetch(url, {
       method: 'get',
@@ -47,7 +48,8 @@ export const SamCounter = () => {
 
 <Container>
   <Card title="Contadores del SAM">
-    {(condicion === true)? <TablaSam/> : <p>No tienes permiso de administrador</p> }
+    {(condicion === true)? <TablaSam2/> : <p>No tienes permiso de administrador</p> }
+    {/* {(condicion === true)? <TablaSam/> : <p>No tienes permiso de administrador</p> } */}
     
   </Card>
   
