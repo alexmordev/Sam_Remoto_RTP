@@ -11,7 +11,7 @@ import Swal from "sweetalert2";
 import { readDeviceCard } from "./../../calypsoComands/readDeviceCard/readDeviceCard";
 import { getWorker } from "../../helpers/getWorker";
 import { Card } from "primereact/card";
-import isLoading from "../../calypsoComands/rehabilitateProcess/Rehabilitate";
+import isLoading from "../../helpers/IsLoading";
 
 export const Pin = () => {
   const [device, setDevice] = useState("");
@@ -21,52 +21,9 @@ export const Pin = () => {
   const [pinValue, setPinValue] = useState("");
 
   const setPin = async () => {
-    // isLoading();
+    // isLoading("Estableciendo PIN...");
     Rehabilitate();
-    // changePinProcesss();
   };
-
-
-    /*
-    try{
-      const rehabilitate = await Rehabilitate();
-
-       Swal.fire({
-        title: `Rehabilitando`,
-        timer: 1000,
-        timerProgressBar: true,
-        didOpen: () => {
-          Swal.showLoading()
-        }
-      });
-    }catch(error){
-      Swal.fire({
-        title: `Error`,
-        text: "Error al rehabilitar",
-        icon: error,
-      });
-
-    }
-     Swal.fire({
-      title: `Cambiando Pin`,
-      timer: 1000,
-      timerProgressBar: true,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
-    const getchangePinProcess = await changePinProcess(pinValue);
-    Swal.fire({
-      title: `Cambiando Pin`,
-      timer: 1000,
-      timerProgressBar: true,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
-    */
-
-
   const readDates = async () => {
     const data = await readDeviceCard();
     await setDevice(data.device.slice(0, -2));
@@ -222,15 +179,3 @@ export const Pin = () => {
     </Container>
   );
 };
-      // const currentDF = await GetRequest('/selectCurrentDF');
-      // if(currentDF.CurrentDF.Response.slice(-4) !== "9000"){
-        // return console.log("error");
-      // }
-      // if(currentDF.applicationStatus !== "00"){
-      // if(currentDF.applicationStatus === "00"){
-        /**
-         * Indicar que se corre comando de rehabilitacion;
-         */
-        // console.log(currentDF);
-        // const rehabilitate = await Rehabilitate();
-      // }
