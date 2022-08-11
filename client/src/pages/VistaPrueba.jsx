@@ -12,8 +12,6 @@ export const VistaPrueba = () => {
 
   return (
     <Container>
-      
-      
       <SpinnerDotted
         size={200}
         thickness={80}

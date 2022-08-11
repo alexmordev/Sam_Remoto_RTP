@@ -1,20 +1,23 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 // Importaciones de componentes
 import { Container } from "../../Components/Container/Container";
+
 // Importaciones de comandos
 import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate";
 import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
 import { readDeviceCard } from "./../../calypsoComands/readDeviceCard/readDeviceCard";
+
 // Importaciones de helpers
 import { VerifyDevice } from "../../helpers/VerifyDevice";
 import { getWorker } from "../../helpers/getWorker";
+
 //Importaciones de terceros
 import {SpinnerDotted} from "spinners-react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
-import Swal from 'sweetalert2';
 
 
 export const Pin2 = () => {  

@@ -17,6 +17,7 @@ import { Pin } from "./pages/PinPage/Pin";
 import { PrivateRoute } from "./auth/PrivateRoute";
 import { Pin2 } from "./pages/PinPage/Pin2";
 import { VistaPrueba } from "./pages/VistaPrueba";
+import { RehabPage } from "./pages/RehabPage/RehabPage";
 
 
 function App() {
@@ -32,8 +33,14 @@ function App() {
 
       <Route path="/samcounters" element={
         <PrivateRoute>
-
           <SamCounter />
+        </PrivateRoute>
+        
+      } />
+
+      <Route path="/rehabilitate" element={
+        <PrivateRoute>
+          <RehabPage />
         </PrivateRoute>
         
       } />

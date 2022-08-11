@@ -27,6 +27,7 @@
     "pg-hstore": "^2.3.4",
     "pino": "^8.0.0",
     "pino-http": "^8.0.1",
+    "pm2": "^5.2.0",
     "pretty": "^2.0.0",
     "sequelize": "^6.20.1",
     "sequelize-cli": "^6.4.1",
