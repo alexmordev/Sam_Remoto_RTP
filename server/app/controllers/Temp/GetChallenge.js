@@ -5,9 +5,16 @@ const SendingCommand= async ( card )=>{
     try{
       const start = Date.now();
       const GetChallenge = await SendCommand( card, "0084000008" );
-    //   const status = objectResponse
       const timer = Date.now() - start;
-      return ({GetChallenge, Time: timer})
+      return(
+        {
+          "command": "GetChallenge", 
+          "request": GetChallenge.Request,
+          "response": GetChallenge.Response,
+          "status": GetChallenge.Status,
+          "time": timer 
+        }
+      )
     }
     catch(err){
       throw err

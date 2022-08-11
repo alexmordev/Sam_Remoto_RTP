@@ -1,14 +1,19 @@
 'use strict';
 const {response, Devices,SendCommand} = require('../utils/Dependencies');
-// const { response } = require('../utils/StatusCodes');
-
 const SendingCommand= async ( card, challenge )=>{
     try{
       const start = Date.now();
       const OpenSecureSession = await SendCommand( card, `008A010104${challenge}00` );
-      // const oppenSecureSession = secureSession.slice(0,-4);
       const timer = Date.now() - start;
-      return ({OpenSecureSession,Time: timer})
+      return (
+        {
+          "command": "OpenSecureSession", 
+          "request": OpenSecureSession.Request,
+          "response": OpenSecureSession.Response,
+          "status": OpenSecureSession.Status,
+          "time": timer 
+        }
+      )
     }
     catch(err){
       throw err
@@ -36,5 +41,4 @@ const OppenSecureSession=( req, res=response )=>{
     });
   });
 }
-// OppenSecureSession( "986F4207" );
 module.exports = { OppenSecureSession } 
