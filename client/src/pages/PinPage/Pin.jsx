@@ -11,6 +11,7 @@ import Swal from "sweetalert2";
 import { readDeviceCard } from "./../../calypsoComands/readDeviceCard/readDeviceCard";
 import { getWorker } from "../../helpers/getWorker";
 import { Card } from "primereact/card";
+import isLoading from "../../helpers/IsLoading";
 
 export const Pin = () => {
   const [device, setDevice] = useState("");
@@ -20,26 +21,9 @@ export const Pin = () => {
   const [pinValue, setPinValue] = useState("");
 
   const setPin = async () => {
-    const rehabilitate = await Rehabilitate();
-    Swal.fire({
-      title: `Rehabilitando`,
-      timer: 1000,
-      timerProgressBar: true,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
-    const getchangePinProcess = await changePinProcess(pinValue);
-    Swal.fire({
-      title: `Cambiando Pin`,
-      timer: 1000,
-      timerProgressBar: true,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
+    // isLoading("Estableciendo PIN...");
+    Rehabilitate();
   };
-
   const readDates = async () => {
     const data = await readDeviceCard();
     await setDevice(data.device.slice(0, -2));

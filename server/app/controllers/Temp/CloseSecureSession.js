@@ -5,9 +5,16 @@ const SendingCommand= async ( card, signature )=>{
     try{
       const start = Date.now();
       const CloseSecureSession = await SendCommand( card, `008E000004${signature}00` );
-      // const closeSecureSession = getCloseSecureSession.slice(0,-4);
       const timer = Date.now() - start;
-      return ({CloseSecureSession,Time: timer})
+      return(
+        {
+            "command": "CloseSecureSession", 
+            "request": CloseSecureSession.Request,
+            "response": CloseSecureSession.Response,
+            "status": CloseSecureSession.Status,
+            "time": timer 
+        }
+      )
     }
     catch(err){
       throw err

@@ -6,7 +6,15 @@ const SendingCommand = async ( sam )=>{
       const start = Date.now();
       const rehabilitate = await SendCommand( sam, `0044000000`);
       const timer = Date.now() - start;
-      return ({rehabilitate,Time: timer})
+      return(
+            {
+                "command": "Rehabilitate", 
+                "request": rehabilitate.Request,
+                "response": rehabilitate.Response,
+                "status": rehabilitate.Status,
+                "time": timer   
+            }
+        )
     }
     catch(err){
       throw err

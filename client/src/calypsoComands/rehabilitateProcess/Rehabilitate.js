@@ -1,71 +1,55 @@
 import GetRequest from "../utils/GetRequest";
 import PostRequest from "../utils/PostRequest";
 import MakeRequest from "../utils/MakeRequest";
+import {getValidation} from "../utils/DataValidation";
+import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
 
 const Rehabilitate = async() => {
-    const start = Date.now();
-    const applicationSN = await GetRequest('/selectApp');
-    const diversifier = await PostRequest(`${process.env.REACT_APP_DOMINIO}/diversifier`,
-                                        {
-                                          "applicationSN": `${applicationSN.serialNumber}`
-                                        });
-    const challenge = await GetRequest(`${process.env.REACT_APP_DOMINIO}/samChallenge`);
-    const cleanChallenge = challenge.SamChallenge.Response.slice(0,-4);
-    const oppenSecure = await PostRequest('/oppenSecureSession', 
-                                        {
-                                          "challenge":`${cleanChallenge}` 
-                                        });
-    const cleanOppenSecure = oppenSecure.OpenSecureSession.Response.slice(0,-4);                                  
-    const digestInit = await PostRequest(`${process.env.REACT_APP_DOMINIO}/digestInit`,
-                                        {
-                                          "secureSession":`${cleanOppenSecure}`
-                                        });
-    const rehabilitate = await GetRequest('/rehabilitate');
-    // const cleanRehabilitate = rehabilitate.
-    const digestUpdate1 =  await PostRequest(`${process.env.REACT_APP_DOMINIO}/digestUpdate`,
-                                        {
-                                          "digestData":`0044000000`
-                                        });
-    const digestUpdate2 =  await PostRequest(`${process.env.REACT_APP_DOMINIO}/digestUpdate`,
-                                        {
-                                          "digestData":`${digestUpdate1.response.slice(-4)}`
-                                        });
-    const digestClose = await GetRequest(`${process.env.REACT_APP_DOMINIO}/digestClose`);
-    const cleanCloseDigest = digestClose.DigestClose.Response.slice(0,-4);
-    const closeSecure = await PostRequest('/closeSecureSession', 
-                                        {
-                                          "digestClose":`${cleanCloseDigest}`
-                                        });
-    const authenticate = await PostRequest(`${process.env.REACT_APP_DOMINIO}/digestAuthenticate`, 
-                                        {
-                                          "signature":`${closeSecure.CloseSecureSession.Response.slice(0,-4)}`
-                                        });
-                                                                            
-    const ratificaton = await GetRequest( '/ratification' )   
-    const saveCounters = await MakeRequest( 'http://dev-node.rtp.gob.mx:5000/insert/counters', 
-                                        {
-                                          "command": "Rehabilitate",
-                                          "cardSN": `${applicationSN.serialNumber.slice(2)}`,
-                                          "folio": "FOLIORTP/OFICIO/231"
-                                        } );                              
+  const start = Date.now();
+  const url = process.env.REACT_APP_DOMINIO;
+  const applicationSN = await GetRequest('/selectApp');
+  const diversifier = await PostRequest(`${url}/diversifier`,{"applicationSN": `${applicationSN.serialNumber}`});
+  const challenge = await GetRequest(`${url}/samChallenge`);
+  const openSecure = await PostRequest('/oppenSecureSession', {"challenge":`${challenge.response.slice(0,-4)}` });        
+  const digestInit = await PostRequest(`${url}/digestInit`,{"secureSession":`${openSecure.response.slice(0,-4)}`});
+  const rehabilitate = await GetRequest('/rehabilitate');
+  const digestUpdate1 = await PostRequest(`${url}/digestUpdate`,{"digestData":`0044000000`});
+  const digestUpdate2 = await PostRequest(`${url}/digestUpdate`,{"digestData":`${digestUpdate1.response.slice(-4)}`});
+  const digestClose = await GetRequest(`${url}/digestClose`);
+  const closeSecure = await PostRequest('/closeSecureSession', {"digestClose":`${digestClose.response.slice(0,-4)}`});
+  const authenticate = await PostRequest(`${url}/digestAuthenticate`, {"signature":`${closeSecure.response.slice(0,-4)}`});
+  const ratificaton = await GetRequest( '/ratification' ) 
+  console.group("Running Rehabilitate");
+  console.log(applicationSN);
+  console.log(diversifier);
+  console.log(challenge);
+  console.log(openSecure);
+  console.log(digestInit);
+  console.log(rehabilitate);
+  console.log(digestUpdate1);
+  console.log(digestUpdate2);
+  console.log(digestClose);
+  console.log(closeSecure);
+  console.log(authenticate);
+  console.log(ratificaton);
+  console.log( Date.now() - start);
+  console.groupEnd();
 
-    const timer = Date.now() - start;
-
-    const objectResponse = {applicationSN, 
-                          diversifier, 
-                          challenge, 
-                          oppenSecure, 
-                          digestInit, 
-                          rehabilitate,
-                          digestUpdate1, 
-                          digestUpdate2,
-                          digestClose,
-                          closeSecure, 
-                          authenticate,
-                          ratificaton,
-                          saveCounters,
-                          timer};
-    console.log(objectResponse);
-    return objectResponse;
+  const objectResponse = [
+    applicationSN, 
+    diversifier, 
+    challenge, 
+    openSecure, 
+    digestInit, 
+    rehabilitate,
+    digestUpdate1, 
+    digestUpdate2,
+    digestClose,
+    closeSecure, 
+    authenticate,
+    ratificaton,
+  ];
+  return objectResponse;
 }
+
 export default  Rehabilitate;
