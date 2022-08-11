@@ -25,7 +25,7 @@ const SendingCommand= async ( card, device )=>{
 }
 const SelectApplication = (req, res = response)=>{
   const devices = new Devices();
-  devices.on('device-activated', (event) => {
+  devices.on('device-activated', (event) => {   
     const samReader = event.devices[0];
     const deviceName= samReader.name
     samReader.on('card-inserted', (event) => {
@@ -35,7 +35,7 @@ const SelectApplication = (req, res = response)=>{
           res.json(success);
       })
       .catch(error =>{
-          console.group('Eror')
+          console.group('Error')
           console.log(error);
           console.groupEnd();
       })
