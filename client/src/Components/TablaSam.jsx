@@ -5,8 +5,6 @@ import {elementos} from '../Pruebas/CounterSamExample';
 import { getSamCounters } from './../helpers/getSamCounters';
 import { getAuthorization } from './../helpers/GetAuthorization';
 
-
-
 export const TablaSam = () => {
 
     const [products, setProducts] = useState([]);   //Aqui se almacenará el arreglo de la SAM
@@ -18,7 +16,6 @@ export const TablaSam = () => {
 
     const getData = async() => {
       const datos = await getSamCounters();
-      console.log(datos);
       setProducts(datos.categories)
     }
 
@@ -31,7 +28,7 @@ export const TablaSam = () => {
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks 
                     NextPageLink LastPageLink RowsPerPageDropdown" 
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" 
-                    rows={10} rowsPerPageOptions={[8,10,12]}
+                    rows={5} rowsPerPageOptions={[8,10,12]}
                     className	="w-auto" >
                 <Column field="id"      style={{with: '25%'}}   header="id"></Column>
                 <Column field="sam"     style={{with: '25%'}}   header="SAM"></Column>

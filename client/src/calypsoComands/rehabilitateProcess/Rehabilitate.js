@@ -28,7 +28,7 @@ const Rehabilitate = async() => {
                                         });
     const digestUpdate2 =  await PostRequest(`${process.env.REACT_APP_DOMINIO}/digestUpdate`,
                                         {
-                                          "digestData":`${digestUpdate1.DigestUpdate.Response.slice(-4)}`
+                                          "digestData":`${digestUpdate1.response.slice(-4)}`
                                         });
     const digestClose = await GetRequest(`${process.env.REACT_APP_DOMINIO}/digestClose`);
     const cleanCloseDigest = digestClose.DigestClose.Response.slice(0,-4);
