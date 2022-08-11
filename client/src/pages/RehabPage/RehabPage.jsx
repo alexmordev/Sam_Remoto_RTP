@@ -96,7 +96,6 @@ export const RehabPage = () => {
         } 
       }
       validando();
-      readDates();
     }, []);
     
     
@@ -151,19 +150,6 @@ export const RehabPage = () => {
                         onChange={(e) => setnomTrabajador(e.target.value)}
                     />
                     </div>
-                    <div className="field col-12 md:col-4 py-0">
-                    <label htmlFor="vigencia">PIN</label>
-                    <InputText
-                        id="vigencia"
-                        value={pinValue}
-                        placeholder="Ingresa un Pin de 4 digitos"
-                        // onValueChange={ (e) => setPinValue( e.target.value )}
-                        onChange={(e) => setPinValue(e.target.value)}
-                        maxLength={4}
-                        // mode="decimal"
-                        required={true}
-                    />
-                    </div>
                 </div>
                 <div className="flex justify-content-center">
                     <Button
@@ -173,7 +159,7 @@ export const RehabPage = () => {
                     icon="pi pi-id-card"
                     />
                     <Button
-                    label="Cambiar"
+                    label="Rehabilitar"
                     className="p-button-raised border-round m-2"
                     onClick={setPin}
                     icon="pi pi-check"

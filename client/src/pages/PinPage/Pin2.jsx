@@ -96,7 +96,6 @@ export const Pin2 = () => {
         } 
       }
       validando();
-      readDates();
     }, []);
     
     
@@ -173,7 +172,7 @@ export const Pin2 = () => {
               icon="pi pi-id-card"
             />
             <Button
-              label="Cambiar"
+              label="Cambiar Pin"
               className="p-button-raised border-round m-2"
               onClick={setPin}
               icon="pi pi-check"
