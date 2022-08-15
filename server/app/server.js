@@ -1,4 +1,6 @@
 const express = require('express')
+const fs = require('fs');
+const path = require('path');
 const { sequelize } = require('./models/index');
 const cors = require('cors')
 class Server {

@@ -19,7 +19,7 @@ module.exports = {
             }
         }).then(user => {
             if (!user) {
-                res.status(406).json({ message: 'User not found', error_Http:error_Http.not_acceptable })
+                res.status(406).json({ message: `El correo *${email}* no existe`, error_Http:error_Http.not_acceptable })
                 logger.error( ` Usuario no encontrado ${email}` )
 
             } else {
@@ -33,7 +33,7 @@ module.exports = {
                     logger.info( ` Usuario con id '${user.id}'*** autenticado  ` )
 
                 } else {
-                    res.status(401).json({ msg: 'Incorrect password',error_Http:error_Http.unauthorized })
+                    res.status(401).json({ message: 'Contraseña incorrecta',error_Http:error_Http.unauthorized })
                     logger.error( ` Usuario con id '${user.id}'*** Ingreso una contraseña no valida` )
                 }
             }
@@ -48,6 +48,18 @@ module.exports = {
         res.send('tienes las galletas!')
     },
 
+<<<<<<< HEAD
+=======
+    // Función de logout
+
+    logout(req, res) {
+        res.cookie('token', '', {
+            maxAge: 1
+        })
+        res.redirect('/')
+    },
+
+>>>>>>> 38028e80658bf6fb8ac8d75b5783c4385c41ef39
     //Funcion para registro
     check_in(req, res) {
         //Encriptar contraseña
