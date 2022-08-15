@@ -4,21 +4,15 @@ const jwt = require('jsonwebtoken')
 const { password } = require('../../config/database')
 const authConfig = require('../../config/auth')
 const { cookieParser } = require('../server')
-const {error_Http} = require('../helpers/erroresHttp')
-
-//Logger monitoreos
 const logger = require('../utils/logger')
-
+const {error_Http} = require('../helpers/erroresHttp')
 
 module.exports = {
 
     //Login
     login(req, res) {
-
         const { email, password } = req.body;
-
         //Buscar users
-
         user.findOne({
             where: {
                 email,
@@ -44,7 +38,6 @@ module.exports = {
                 }
             }
         }).catch(err => { res.status(500).json(err) });
-
     },
 
     //Función de cookie
@@ -55,21 +48,10 @@ module.exports = {
         res.send('tienes las galletas!')
     },
 
-    // Función de logout
-
-    logout(req, res) {
-        res.cookie('token', '', {
-            maxAge: 1
-        })
-        res.redirect('/')
-    },
-
-
     //Funcion para registro
     check_in(req, res) {
         //Encriptar contraseña
-        
-        let password = bcrypt.hashSync(req.body.password, +authConfig.rounds);//-Llamo de .env a rounds
+        let password = bcrypt.hashSync(req.body.password, +authConfig.rounds);
         //Creación de users
         user.create({
             name: req.body.name,
@@ -82,7 +64,6 @@ module.exports = {
             })
             res.json({ user, token, })
             logger.info(` Nuevo usuario con id '${user.id}' ` )
-
         }).catch(err => {
             res.status(500).json(err);
         })
