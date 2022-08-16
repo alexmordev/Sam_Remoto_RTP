@@ -17,14 +17,6 @@ export const LoginPrincipal = () => {
 
   const [userValue, setUserValue] = useState(""); //Aqui se almacenará el valor del correo de usuario
   const [passValue, setPassValue] = useState(""); //Aqui se almacenará el valor de la contraseña
-  const [sendData, setSendData] = useState(true); //Esta unicamente es una condición para que 
-  const [timer, setTimer] = useState(true);
-
-  
-
-  useEffect(() => {
-    setTimer(false);
-  }, [])
 
   const fetchData = async () => {
 
@@ -53,10 +45,6 @@ export const LoginPrincipal = () => {
     }
   }
 
-  if (timer === true) {
-    return <p> Cargando </p>
-  }
-
   const handleSubmit = ( e ) => {
     e.preventDefault();
     fetchData();
@@ -75,9 +63,9 @@ export const LoginPrincipal = () => {
               <div className="text-900 text-3xl font-medium mb-3">Iniciar sesión</div>
             </div>
               <label htmlFor="username" className="block text-900 font-medium mb-2">Usuario</label>
-              <InputText placeholder="Usuario" id="username" className="w-full mb-3" value={userValue} onChange={(e) => setUserValue(e.target.value)}/>
+              <InputText placeholder="example@example.com" id="username" className="w-full mb-3" value={userValue} onChange={(e) => setUserValue(e.target.value)}/>
               <label htmlFor="password" className="block text-900 font-medium mb-2">Contraseña</label>
-              <InputText type="password" className="w-full mb-3" value={passValue} feedback={false} onChange={(e) => setPassValue(e.target.value)}/>
+              <InputText placeholder="Contraseña" type="password" className="w-full mb-3" value={passValue}  onChange={(e) => setPassValue(e.target.value)}/>
               <Button label="Acceder" icon="pi pi-sign-in" className="w-full" onClick={fetchData} />
           </div>
       </div>
