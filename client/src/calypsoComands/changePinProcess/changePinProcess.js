@@ -18,6 +18,7 @@ const changePinProcess = async(newPin) => {
 
     const applicationSN = await GetRequest("/selectApp");
     console.log("Select Aplication: ", applicationSN.serialNumber);
+
     const { SelectDiversifier } = await PostRequest(
       `${process.env.REACT_APP_DOMINIO}/diversifier`,
       {

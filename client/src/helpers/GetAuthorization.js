@@ -1,28 +1,26 @@
-import axios from 'axios';
-
-export const getAuthorization = (user, passUser) => {
 
 
-  const url = `${process.env.REACT_APP_DOMINIO}/api/login`;
+export const getAuthorization = async() => {
 
-  const fetchData = async() => {
+  const token = JSON.parse( localStorage.getItem( 'token' ));
+    const url = `${process.env.REACT_APP_DOMINIO}/api/consultaContador`;
+        
+        const resp = await fetch(url, {
+            method: 'get',
+            headers: new Headers ({
+                'Authorization': `jwt ${token}`
+            })
+        });
+        const result = await resp.json();
+        return result;
+        // console.log(result)
+        // const success = result.Tabla_Sam 
+        // if (success) {
+        //   return true
+        // } else {
+        //   return false
+        // }
 
-    try {
-      const { data } = await axios.post(
-        url,
-        {
-          "email": user,
-          "password": passUser
-        }
-      );
-      localStorage.setItem('token', JSON.stringify(data.token));
-      
-    } catch (error) {
-      console.log('Algo salio mal');
-      
-    }
-  }
-  fetchData();
 }
 
 
