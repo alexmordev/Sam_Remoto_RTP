@@ -11,15 +11,18 @@ echo Finalizando instalacion de NODE JS
 call npm --version
 echo "The current folder is:"
 echo %CD%
-cd ..\..\Users\oscastro\Documents\SamRemoto\Sam_Remoto_RTP\client
+cd %HOMEPATH%\Documents\SamCard\Sam_Remoto_RTP\client
+echo "The current folder is:"
+echo %CD%
 echo Inicio de instalacion client
-@REM call npm i
+call npm i
 echo Inicio de instalacion server
 cd ..\server\
-@REM call npm i
+call npm i
 TASKKILL /IM node.exe /F
-pause
 echo %CD%
-pause
-call pm2 start apps.js
+echo "Regresando a Admin"
+cd %SystemRoot%/System32
+echo %CD%
+pm2 start %HOMEPATH%\Documents\SamCard\Sam_Remoto_RTP\server\apps.js
 pause

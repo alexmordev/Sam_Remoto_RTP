@@ -16,7 +16,6 @@ import { SamCounter } from "./pages/SamCounters/SamCounter";
 import { Pin } from "./pages/PinPage/Pin";
 import { PrivateRoute } from "./auth/PrivateRoute";
 import { Pin2 } from "./pages/PinPage/Pin2";
-import { VistaPrueba } from "./pages/VistaPrueba";
 import { RehabPage } from "./pages/RehabPage/RehabPage";
 
 import io from 'socket.io-client';
@@ -71,10 +70,6 @@ function App() {
         
       } />
 
-      <Route path="/prueba" element={
-          <VistaPrueba/>
-        
-      } />
 
     </Routes>
   );
