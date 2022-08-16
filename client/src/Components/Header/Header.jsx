@@ -2,10 +2,7 @@ import React from 'react';
 import { LogoutButton } from '../LogoutButton';
 import { Avatar } from 'primereact/avatar';
 import { Menubar } from 'primereact/menubar';
-<<<<<<< HEAD
 
-=======
->>>>>>> 60dad6087f9aa6d4a5a7c7c21a7fe5f02119a89a
 import logo from '../../assets/rtp_sinlogo.png';
 import { Link, useNavigate } from "react-router-dom";
 import Swal from 'sweetalert2';
