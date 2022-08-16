@@ -2,12 +2,13 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "apps.js",
   "type": "Commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server",
-    "dev": "nodemon apps.js"
+    "dev": "nodemon apps.js",
+    "pkg": { "scripts": "apps.js" }
   },
   "keywords": [],
   "author": "",
@@ -27,7 +28,11 @@
     "pg-hstore": "^2.3.4",
     "pino": "^8.0.0",
     "pino-http": "^8.0.1",
+<<<<<<< HEAD
     "pm2": "^5.2.0",
+=======
+    "pkg": "^5.8.0",
+>>>>>>> 38028e80658bf6fb8ac8d75b5783c4385c41ef39
     "pretty": "^2.0.0",
     "sequelize": "^6.20.1",
     "sequelize-cli": "^6.4.1",

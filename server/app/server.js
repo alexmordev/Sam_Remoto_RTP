@@ -1,10 +1,8 @@
 const express = require('express')
+const fs = require('fs');
+const path = require('path');
 const { sequelize } = require('./models/index');
 const cors = require('cors')
-const logger = require('./utils/logger')
-
-
-
 class Server {
   constructor() {
     this.app = express();
@@ -19,19 +17,14 @@ class Server {
   }
 
   middleware() {
-
     this.app.use(express.json());
-    this.app.use( cors() );
+    this.app.use(cors());
     this.app.use(express.urlencoded({ extended: false }));
   }
 
   routes() {
-
     this.app.use(require('./routes/routes'))
     this.app.use(require('./routes/insertSamConta.routes'))
-
-    // this.app.use( '/sam-commands', require( '../routes/pin' ) )
-
   }
 
   listen() {
@@ -41,10 +34,7 @@ class Server {
         // logger.info('Conectado a la base de RTP');
         console.log('Conectado a la base de datos RTP');
       })
-      
     })
-
-
   }
 }
 

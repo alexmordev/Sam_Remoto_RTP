@@ -1,6 +1,5 @@
 const errorHttp = {
     error_Http:{
-        
         //Code Name
         Continue: 100, 
         Witching_Protocols:101,
@@ -50,7 +49,6 @@ const errorHttp = {
         service_unavailable: 503,
         gateway_timeout: 504,
         http_version_not_supported: 505
-
     }
 }
 

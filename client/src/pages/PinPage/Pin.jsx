@@ -39,14 +39,31 @@ export const Pin = () => {
   };
 
   const validateData = () => {
+<<<<<<< HEAD
     if (credencial === "") {
+=======
+    
+    if (folio === "") {
+      console.log("Folio vacio");
+      Swal.fire({
+        title: "Error",
+        text: "Es necesario colocar un folio ",
+        icon: 'error',
+      });
+
+    } else if (credencial === "") {
+>>>>>>> 38028e80658bf6fb8ac8d75b5783c4385c41ef39
       console.log("Credencial vacio");
       // document.getElementById("aviso_credencial").innerText = " LLENAR CAMPO";
       Swal.fire({
         title: "Error",
         text: "Es necesario colocar una Credencial ",
+<<<<<<< HEAD
         //text: "Bienvenido Marios",
         icon: "error",
+=======
+        icon: 'info',
+>>>>>>> 38028e80658bf6fb8ac8d75b5783c4385c41ef39
       });
     } else if (pinValue === "") {
       console.log("PIN vacio");

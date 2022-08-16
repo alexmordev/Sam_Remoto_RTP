@@ -15,7 +15,6 @@ let sequelize = new Sequelize(config.database, config.username, config.password,
   loggin:(message) => { logger.info(message) }
 });
 
-
 fs
   .readdirSync(__dirname)
   .filter(file => {
