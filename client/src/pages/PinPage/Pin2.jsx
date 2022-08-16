@@ -18,6 +18,7 @@ import {SpinnerDotted} from "spinners-react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
+import Swal from 'sweetalert2'
 
 
 export const Pin2 = () => {  
@@ -75,14 +76,28 @@ export const Pin2 = () => {
 
       const readDates = async () => {
         const data = await readDeviceCard();
-        await setDevice(data.device.slice(0, -2));
         const snumber = data.serialNumber.slice(10);
-        await setCard(snumber);
-        const wdates = await getWorker(snumber);
-        await setCredencial(wdates.trab_credencial);
-        await setnomTrabajador(wdates.nombre);
-        await setPinValue(wdates.trab_tarjeta_pin);
-        await setCard(wdates.trab_ser_tarjeta.slice(8));
+        const wdates = await getWorker('946AD0F1');
+        // const wdates = await getWorker('946AD0F0');
+        // const wdates = await getWorker(snumber);
+
+        if (wdates.error) {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Tarjeta no registrada',
+            showConfirmButton: false,
+            timer: 1800
+          })
+        } else {
+          await setDevice(data.device.slice(0, -2));
+          await setCard(snumber);
+          await setCredencial(wdates.trab_credencial);
+          await setnomTrabajador(wdates.nombre);
+          await setPinValue(wdates.trab_tarjeta_pin);
+          await setCard(wdates.trab_ser_tarjeta.slice(8));
+        }
+
       };
 
 
@@ -97,6 +112,13 @@ export const Pin2 = () => {
       }
       validando();
     }, []);
+
+    useEffect(() => {
+      
+      
+
+    }, [])
+    
     
     
     
@@ -139,6 +161,7 @@ export const Pin2 = () => {
                 value={credencial}
                 onChange={(e) => setCredencial(e.target.value)}
                 maxLength={5}
+                readOnly={true}
               />
             </div>
             <div className="field col-12 md:col-8 py-0">
@@ -148,6 +171,7 @@ export const Pin2 = () => {
                 placeholder="Nombre trabajador"
                 value={nomTrabajador}
                 onChange={(e) => setnomTrabajador(e.target.value)}
+                readOnly={true}
               />
             </div>
             <div className="field col-12 md:col-4 py-0">
@@ -159,6 +183,7 @@ export const Pin2 = () => {
                 // onValueChange={ (e) => setPinValue( e.target.value )}
                 onChange={(e) => setPinValue(e.target.value)}
                 maxLength={4}
+                readOnly={true}
                 // mode="decimal"
                 required={true}
               />

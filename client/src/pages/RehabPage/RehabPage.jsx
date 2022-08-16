@@ -139,6 +139,7 @@ export const RehabPage = () => {
                         value={credencial}
                         onChange={(e) => setCredencial(e.target.value)}
                         maxLength={5}
+                        readOnly={true}
                     />
                     </div>
                     <div className="field col-12 md:col-8 py-0">
@@ -148,6 +149,7 @@ export const RehabPage = () => {
                         placeholder="Nombre trabajador"
                         value={nomTrabajador}
                         onChange={(e) => setnomTrabajador(e.target.value)}
+                        readOnly={true}
                     />
                     </div>
                 </div>
