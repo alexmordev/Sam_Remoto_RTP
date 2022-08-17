@@ -6,42 +6,42 @@ const counters = require('../helpers/counters')
 const prueba = counters.contadores
 
 const insertContadores = async (req, res) => {
-    const
-        {
-            id_user,
-            sam,
-            tarjeta,
-            c00,
-            c01,
-            c02,
-            c03,
-            c04,
-            c05,
-            c06,
-            c07,
-            c08,
-            c09,
-            c10,
-            c11,
-            c12,
-            c13,
-            c14,
-            c15,
-            c16,
-            c17,
-            c18,
-            c19,
-            c20,
-            c21,
-            c22,
-            c23,
-            c24,
-            c25,
-            c26,
-            estatus,
-            secuencia,
+    // const
+    //     {
+    //         id_user,
+    //         sam,
+    //         tarjeta,
+    //         c00,
+    //         c01,
+    //         c02,
+    //         c03,
+    //         c04,
+    //         c05,
+    //         c06,
+    //         c07,
+    //         c08,
+    //         c09,
+    //         c10,
+    //         c11,
+    //         c12,
+    //         c13,
+    //         c14,
+    //         c15,
+    //         c16,
+    //         c17,
+    //         c18,
+    //         c19,
+    //         c20,
+    //         c21,
+    //         c22,
+    //         c23,
+    //         c24,
+    //         c25,
+    //         c26,
+    //         estatus,
+    //         secuencia,
 
-        } = req.body
+    //     } = req.body
     // console.log(req.body)
 
     return await contadores.create({
@@ -79,9 +79,8 @@ const insertContadores = async (req, res) => {
         secuencia: counters.secuencia,
     }).then(contadores => {
         res.send({ msg:'Success', contadores },);
-        if(contadores == null){
-            res.status(400).send({msg:`Error inserting record `, error_Http:error_Http.bad_request});
-        }
+    }).catch(err => {
+        res.status(400).send({msg:`Error inserting record `, error_Http:error_Http.bad_request});
     })
 }
 
