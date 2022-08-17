@@ -13,12 +13,7 @@ const validarRole = (req, res, next) => {
                 res.status(500).json({ message: "Oops, ocurrio un problema con tu token!!", err })
             } else {
                 user.findByPk(decoded.user.id, { include: "roles" }).then(user => {
-<<<<<<< HEAD
-=======
-
                     // console.log(user.roles);    
-
->>>>>>> 38028e80658bf6fb8ac8d75b5783c4385c41ef39
                     if (user.id !== 1) {
                         return res.send({ msg: 'Lo sentimos, no tienes permisos de administrador!!' })
                     }

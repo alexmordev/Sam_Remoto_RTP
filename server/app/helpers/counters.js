@@ -4,7 +4,7 @@ const counters =
         0,
         0,
         0,
-        150,
+        180,
         0,
         0,
         0,
@@ -27,18 +27,17 @@ const counters =
         0,
         0,
         0,
-        0
+        120, 
     ],
     samSerial: "aec11a4e",
     status: "Correct Execution",
-    Time: 20
+    secuencia:"Carga util",
+    id_user:1
     
 }
-// console.log(counters.contadores[0]);
-// const [p1] = counters.contadores
-// console.log()
-const prueba = counters.contadores 
-// console.log(prueba[3]);
+
+// const prueba = counters.status 
+// console.log({prueba});
 
 
 module.exports = counters;

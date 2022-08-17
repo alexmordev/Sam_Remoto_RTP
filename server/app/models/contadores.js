@@ -14,39 +14,138 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   contadores.init({
-    sam: DataTypes.STRING,
-    tarjeta: DataTypes.STRING,
-    c00: DataTypes.STRING,
-    c01: DataTypes.STRING,
-    c02: DataTypes.STRING,
-    c03: DataTypes.STRING,
-    c04: DataTypes.STRING,
-    c05: DataTypes.STRING,
-    c06: DataTypes.STRING,
-    c07: DataTypes.STRING,
-    c08: DataTypes.STRING,
-    c09: DataTypes.STRING,
-    c10: DataTypes.STRING,
-    c11: DataTypes.STRING,
-    c12: DataTypes.STRING,
-    c13: DataTypes.STRING,
-    c14: DataTypes.STRING,
-    c15: DataTypes.STRING,
-    c16: DataTypes.STRING,
-    c17: DataTypes.STRING,
-    c18: DataTypes.STRING,
-    c19: DataTypes.STRING,
-    c20: DataTypes.STRING,
-    c21: DataTypes.STRING,
-    c22: DataTypes.STRING,
-    c23: DataTypes.STRING,
-    c24: DataTypes.STRING,
-    c25: DataTypes.STRING,
-    c26: DataTypes.STRING,
-    estatus: DataTypes.STRING,
-    movimiento: DataTypes.STRING,
-    folio: DataTypes.STRING,
-    fecha_hora: DataTypes.DATE
+    id_user:{
+      type:DataTypes.INTEGER,
+      allowNull:false,
+    },
+    sam:{
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    tarjeta:{
+      type:DataTypes.STRING,
+      allowNull:false,
+    },
+    c00:{
+      type:DataTypes.STRING,
+      allowNull:false,
+    },
+    c01:{
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c02: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c03: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c04: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c05: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c06: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c07: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c08: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c09: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c10: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c11: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c12: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c13: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c14: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c15: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c16: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c17: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c18: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c19: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c20: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c21: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c22: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c23: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c24: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c25: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    c26: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    estatus: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    secuencia: {
+      type:DataTypes.STRING,
+      allowNull:false,
+    }, 
+    // folio: {
+    //   type:DataTypes.STRING,
+    //   allowNull:false,
+    // }, 
   }, {
     sequelize,
     modelName: 'contadores',

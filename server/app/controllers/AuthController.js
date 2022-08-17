@@ -48,10 +48,7 @@ module.exports = {
         res.send('tienes las galletas!')
     },
 
-<<<<<<< HEAD
-=======
     // Función de logout
-
     logout(req, res) {
         res.cookie('token', '', {
             maxAge: 1
@@ -59,7 +56,6 @@ module.exports = {
         res.redirect('/')
     },
 
->>>>>>> 38028e80658bf6fb8ac8d75b5783c4385c41ef39
     //Funcion para registro
     check_in(req, res) {
         //Encriptar contraseña
