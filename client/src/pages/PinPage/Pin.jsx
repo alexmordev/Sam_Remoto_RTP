@@ -5,13 +5,15 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Container } from "../../Components/Container/Container";
 import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate";
-import GetRequest from "../../calypsoComands/utils/GetRequest";
-import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
+// import GetRequest from "../../calypsoComands/utils/GetRequest";
+// import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
 import Swal from "sweetalert2";
 import { readDeviceCard } from "./../../calypsoComands/readDeviceCard/readDeviceCard";
 import { getWorker } from "../../helpers/getWorker";
 import { Card } from "primereact/card";
 import isLoading from "../../helpers/IsLoading";
+
+// import isLoading from "../../helpers/IsLoading";
 
 export const Pin = () => {
   const [device, setDevice] = useState("");
@@ -19,10 +21,20 @@ export const Pin = () => {
   const [credencial, setCredencial] = useState("");
   const [nomTrabajador, setnomTrabajador] = useState("");
   const [pinValue, setPinValue] = useState("");
+  
 
-  const setPin = async () => {
+  const setPin = () => {
     // isLoading("Estableciendo PIN...");
-    Rehabilitate();
+    // Rehabilitate()
+    //   .then( success=> isLoading(success[0].command) )
+    //   .catch( err=>console.log(err) )
+    Swal.fire({
+      title: `hola`,
+      timerProgressBar: true,
+      didOpen: async() => {
+        await Swal.showLoading()
+      }
+    });
   };
   const readDates = async () => {
     const data = await readDeviceCard();

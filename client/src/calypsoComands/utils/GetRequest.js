@@ -7,7 +7,7 @@ const GetRequest = async(url)=>{
     return data;
   }
   catch(err){
-    return {err}
+    throw err
   }
 }
 module.exports = GetRequest;

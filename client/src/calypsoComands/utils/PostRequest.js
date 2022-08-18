@@ -4,15 +4,15 @@ const PostRequest = async(url,object)=>{
             method:'POST',
             body:JSON.stringify(object),
             headers:{
-            'Content-Type': 'application/json'
-        }
+                'Content-Type': 'application/json'
+            }
         })
         if(!res)
             throw new Error("WARN", res.status);
         const data = await res.json();
         return data;
     }catch(err){
-        return {err};
+        throw err;
     }
 }
 
