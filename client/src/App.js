@@ -16,11 +16,29 @@ import { SamCounter } from "./pages/SamCounters/SamCounter";
 import { Pin } from "./pages/PinPage/Pin";
 import { PrivateRoute } from "./auth/PrivateRoute";
 import { Pin2 } from "./pages/PinPage/Pin2";
-import { VistaPrueba } from "./pages/VistaPrueba";
 import { RehabPage } from "./pages/RehabPage/RehabPage";
+
+import io from 'socket.io-client';
+import { useState, useEffect } from "react";
+
+const connectSocket = () =>{
+    const socket = io('http://localhost:5000', { transports: ["websocket"] })
+    return socket;
+}
+
 
 
 function App() {
+  const [ socket ] = useState( connectSocket() );
+  
+  useEffect(() => {
+    socket.on('status-device', (device) =>{
+      console.log(device);
+    })
+    
+  }, [socket])
+  
+
   return (
     <Routes>  //Route 1
       <Route path="/" element={<Login />} />
@@ -52,10 +70,6 @@ function App() {
         
       } />
 
-      <Route path="/prueba" element={
-          <VistaPrueba/>
-        
-      } />
 
     </Routes>
   );

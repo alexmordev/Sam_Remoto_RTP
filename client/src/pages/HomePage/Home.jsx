@@ -5,7 +5,6 @@ import { AuthProvider } from "../../auth/context/AuthProvider";
 import { BarChart } from "./BarChart";
 import { LineChart } from "./LineChart";
 
-
 export const Home = () => {
 
   return (

@@ -1,4 +1,4 @@
 node_modules/
 .sequelizerc/
-.env/
+.env
 logs/
