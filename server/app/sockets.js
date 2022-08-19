@@ -1,11 +1,10 @@
-// const ReaderPCSC = require('./reader');
+
 
 // Status para el estado de la antena y tarjeta:
 // 0: Antena desconectada
 // 1: Antena conectada
 // 2: Tarjeta desconectada
 // 3: Tarjeta Conectada
-// 4: Al iniciar no hay tarjeta conectada
 
 const socketMessage = require('./socketMessage');
 const smartcard = require('smartcard');
@@ -23,53 +22,48 @@ class Sockets {
 
 
     socketEvents(){
-        // let dev = this.reader;
-        this.io.on("connection", (socket) => {
-            const readers = new Devices();
-            console.log('cliente conectado');
-            readers.on('device-activated', event => {
-                let device = event.device;
+        try {
 
-                message.getStatus('1', `Lectora conectada: ${event.device.name}`);
-                
-
-                socket.emit('status-device', 
-                    message.getStatus('1', `Lectora conectada: ${event.device.name}`)
-                );
-
-                device.on('card-inserted', event => {
-                    let card = event.card;
-                    const serialNumberSAM = card.getAtr().substr(-14, 8).toUpperCase() ;
-                    message.getStatus('3', `Tarjeta conectada: ${serialNumberSAM}` );
+            this.io.on("connection", (socket) => {
+                const readers = new Devices();
+                // console.log('cliente conectado');
+                readers.on('device-activated', event => {
+                    let device = event.device;
+                    message.getStatus('1', `Lectora conectada: ${event.device.name}`);
                     socket.emit('status-device', 
-                        message.getStatus('3', `Tarjeta conectada: ${serialNumberSAM}` )
+                        message.getStatus('1', `Lectora conectada: ${event.device.name}`)
                     );
-                });
-
-                device.on('card-removed', event => {
-                    let codigo, mensaje;
-
-                    if (event.card != null) {
+    
+                    device.on('card-inserted', event => {
                         let card = event.card;
-                        const serialNumberSAM = card.getAtr().substr(-14, 8).toUpperCase() 
-                        message.getStatus(`2`, `Tarjeta desconectada: ${serialNumberSAM}` )
-                    
-                    // if (event.card == null) {
-                    //     // codigo = '4';
-                    //     // mensaje = `Al iniciar no hay tarjeta conectada`;
-                    // }else{
-                    //     let card = event.card;
-                    //     const serialNumberSAM = card.getAtr().substr(-14, 8).toUpperCase() 
-                    //     codigo = '2';
-                    //     mensaje = `Tarjeta desconectada: ${serialNumberSAM}`;
-                    // }
-
-                    socket.emit('status-device', 
-                        message.getStatus(`2`, `Tarjeta desconectada: ${serialNumberSAM}` )
-                    );
-                    }
+                        const serialNumberSAM = card.getAtr().substr(-14, 8).toUpperCase() ;
+                        message.getStatus('3', `Tarjeta conectada: ${serialNumberSAM}` );
+                        socket.emit('status-device', 
+                            message.getStatus('3', `Tarjeta conectada: ${serialNumberSAM}` )
+                        );
+                    });
+    
+                    device.on('card-removed', event => {
+                        let codigo, mensaje;
+    
+                        if (event.card != null) {
+                            let card = event.card;
+                            const serialNumberSAM = card.getAtr().substr(-14, 8).toUpperCase() 
+                            message.getStatus(`2`, `Tarjeta desconectada: ${serialNumberSAM}` )
+    
+                        socket.emit('status-device', 
+                            message.getStatus(`2`, `Tarjeta desconectada: ${serialNumberSAM}` )
+                        );
+                        }
+                    });
                 });
+    
+                
+                
+                
             });
+            
+        } catch (error) {
 
             readers.on('device-deactivated', event => {
                 message.getStatus('0', `Lectora desconectada: ${event.device.name}` );
@@ -77,11 +71,13 @@ class Sockets {
                     message.getStatus('0', `Lectora desconectada: ${event.device.name}` )
                 );
             });
-            
+
             readers.on('error', event => {
-                // console.log(event);
+                console.log(event);
             });
-        });
+            
+        }
+        
     }
 
 }

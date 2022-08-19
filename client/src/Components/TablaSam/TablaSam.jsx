@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import { getSamCounters } from './../../helpers/getSamCounters';
-import { getAuthorization } from './../../helpers/GetAuthorization';
+import { Button } from "primereact/button";
+import { Tooltip } from 'primereact/tooltip';
+
+
 
 export const TablaSam = () => {
 
     const [products, setProducts] = useState([]);   //Aqui se almacenará el arreglo de la SAM
 
-
     useEffect(() => {
       getData(); 
+      console.log(products);
     }, []); 
 
     const getData = async() => {
@@ -18,23 +21,59 @@ export const TablaSam = () => {
       setProducts(datos.categories)
     }
 
+    const exportExcel = () => {
+      import('xlsx').then(xlsx => {
+          const worksheet = xlsx.utils.json_to_sheet(products);
+          const workbook = { Sheets: { 'data': worksheet }, SheetNames: ['data'] };
+          const excelBuffer = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+          saveAsExcelFile(excelBuffer, 'products');
+      });
+    }
+    
+    const saveAsExcelFile = (buffer, fileName) => {
+      import('file-saver').then(module => {
+          if (module && module.default) {
+              let EXCEL_TYPE = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+              let EXCEL_EXTENSION = '.xlsx';
+              const data = new Blob([buffer], {
+                  type: EXCEL_TYPE
+              });
+    
+              module.default.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+          }
+      });
+    }
+
 
   return (
     <div className="card">
 
-        
-            <DataTable value={products} paginator responsiveLayout="scroll" breakpoint="960px"
+      <div className="flex flex-row-reverse pb-2">
+
+      <Button
+        type="button"
+        icon="pi pi-file-excel"
+        onClick={exportExcel}
+        className="p-button-success mr-2 "
+        data-pr-tooltip="XLS"
+        />  
+        </div>
+      
+
+      
+            <DataTable dataKey="id_table" value={products} paginator responsiveLayout="scroll" breakpoint="960px"
                     paginatorTemplate="CurrentPageReport FirstPageLink PrevPageLink PageLinks 
                     NextPageLink LastPageLink RowsPerPageDropdown" 
                     currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" 
-                    rows={12} rowsPerPageOptions={[8,10,12]}
+                    rows={10} rowsPerPageOptions={[8,10,12]}
                     className	="w-auto" >
-                <Column field="id"      style={{with: '25%'}}   header="id"></Column>
-                <Column field="sam"     style={{with: '25%'}}   header="SAM"></Column>
-                <Column field="tarjeta" style={{with: '25%'}}   header="Tarjeta"></Column>
-                <Column field="c00"     style={{with: '25%'}}   header="C00"></Column>
-                <Column field="c01"     style={{with: '25%'}}   header="C01"></Column>
-                <Column field="c02"     style={{with: '25%'}}   header="C02"></Column>
+                <Column field="id"        style={{with: '25%'}}   header="id"></Column>
+                <Column field="sam"       style={{with: '25%'}}   header="SAM"></Column>
+                <Column field="tarjeta"   style={{with: '25%'}}   header="Tarjeta"></Column>
+                <Column field="createdAt" style={{with: '25%'}}   header="F. Creacion"></Column>
+                <Column field="c00"       style={{with: '25%'}}   header="C00"></Column>
+                <Column field="c01"       style={{with: '25%'}}   header="C01"></Column>
+                <Column field="c02"       style={{with: '25%'}}   header="C02"></Column>
                 <Column field="c03"      header="C03"></Column>
                 <Column field="c04"      header="C04"></Column>
                 <Column field="c05"      header="C05"></Column>
