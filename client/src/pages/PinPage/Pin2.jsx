@@ -1,4 +1,11 @@
+//Importaciones de terceros
 import React, { useEffect, useState } from "react";
+import {  useNavigate } from "react-router-dom";
+import {SpinnerDotted} from "spinners-react";
+import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
+import { Card } from "primereact/card";
+import Swal from "sweetalert2";
 // Importaciones de componentes
 import { Container } from "../../Components/Container/Container";
 // Importaciones de comandos
@@ -7,14 +14,9 @@ import { readDeviceCard } from "./../../calypsoComands/readDeviceCard/readDevice
 // Importaciones de helpers
 import { VerifyDevice } from "../../helpers/VerifyDevice";
 import { getWorker } from "../../helpers/getWorker";
-//Importaciones de terceros
-import {SpinnerDotted} from "spinners-react";
-import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
-import { Card } from "primereact/card";
-import Swal from "sweetalert2";
 import isLoading from "../../helpers/IsLoading";
 import errHandler from "../../helpers/ErrHandler";
+import GetRequest from "../../calypsoComands/utils/GetRequest";
 
 export const Pin2 = () => {  
   const [device, setDevice] = useState("");
@@ -23,7 +25,7 @@ export const Pin2 = () => {
   const [nomTrabajador, setnomTrabajador] = useState("");
   const [pinValue, setPinValue] = useState("");
   const [timer, setTimer]   = useState(false);
-
+  const navigate = useNavigate();
   const interceptor = (
 
     <div className="h-screen w-screen  flex align-items-center justify-content-center">
@@ -48,7 +50,7 @@ export const Pin2 = () => {
         Swal.showLoading()
         ChangePinSequence(pinValue)
           .then( success=> isLoading(success) )
-          .catch( err=> errHandler( ) ) 
+          .catch( err=> errHandler(err)) 
       }
     })
     cleanInputs();
@@ -97,15 +99,39 @@ export const Pin2 = () => {
   }
 
   const readData = async () => {
-    const data = await readDeviceCard();
-    await setDevice(data.device.slice(0, -2));
-    const snumber = data.serialNumber.slice(10);
-    await setCard(snumber);
-    const wdates = await getWorker(snumber);
-    await setCredencial(wdates.trab_credencial);
-    await setnomTrabajador(wdates.nombre);
-    await setPinValue(wdates.trab_tarjeta_pin);
-    await setCard(wdates.trab_ser_tarjeta.slice(8));
+    const currentDF = await GetRequest("/selectCurrentDF");
+    // console.log(currentDF);
+    if( currentDF.status === "Correct Execution" ){
+      try {
+        const data = await readDeviceCard();
+        await setDevice(data.device.slice(0, -2));
+        const snumber = data.serialNumber.slice(10);
+        await setCard(snumber);
+        const wdates = await getWorker(snumber);
+        await setCredencial(wdates.trab_credencial);
+        await setnomTrabajador(wdates.nombre);
+        await setPinValue(wdates.trab_tarjeta_pin);
+        await setCard(wdates.trab_ser_tarjeta.slice(8));
+      }
+      catch(err){
+        throw err;
+      }
+    }else{
+      Swal.fire({
+        title: "Es necesario Rehabilitar",
+        text: "Tu aplicación de Transporte está bloqueada",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Ir a Rehabilitar!'
+      }).then((result) => {
+        if (result.isConfirmed) {  
+          navigate('/rehabilitate');
+        }
+      })
+    }
+
   };
 
   useEffect(() => {

@@ -13,6 +13,7 @@ const ChangePinSequence = async(newPin) => {
     const ascii_pin = `${value_0}${value_1}${value_2}${value_3}`
   
     const applicationSN = await GetRequest("/selectApp");
+    // const Unlock = await GetRequest("/unlock");
     const SelectDiversifier = await PostRequest(`${url}/diversifier`,{"applicationSN": `${applicationSN.serialNumber}`,});
     const getChallenge = await GetRequest("/getChallenge");
     const GiveRandom = await PostRequest(`${url}/random`,{ "challenge": `${getChallenge.response.slice(0,-4)}` });
@@ -31,6 +32,7 @@ const ChangePinSequence = async(newPin) => {
     
     const objectResponse = [
           applicationSN,
+          // Unlock,
           SelectDiversifier,
           getChallenge,
           GiveRandom,

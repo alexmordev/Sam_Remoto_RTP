@@ -7,6 +7,7 @@ const Rehabilitate = async() => {
     const start = Date.now();
     const url = process.env.REACT_APP_DOMINIO;
     const applicationSN = await GetRequest('/selectApp');
+    // const Unlock = await GetRequest("/unlock");
     const diversifier = await PostRequest(`${url}/diversifier`,{"applicationSN": `${applicationSN.serialNumber}`});
     const challenge = await GetRequest(`${url}/samChallenge`);
     const openSecure = await PostRequest('/oppenSecureSession', {"challenge":`${challenge.response.slice(0,-4)}` });        
