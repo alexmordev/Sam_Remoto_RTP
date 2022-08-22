@@ -105,14 +105,13 @@ export const TablaSam = () => {
                   NextPageLink LastPageLink RowsPerPageDropdown" 
                   currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" 
                   rows={10} rowsPerPageOptions={[8,10,12]}
-                  className	="w-auto" >
-              <Column field="id"        style={{with: '25%'}}   header="id"></Column>
-              <Column field="sam"       style={{with: '25%'}}   header="SAM"></Column>
-              <Column field="tarjeta"   style={{with: '25%'}}   header="Tarjeta"></Column>
-              <Column field="createdAt" style={{with: '25%'}}   header="F. Creacion"></Column>
-              <Column field="c00"       style={{with: '25%'}}   header="C00"></Column>
-              <Column field="c01"       style={{with: '25%'}}   header="C01"></Column>
-              <Column field="c02"       style={{with: '25%'}}   header="C02"></Column>
+                  className	="w-auto" size="large"> 
+              <Column field="id"       header="id"></Column>
+              <Column field="sam"      header="SAM"></Column>
+              <Column field="tarjeta"  header="Tarjeta"></Column>
+              <Column field="c00"      header="C00"></Column>
+              <Column field="c01"      header="C01"></Column>
+              <Column field="c02"      header="C02"></Column>
               <Column field="c03"      header="C03"></Column>
               <Column field="c04"      header="C04"></Column>
               <Column field="c05"      header="C05"></Column>
@@ -137,6 +136,7 @@ export const TablaSam = () => {
               <Column field="c24"      header="C24"></Column>
               <Column field="c25"      header="C25"></Column>
               <Column field="c26"      header="C26"></Column>
+              <Column field="createdAt" style={{width: '15%'}} header="Fecha_Creacion"></Column>
           </DataTable>
     </div>
   )

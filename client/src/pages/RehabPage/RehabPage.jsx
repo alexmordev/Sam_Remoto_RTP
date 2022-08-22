@@ -9,6 +9,9 @@ import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate"
 import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
 import { readDeviceCard } from "./../../calypsoComands/readDeviceCard/readDeviceCard";
 
+// Importaciones de sockets
+// import io from 'socket.io-client';
+
 // Importaciones de helpers
 import { VerifyDevice } from "../../helpers/VerifyDevice";
 import { getWorker } from "../../helpers/getWorker";
@@ -18,6 +21,12 @@ import {SpinnerDotted} from "spinners-react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
+import Swal from 'sweetalert2'
+
+// const connectSocket = () =>{
+//     const socket = io('http://localhost:5000', { transports: ["websocket"] })
+//     return socket;
+//   }
 
 
 export const RehabPage = () => {
@@ -25,85 +34,68 @@ export const RehabPage = () => {
     const [card, setCard] = useState("");
     const [credencial, setCredencial] = useState("");
     const [nomTrabajador, setnomTrabajador] = useState("");
-    const [pinValue, setPinValue] = useState("");
-    const [timer, setTimer]   = useState(false);
+    // const [ socket ] = useState( connectSocket() );
 
-    const interceptor = (
-        <div className="h-screen w-screen  flex align-items-center justify-content-center">
-          <div className="flex flex-column">
-            <SpinnerDotted 
-              size={300} 
-              thickness={80} 
-              color={"#38ad48"} 
-              speed={60}
-              />
-          <p className="text-green-500 text-3xl font-semibold pt-6 pl-4" >Detectando Antena</p>
-            </div>
-        </div>
-    )
 
-    
-    const setPin = async () => {
-        const rehabilitate = await Rehabilitate();
-        // Swal.fire({
-        //   title: `Rehabilitando`,
-        //   timer: 1000,
-        //   timerProgressBar: true,
-        //   didOpen: () => {
-        //     Swal.showLoading();
-        //   },
-        // });
-        // const getchangePinProcess = await changePinProcess(pinValue);
-        // Swal.fire({
-        //   title: `Cambiando Pin`,
-        //   timer: 1000,
-        //   timerProgressBar: true,
-        //   didOpen: () => {
-        //     Swal.showLoading();
-        //   },
-        // });
-        cleanInputs();
+    const readDates = async () => {
+        const data = await readDeviceCard();
+        const snumber = data.serialNumber.slice(10);
+        const wdates = await getWorker(snumber);
+
+        if (wdates.error) {
+            Swal.fire({
+              icon: 'error',
+              title: 'Oops...',
+              text: 'Tarjeta no registrada',
+              showConfirmButton: false,
+              timer: 1800
+            })
+          } else {
+            await setDevice(data.device.slice(0, -2));
+            await setCard(snumber);
+            await setCredencial(wdates.trab_credencial);
+            await setnomTrabajador(wdates.nombre);
+            await setCard(wdates.trab_ser_tarjeta.slice(8));
+          }
       };
-      
-      const cleanInputs = () => {
+
+    const cleanInputs = () => {
         setDevice('');
         setCard('');
         setCredencial('');
         setnomTrabajador('');
-        setPinValue('');
-      }
-
-      const readDates = async () => {
-        const data = await readDeviceCard();
-        await setDevice(data.device.slice(0, -2));
-        const snumber = data.serialNumber.slice(10);
-        await setCard(snumber);
-        const wdates = await getWorker(snumber);
-        await setCredencial(wdates.trab_credencial);
-        await setnomTrabajador(wdates.nombre);
-        await setPinValue(wdates.trab_tarjeta_pin);
-        await setCard(wdates.trab_ser_tarjeta.slice(8));
-      };
-
-
-
-    useEffect(() => {
-      async function validando () {
-        const resp = await VerifyDevice();
-
-        if (resp === 1) {
-            setTimer(true);
-        } 
-      }
-      validando();
-    }, []);
-    
-    
-    
-
-    if (timer === false) {
-        return interceptor
     }
+    
+    const rehabilitar = async () => {
+        const rehabilitate = await Rehabilitate();
+        Swal.fire({
+          title: `Rehabilitando`,
+          timer: 1000,
+          timerProgressBar: true,
+          didOpen: () => {
+            Swal.showLoading();
+          },
+        });
+        cleanInputs();
+      };
+      
+
+      // useEffect(() => {
+      //   socket.on('status-device', (device) =>{
+      //     console.log(device);
+      //     switch (device.code) {
+      //       case '2':
+      //         cleanInputs();
+      //         break;
+      //         case '3':
+      //           readDates();
+      //           break;
+      //       default:
+      //         break;
+      //     }
+      //   });
+      // }, [socket])
+
 
     return (
         <Container>
@@ -154,18 +146,14 @@ export const RehabPage = () => {
                     </div>
                 </div>
                 <div className="flex justify-content-center">
-                    <Button
-                    label="Leer"
-                    className="p-button-raised border-round m-2"
-                    onClick={readDates}
-                    icon="pi pi-id-card"
-                    />
-                    <Button
-                    label="Rehabilitar"
-                    className="p-button-raised border-round m-2"
-                    onClick={setPin}
-                    icon="pi pi-check"
-                    />
+                    
+                  <Button
+                  label="Rehabilitar"
+                  className="p-button-raised border-round m-2"
+                  onClick={rehabilitar}
+                  icon="pi pi-check"
+                  />
+                  
                 </div>
                 </Card>
             </div>

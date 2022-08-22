@@ -83,7 +83,7 @@ export const Pin = () => {
 
   useEffect(() => {
     socket.on('status-device', (device) =>{
-      // console.log(device);
+      console.log(device);
       switch (device.code) {
         case '2':
           cleanInputs();

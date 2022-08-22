@@ -35,7 +35,6 @@ function App() {
   //   socket.on('status-device', (device) =>{
   //     console.log(device);
   //   })
-    
   // }, [socket])
   
 
@@ -65,7 +64,6 @@ function App() {
 
       <Route path="/app" element={
         <PrivateRoute>
-          {/* <Pin2/> */}
           <Pin />
         </PrivateRoute>
         

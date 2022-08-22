@@ -56,7 +56,17 @@ class Sockets {
                         );
                         }
                     });
+                
+                    readers.on('device-deactivated', event => {
+                        message.getStatus('0', `Lectora desconectada: ${event.device.name}` );
+                        socket.emit('status-device', 
+                            message.getStatus('0', `Lectora desconectada: ${event.device.name}` )
+                        );
+                    });
+                
                 });
+
+                
     
                 
                 
@@ -65,12 +75,7 @@ class Sockets {
             
         } catch (error) {
 
-            readers.on('device-deactivated', event => {
-                message.getStatus('0', `Lectora desconectada: ${event.device.name}` );
-                socket.emit('status-device', 
-                    message.getStatus('0', `Lectora desconectada: ${event.device.name}` )
-                );
-            });
+            
 
             readers.on('error', event => {
                 console.log(event);
