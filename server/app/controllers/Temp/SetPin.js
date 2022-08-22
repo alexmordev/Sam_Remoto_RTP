@@ -4,9 +4,17 @@ const { Devices,SendCommand, response} = require('../utils/Dependencies');
 const SendingCommand = async ( card, cipher )=>{
     try{
       const start = Date.now();
-      const changePinResponse = await SendCommand( card, `00D800FF10${cipher}`)
+      const ChangePin = await SendCommand( card, `00D800FF10${cipher}`)
       const timer = Date.now() - start;
-      return ({changePinResponse,Time: timer})
+      return(
+        {
+          "command": "ChangePin", 
+          "request": ChangePin.Request,
+          "response": ChangePin.Response,
+          "status": ChangePin.Status,
+          "time": timer 
+        }
+      )
     }
     catch(err){
       throw err
