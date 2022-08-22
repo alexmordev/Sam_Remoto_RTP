@@ -29,7 +29,7 @@ class Sockets {
                 // console.log('cliente conectado');
                 readers.on('device-activated', event => {
                     let device = event.device;
-                    message.getStatus('1', `Lectora conectada: ${event.device.name}`);
+                    // message.getStatus('1', `Lectora conectada: ${event.device.name}`);
                     socket.emit('status-device', 
                         message.getStatus('1', `Lectora conectada: ${event.device.name}`)
                     );
@@ -37,7 +37,7 @@ class Sockets {
                     device.on('card-inserted', event => {
                         let card = event.card;
                         const serialNumberSAM = card.getAtr().substr(-14, 8).toUpperCase() ;
-                        message.getStatus('3', `Tarjeta conectada: ${serialNumberSAM}` );
+                        // message.getStatus('3', `Tarjeta conectada: ${serialNumberSAM}` );
                         socket.emit('status-device', 
                             message.getStatus('3', `Tarjeta conectada: ${serialNumberSAM}` )
                         );
@@ -49,7 +49,7 @@ class Sockets {
                         if (event.card != null) {
                             let card = event.card;
                             const serialNumberSAM = card.getAtr().substr(-14, 8).toUpperCase() 
-                            message.getStatus(`2`, `Tarjeta desconectada: ${serialNumberSAM}` )
+                            // message.getStatus(`2`, `Tarjeta desconectada: ${serialNumberSAM}` )
     
                         socket.emit('status-device', 
                             message.getStatus(`2`, `Tarjeta desconectada: ${serialNumberSAM}` )

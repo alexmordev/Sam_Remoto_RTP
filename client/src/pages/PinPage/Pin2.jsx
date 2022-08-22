@@ -27,7 +27,6 @@ import Swal from 'sweetalert2'
 // 1: Antena conectad
 
 const connectSocket = () =>{
-  // const socket = io('http://localhost:5000')
   const socket = io('http://localhost:5000', { transports: ["websocket"] })
   return socket;
 }

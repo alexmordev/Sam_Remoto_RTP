@@ -22,7 +22,7 @@ export const SamCounter = () => {
       })
     });
     const result = await resp.json();
-    console.log(result);
+    // console.log(result);
     const {categories} = result
 
     if (categories) {

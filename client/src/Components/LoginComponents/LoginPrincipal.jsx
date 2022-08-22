@@ -24,10 +24,8 @@ export const LoginPrincipal = () => {
       const { data } = await axios.post(
         url,
         {
-
           "email": userValue,
           "password": passValue
-       
         }
       );
       login("email", "password")
