@@ -13,30 +13,30 @@ import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/HomePage/Home";
 import { Login } from "./pages/LoginPage/Login";
 import { SamCounter } from "./pages/SamCounters/SamCounter";
-import { Pin } from "./pages/PinPage/Pin";
 import { PrivateRoute } from "./auth/PrivateRoute";
 import { Pin2 } from "./pages/PinPage/Pin2";
+import { Pin } from "./pages/PinPage/Pin";
 import { RehabPage } from "./pages/RehabPage/RehabPage";
 
-import io from 'socket.io-client';
-import { useState, useEffect } from "react";
+// import io from 'socket.io-client';
+// import { useState, useEffect } from "react";
 
-const connectSocket = () =>{
-    const socket = io('http://localhost:5000', { transports: ["websocket"] })
-    return socket;
-}
+// const connectSocket = () =>{
+//     const socket = io('http://localhost:5000', { transports: ["websocket"] })
+//     return socket;
+// }
 
 
 
 function App() {
-  const [ socket ] = useState( connectSocket() );
+  // const [ socket ] = useState( connectSocket() );
   
-  useEffect(() => {
-    socket.on('status-device', (device) =>{
-      console.log(device);
-    })
+  // useEffect(() => {
+  //   socket.on('status-device', (device) =>{
+  //     console.log(device);
+  //   })
     
-  }, [socket])
+  // }, [socket])
   
 
   return (
@@ -65,7 +65,8 @@ function App() {
 
       <Route path="/app" element={
         <PrivateRoute>
-          <Pin2/>
+          {/* <Pin2/> */}
+          <Pin />
         </PrivateRoute>
         
       } />

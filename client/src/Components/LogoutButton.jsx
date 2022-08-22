@@ -11,6 +11,7 @@ export const LogoutButton = () => {
 
   const action = () => {
     localStorage.removeItem("token")
+    localStorage.removeItem("id")
     navigate('/');
     logout();
   }

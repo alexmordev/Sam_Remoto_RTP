@@ -22,8 +22,8 @@ class Server {
 
     this.io = Socket(this.server, {
       cors: {
-        origin: "*",
-        allowedHeaders: ["Access-Control-Allow-Origin"]
+        origin: ["http://localhost:5000"],
+        allowedHeaders: ["Access-Control-Allow-Origin"],
       }
     });
 

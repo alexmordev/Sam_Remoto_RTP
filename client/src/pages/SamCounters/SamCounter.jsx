@@ -22,7 +22,7 @@ export const SamCounter = () => {
       })
     });
     const result = await resp.json();
-    console.log(result);
+    // console.log(result);
     const {categories} = result
 
     if (categories) {
@@ -41,9 +41,8 @@ export const SamCounter = () => {
 
 <Container>
   <Card title="Contadores del SAM">
-  {/* <TablaSam/> */}
     {(condicion === true)? <TablaSam/> : <p>No tienes permiso de administrador</p> }
-    {/* {(condicion === true)? <TablaSam/> : <p>No tienes permiso de administrador</p> } */}
+
   </Card>
 </Container>
 );

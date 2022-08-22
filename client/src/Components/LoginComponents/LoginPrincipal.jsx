@@ -15,8 +15,8 @@ export const LoginPrincipal = () => {
 
   const navigate = useNavigate();
 
-  const [userValue, setUserValue] = useState(""); //Aqui se almacenará el valor del correo de usuario
-  const [passValue, setPassValue] = useState(""); //Aqui se almacenará el valor de la contraseña
+  const [userValue, setUserValue] = useState("omarsc97nuevo@gmail.com"); //Aqui se almacenará el valor del correo de usuario
+  const [passValue, setPassValue] = useState("rtp2019++"); //Aqui se almacenará el valor de la contraseña
 
   const fetchData = async () => {
 
@@ -24,10 +24,8 @@ export const LoginPrincipal = () => {
       const { data } = await axios.post(
         url,
         {
-
           "email": userValue,
           "password": passValue
-       
         }
       );
       login("email", "password")

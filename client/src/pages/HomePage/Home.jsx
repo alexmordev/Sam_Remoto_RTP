@@ -7,6 +7,18 @@ import { LineChart } from "./LineChart";
 
 export const Home = () => {
 
+    const token = JSON.parse( localStorage.getItem( 'token' ));
+    function parseJwt (token) {
+        var base64Url = token.split('.')[1];
+        var base64 = base64Url.replace('-', '+').replace('_', '/');
+        return JSON.parse(window.atob(base64));
+    };
+    localStorage.setItem("id",parseJwt(token).user.id )
+    // const id = parseJwt(token).use
+    // let variable = token
+    
+    
+
   return (
     <AuthProvider>
     <Container>
