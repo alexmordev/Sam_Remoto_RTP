@@ -136,7 +136,7 @@ export const TablaSam = () => {
               <Column field="c24"      header="C24"></Column>
               <Column field="c25"      header="C25"></Column>
               <Column field="c26"      header="C26"></Column>
-              <Column field="createdAt" style={{width: '15%'}} header="Fecha_Creacion"></Column>
+              <Column field="createdAt" style={{width: '20%'}} header="Fecha_Creacion"></Column>
           </DataTable>
     </div>
   )
