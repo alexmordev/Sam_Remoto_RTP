@@ -4,17 +4,17 @@ const counters =
         0,
         0,
         0,
-        180,
+        192,
         0,
         0,
         0,
+        3,
         2,
-        2,
         0,
         0,
         0,
         0,
-        0,
+        190,
         0,
         0,
         9,
@@ -27,7 +27,7 @@ const counters =
         0,
         0,
         0,
-        120, 
+        2, 
     ],
     samSerial: "aec11a4e",
     status: "Correct Execution",
@@ -35,9 +35,5 @@ const counters =
     id_user:1
     
 }
-
-// const prueba = counters.status 
-// console.log({prueba});
-
 
 module.exports = counters;

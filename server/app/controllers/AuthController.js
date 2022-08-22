@@ -29,7 +29,7 @@ module.exports = {
                         expiresIn: authConfig.expires //expiresIn-Tiempo que dura la expiracion
                     })
 
-                    res.json({ token, })
+                    res.json({  token, })
                     logger.info( ` Usuario con id '${user.id}'*** autenticado  ` )
 
                 } else {
