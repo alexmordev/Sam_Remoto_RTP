@@ -27,12 +27,12 @@ const counters =
         0,
         0,
         1,
-        5, 
+        6, 
     ],
     samSerial: "aec11a4e",
     status: "Correct Execution",
     secuencia:"Carga util",
-    id_user:1
+    userId:3
     
 }
 

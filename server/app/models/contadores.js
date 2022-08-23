@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   contadores.init({
-    id_user:{
+    userId:{
       type:DataTypes.INTEGER,
       allowNull:false,
     },
@@ -142,10 +142,7 @@ module.exports = (sequelize, DataTypes) => {
       type:DataTypes.STRING,
       allowNull:false,
     }, 
-    // folio: {
-    //   type:DataTypes.STRING,
-    //   allowNull:false,
-    // }, 
+
   }, {
     sequelize,
     modelName: 'contadores',

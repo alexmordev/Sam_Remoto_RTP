@@ -1,7 +1,7 @@
 const { contadores } = require('../models/index')
-
 const {error_Http} = require('../helpers/erroresHttp')
 const counters = require('../helpers/counters')
+
 
 const muestra_Counters = counters.contadores
 
@@ -11,7 +11,7 @@ const insertContadores = async (req, res) => {
     return await contadores.findOrCreate({
         
         where: { 
-            id_user: counters.id_user,
+            userId: counters.userId,
             sam: counters.samSerial,
             tarjeta: counters.samSerial,
             c00:counters.contadores[0],
