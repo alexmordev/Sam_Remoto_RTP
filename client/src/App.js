@@ -2,7 +2,8 @@
 import "./App.css";
 
 // Importaciones de prime
-import 'primereact/resources/themes/lara-light-indigo/theme.css';
+import 'primereact/resources/themes/bootstrap4-dark-purple/theme.css';
+// import 'primereact/resources/themes/lara-light-indigo/theme.css';
 import 'primereact/resources/primereact.min.css';
 import 'primeicons/primeicons.css';
 import '/node_modules/primeflex/primeflex.css';
@@ -11,11 +12,12 @@ import '/node_modules/primeflex/primeflex.css';
 import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/HomePage/Home";
 import { Login } from "./pages/LoginPage/Login";
-import { Dumps } from "./pages/DumpsPage/Dumps";
 import { SamCounter } from "./pages/SamCounters/SamCounter";
 import { Pin } from "./pages/PinPage/Pin";
-import { VistaPrueba } from "./pages/VistaPrueba";
 import { PrivateRoute } from "./auth/PrivateRoute";
+import { Pin2 } from "./pages/PinPage/Pin2";
+import { VistaPrueba } from "./pages/VistaPrueba";
+import { RehabPage } from "./pages/RehabPage/RehabPage";
 
 
 function App() {
@@ -29,29 +31,32 @@ function App() {
         </PrivateRoute>
       } />
 
-      <Route path="/dumps" element={
-        <PrivateRoute>
-          <Dumps />
-        </PrivateRoute>
-      } />
-
       <Route path="/samcounters" element={
         <PrivateRoute>
           <SamCounter />
         </PrivateRoute>
+        
+      } />
+
+      <Route path="/rehabilitate" element={
+        <PrivateRoute>
+          <RehabPage />
+        </PrivateRoute>
+        
       } />
 
       <Route path="/app" element={
         <PrivateRoute>
-          <Pin />
+          <Pin2/>
         </PrivateRoute>
+        
       } />
 
       <Route path="/prueba" element={
-        <PrivateRoute>
-          <VistaPrueba />
-        </PrivateRoute>
+          <VistaPrueba/>
+        
       } />
+
     </Routes>
   );
 }

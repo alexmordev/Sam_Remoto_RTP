@@ -1,8 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Button } from "primereact/button";
+import { Image } from "primereact/image";
 import { InputText } from "primereact/inputtext";
-import { Password } from "primereact/password";
-import { Imagen } from "./Imagen";
 import { getAuthorization } from "../../helpers/GetAuthorization";
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -21,9 +20,7 @@ export const LoginPrincipal = () => {
   const [sendData, setSendData] = useState(true); //Esta unicamente es una condición para que 
   const [timer, setTimer] = useState(true);
 
-  useEffect(() => {
-    fetchData()
-  }, [sendData])
+  
 
   useEffect(() => {
     setTimer(false);
@@ -53,49 +50,37 @@ export const LoginPrincipal = () => {
       });
       console.log(error.response.data);
       // navigate('/')
-
     }
   }
-
-  const validacion = () => {
-    setSendData(!sendData);
-  };
 
   if (timer === true) {
     return <p> Cargando </p>
   }
+
+  const handleSubmit = ( e ) => {
+    e.preventDefault();
+    fetchData();
+  }
+
   return (
-    <div className="bg-bluegray-300 h-screen w-screen flex align-items-center justify-content-center ">
-      <div className=" h-30rem w-30rem flex  align-items-center  flex-column justify-content-around">
-        <Imagen />
-        <span className="p-float-label">
-          <InputText
-            className="w-18rem h-4rem"
-            id="username"
-            value={userValue}
-            onChange={(e) => setUserValue(e.target.value)}
-          />
-          <label htmlFor="username">Usuario</label>
-        </span>
-
-        <span className="p-float-label">
-          <Password
-            inputClassName="w-18rem h-4rem"
-            feedback={false}
-            value={passValue}
-            onChange={(e) => setPassValue(e.target.value)}
-            toggleMask
-          />
-          <label htmlFor="password">Contraseña</label>
-        </span>
-
-        <Button
-          label="Ingresar"
-          icon="pi pi-sign-in"
-          className="p-button-success"
-          onClick={validacion}
-        />
+    <form onSubmit={handleSubmit}>
+      <div className="surface-ground px-8 py-8 flex align-content-center flex-wrap justify-content-center">
+          <div className="surface-card p-4 shadow-2 border-round w-full lg:w-4">
+            <div className="text-center mb-5">
+              <div className="grid -mt-3 -ml-3 -mr-3">
+                <div className="col-12 md:col-12 lg:col-12">
+                  <Image src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/bc/Logo_RTP_y_Movilidad_Integrada.png/320px-Logo_RTP_y_Movilidad_Integrada.png" alt="Image" width="250" />
+                </div>
+              </div>
+              <div className="text-900 text-3xl font-medium mb-3">Iniciar sesión</div>
+            </div>
+              <label htmlFor="username" className="block text-900 font-medium mb-2">Usuario</label>
+              <InputText placeholder="Usuario" id="username" className="w-full mb-3" value={userValue} onChange={(e) => setUserValue(e.target.value)}/>
+              <label htmlFor="password" className="block text-900 font-medium mb-2">Contraseña</label>
+              <InputText type="password" className="w-full mb-3" value={passValue} feedback={false} onChange={(e) => setPassValue(e.target.value)}/>
+              <Button label="Acceder" icon="pi pi-sign-in" className="w-full" onClick={fetchData} />
+          </div>
       </div>
-    </div>
+    </form>
   );
 };

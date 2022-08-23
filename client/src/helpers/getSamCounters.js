@@ -1,30 +1,18 @@
 
-export const getSamCounters = () => {
+export const getSamCounters = async() => {
     
-    const urlSamCounters = 'https://api.chucknorris.io/jokes/random';
-
-    // fetch(urlSamCounters)
-    //     .then( resp => resp.json() )
-    //     .then( data => {
-    //         // console.log( data );
-    //         return  data ;
-    //     } );
 
     const token = JSON.parse( localStorage.getItem( 'token' ));
-    const url = "http://dev-node.rtp.gob.mx:5000/api/consultaSams";
+    const url = `${process.env.REACT_APP_DOMINIO}/api/consultaContador`;
 
-    const peticion = async() => {
         const resp = await fetch(url, {
             method: 'get',
             headers: new Headers ({
-                'Authorization': `jwt ${token}`
+                'Authorization': `jwt ${token}`,
+                
             })
         });
-        const result = await resp.json();
-        console.log(result);
-    };
-
-    
-
-    peticion();
+    const result = await resp.json();
+    return result
+   
 };

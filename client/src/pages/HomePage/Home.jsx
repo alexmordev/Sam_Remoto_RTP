@@ -2,52 +2,87 @@ import React from "react";
 import { Container, GraficaPastel, UserCard } from "../../Components";
 import { AuthProvider } from "../../auth/context/AuthProvider";
 
+import { BarChart } from "./BarChart";
+import { LineChart } from "./LineChart";
+
+
 export const Home = () => {
+
   return (
     <AuthProvider>
     <Container>
-      <div className="h-full w-full bg-blue-900 card-container flex">
-        <div className="border-2 border-white w-5 flex 
-          flex-column align-items-center ">
-          <p className="
-            text-6xl 
-            font-bold
-            text-white
-
-          ">
-            BIENVENIDO
-          </p>
-          <UserCard />
-
-          
-        </div>
-        <div className=" w-7 flex flex-column  ">
-          {/* <div className="border-2 border-white bg-red-300 w-full h-30rem"> */}
-          <div className="border-2 border-white w-full h-30rem">
-            <div className="p-5">
-            <GraficaPastel className="p-3" />
+        <div className="grid pb-6">
+          <div className="col-12 md:col-6 lg:col-3">
+              <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
+                  <div className="flex justify-content-between mb-3">
+                      <div>
+                          <span className="block text-500 font-medium mb-3">Orders</span>
+                          <div className="text-900 font-medium text-xl">152</div>
+                      </div>
+                      <div className="flex align-items-center justify-content-center bg-blue-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+                          <i className="pi pi-shopping-cart text-blue-500 text-xl"></i>
+                      </div>
+                  </div>
+                  <span className="text-green-500 font-medium">24 new </span>
+                  <span className="text-500">since last visit</span>
+              </div>
+          </div>
+          <div className="col-12 md:col-6 lg:col-3">
+              <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
+                  <div className="flex justify-content-between mb-3">
+                      <div>
+                          <span className="block text-500 font-medium mb-3">Revenue</span>
+                          <div className="text-900 font-medium text-xl">$2.100</div>
+                      </div>
+                      <div className="flex align-items-center justify-content-center bg-orange-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+                          <i className="pi pi-map-marker text-orange-500 text-xl"></i>
+                      </div>
+                  </div>
+                  <span className="text-green-500 font-medium">%52+ </span>
+                  <span className="text-500">since last week</span>
+              </div>
+          </div>
+          <div className="col-12 md:col-6 lg:col-3">
+              <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
+                  <div className="flex justify-content-between mb-3">
+                      <div>
+                          <span className="block text-500 font-medium mb-3">Customers</span>
+                          <div className="text-900 font-medium text-xl">28441</div>
+                      </div>
+                      <div className="flex align-items-center justify-content-center bg-cyan-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+                          <i className="pi pi-inbox text-cyan-500 text-xl"></i>
+                      </div>
+                  </div>
+                  <span className="text-green-500 font-medium">520  </span>
+                  <span className="text-500">newly registered</span>
+              </div>
+          </div>
+          <div className="col-12 md:col-6 lg:col-3">
+              <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round">
+                  <div className="flex justify-content-between mb-3">
+                      <div>
+                          <span className="block text-500 font-medium mb-3">Comments</span>
+                          <div className="text-900 font-medium text-xl">152 Unread</div>
+                      </div>
+                      <div className="flex align-items-center justify-content-center bg-purple-100 border-round" style={{ width: '2.5rem', height: '2.5rem' }}>
+                          <i className="pi pi-comment text-purple-500 text-xl"></i>
+                      </div>
+                  </div>
+                  <span className="text-green-500 font-medium">85 </span>
+                  <span className="text-500">responded</span>
+              </div>
+          </div>
+          <div className="col-12 md:col-6 lg:col-6">
+            <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round p-4">
+            <BarChart />
             </div>
           </div>
-          <div className="w-full h-30rem flex">
-            {/* <div className="border-2 border-white bg-pink-300 h-full w-6 "> */}
-            <div className="border-2 border-white h-full w-6 ">
-              <i className="pi pi-info-circle text-white text-7xl p-4">
-                <span className="text-5xl"> Informacion</span></i> 
-                
-            
-            </div>
-            {/* <div className="border-2 border-white bg-yellow-300 h-full w-6"> */}
-            <div className="border-2 border-white h-full w-6">
-            
-              {/* <i className="pi pi-lock text-white text-7xl" /> */}
-              <i className="pi pi-shield text-white text-7xl p-4">
-                <span className="text-5xl"> Seguridad</span></i> 
-                <p></p>
-
+          <div className="col-12 md:col-6 lg:col-6">
+            <div className="surface-0 shadow-2 p-3 border-1 border-50 border-round p-4">
+              <LineChart />
             </div>
           </div>
         </div>
-      </div>
     </Container>
     </AuthProvider>
   );
