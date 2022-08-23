@@ -13,9 +13,6 @@ import { readDeviceCard } from "./../../calypsoComands/readDeviceCard/readDevice
 import { VerifyDevice } from "../../helpers/VerifyDevice";
 import { getWorker } from "../../helpers/getWorker";
 
-// Importaciones de sockets
-// import io from 'socket.io-client';
-
 //Importaciones de terceros
 import { SpinnerDotted } from "spinners-react";
 import { InputText } from "primereact/inputtext";
@@ -23,12 +20,9 @@ import { Button } from "primereact/button";
 
 import { Card } from "primereact/card";
 import Swal from 'sweetalert2'
+import { useContext } from "react";
+import { SocketContext } from "../../context/SocketContext";
 
-
-// const connectSocket = () =>{
-//   const socket = io('http://localhost:5000', { transports: ["websocket"] })
-//   return socket;
-// }
 
 export const Pin = () => {  
   const [device, setDevice] = useState("");
@@ -36,16 +30,43 @@ export const Pin = () => {
   const [credencial, setCredencial] = useState("");
   const [nomTrabajador, setnomTrabajador] = useState("");
   const [pinValue, setPinValue] = useState("");
-  // const [ socket ] = useState( connectSocket() );
+
+  const { socket } = useContext( SocketContext );
+
+  useEffect(() => {
+    socket.on('status-device', (device) =>{
+      console.log(device);
+      switch (device.code) {
+        case '2':
+          cleanInputs();
+          break;
+          case '3':
+            readDates();
+            break;
+        default:
+          break;
+      }
+    });
+    return () => socket.off('status-device');
+  }, [socket])
 
   const readDates = async () => {
-    try {
       
       const data = await readDeviceCard();
       const snumber = data.serialNumber.slice(10);
       const wdates = await getWorker(snumber);
-  
-      if (wdates.error) {
+
+      if (wdates === '0') {
+
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Tarjeta Invalida',
+          showConfirmButton: false,
+          timer: 1800
+        })
+        
+      } else if (wdates.error) {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -61,10 +82,6 @@ export const Pin = () => {
         await setPinValue(wdates.trab_tarjeta_pin);
         await setCard(wdates.trab_ser_tarjeta.slice(8));
       }
-
-    } catch (error) {
-        throw error
-    }
   };
 
   const cleanInputs = () => {

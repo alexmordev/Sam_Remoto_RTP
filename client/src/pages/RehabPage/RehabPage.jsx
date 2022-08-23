@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 // Importaciones de componentes
 import { Container } from "../../Components/Container/Container";
@@ -7,8 +7,6 @@ import { Container } from "../../Components/Container/Container";
 import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate";
 import { readDeviceCard } from "./../../calypsoComands/readDeviceCard/readDeviceCard";
 
-// Importaciones de sockets
-// import io from 'socket.io-client';
 
 // Importaciones de helpers
 import { VerifyDevice } from "../../helpers/VerifyDevice";
@@ -20,11 +18,8 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
 import Swal from 'sweetalert2'
+import { SocketContext } from "../../context/SocketContext";
 
-// const connectSocket = () =>{
-//     const socket = io('http://localhost:5000', { transports: ["websocket"] })
-//     return socket;
-//   }
 
 
 export const RehabPage = () => {
@@ -32,7 +27,25 @@ export const RehabPage = () => {
     const [card, setCard] = useState("");
     const [credencial, setCredencial] = useState("");
     const [nomTrabajador, setnomTrabajador] = useState("");
-    // const [ socket ] = useState( connectSocket() );
+
+    const { socket } = useContext( SocketContext );
+
+    useEffect(() => {
+      socket.on('status-device', (device) =>{
+        console.log(device);
+        switch (device.code) {
+          case '2':
+            cleanInputs();
+            break;
+            case '3':
+              readDates();
+              break;
+          default:
+            break;
+        }
+      });
+      return () => socket.off('status-device');
+    }, [socket])
 
 
     const readDates = async () => {
@@ -40,7 +53,17 @@ export const RehabPage = () => {
         const snumber = data.serialNumber.slice(10);
         const wdates = await getWorker(snumber);
 
-        if (wdates.error) {
+        if (wdates === '0') {
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Tarjeta Invalida',
+            showConfirmButton: false,
+            timer: 1800
+          })
+          
+        } else if (wdates.error) {
             Swal.fire({
               icon: 'error',
               title: 'Oops...',
@@ -76,23 +99,6 @@ export const RehabPage = () => {
         });
         cleanInputs();
       };
-      
-
-      // useEffect(() => {
-      //   socket.on('status-device', (device) =>{
-      //     console.log(device);
-      //     switch (device.code) {
-      //       case '2':
-      //         cleanInputs();
-      //         break;
-      //         case '3':
-      //           readDates();
-      //           break;
-      //       default:
-      //         break;
-      //     }
-      //   });
-      // }, [socket])
 
 
     return (
