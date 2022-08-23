@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 // Importaciones de componentes
 import { Container } from "../../Components/Container/Container";
 
 // Importaciones de comandos
 import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate";
-import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
 import { readDeviceCard } from "./../../calypsoComands/readDeviceCard/readDeviceCard";
 
 // Importaciones de sockets
@@ -147,6 +145,13 @@ export const RehabPage = () => {
                 </div>
                 <div className="flex justify-content-center">
                     
+                  <Button
+                    label="Leer"
+                    className="p-button-raised border-round m-2"
+                    onClick={readDates}
+                    icon="pi pi-id-card"
+                  />
+
                   <Button
                   label="Rehabilitar"
                   className="p-button-raised border-round m-2"

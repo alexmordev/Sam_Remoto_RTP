@@ -14,7 +14,6 @@ import { Home } from "./pages/HomePage/Home";
 import { Login } from "./pages/LoginPage/Login";
 import { SamCounter } from "./pages/SamCounters/SamCounter";
 import { PrivateRoute } from "./auth/PrivateRoute";
-import { Pin2 } from "./pages/PinPage/Pin2";
 import { Pin } from "./pages/PinPage/Pin";
 import { RehabPage } from "./pages/RehabPage/RehabPage";
 

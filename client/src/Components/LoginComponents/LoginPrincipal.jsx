@@ -30,16 +30,12 @@ export const LoginPrincipal = () => {
       );
       login("email", "password")
       localStorage.setItem('token', JSON.stringify(data.token));
+
       navigate('/homepage');
     } catch (error) {
-      Swal.fire({
-        title: `Error ${error.response.data.error_Http}`,
-        text: `${error.response.data.message}`,
-        //text: "Bienvenido Mario",
-        icon: 'error',
-      });
-      console.log(error.response.data);
-      // navigate('/')
+      document.getElementById("msj_error").innerText= "Usuario y/o contraseña incorrecta";
+      setPassValue("");
+      setUserValue("");
     }
   }
 
@@ -65,6 +61,7 @@ export const LoginPrincipal = () => {
               <label htmlFor="password" className="block text-900 font-medium mb-2">Contraseña</label>
               <InputText placeholder="Contraseña" type="password" className="w-full mb-3" value={passValue}  onChange={(e) => setPassValue(e.target.value)}/>
               <Button label="Acceder" icon="pi pi-sign-in" className="w-full" onClick={fetchData} />
+              <p id="msj_error" className="text-lg text-red-500"></p>
           </div>
       </div>
     </form>

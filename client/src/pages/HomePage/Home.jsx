@@ -4,18 +4,16 @@ import { AuthProvider } from "../../auth/context/AuthProvider";
 
 import { BarChart } from "./BarChart";
 import { LineChart } from "./LineChart";
+import { parseToken } from "../../helpers/parseToken";
 
 export const Home = () => {
 
     const token = JSON.parse( localStorage.getItem( 'token' ));
-    function parseJwt (token) {
-        var base64Url = token.split('.')[1];
-        var base64 = base64Url.replace('-', '+').replace('_', '/');
-        return JSON.parse(window.atob(base64));
-    };
-    localStorage.setItem("id",parseJwt(token).user.id )
-    // const id = parseJwt(token).use
-    // let variable = token
+    const data = parseToken(token);
+    localStorage.setItem("id",data.user.id )
+    localStorage.setItem("name",data.user.name )
+    
+    let variable = token
     
     
 

@@ -6,12 +6,14 @@ import { AuthContext } from '../auth/context/AuthContext'
 
 export const LogoutButton = () => {
   
+
   const { logout } = useContext( AuthContext )
   const navigate = useNavigate();
 
   const action = () => {
     localStorage.removeItem("token")
     localStorage.removeItem("id")
+    localStorage.removeItem("name")
     navigate('/');
     logout();
   }

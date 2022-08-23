@@ -14,7 +14,7 @@ import { VerifyDevice } from "../../helpers/VerifyDevice";
 import { getWorker } from "../../helpers/getWorker";
 
 // Importaciones de sockets
-import io from 'socket.io-client';
+// import io from 'socket.io-client';
 
 //Importaciones de terceros
 import { SpinnerDotted } from "spinners-react";
@@ -25,10 +25,10 @@ import { Card } from "primereact/card";
 import Swal from 'sweetalert2'
 
 
-const connectSocket = () =>{
-  const socket = io('http://localhost:5000', { transports: ["websocket"] })
-  return socket;
-}
+// const connectSocket = () =>{
+//   const socket = io('http://localhost:5000', { transports: ["websocket"] })
+//   return socket;
+// }
 
 export const Pin = () => {  
   const [device, setDevice] = useState("");
@@ -36,28 +36,34 @@ export const Pin = () => {
   const [credencial, setCredencial] = useState("");
   const [nomTrabajador, setnomTrabajador] = useState("");
   const [pinValue, setPinValue] = useState("");
-  const [ socket ] = useState( connectSocket() );
+  // const [ socket ] = useState( connectSocket() );
 
   const readDates = async () => {
-    const data = await readDeviceCard();
-    const snumber = data.serialNumber.slice(10);
-    const wdates = await getWorker(snumber);
+    try {
+      
+      const data = await readDeviceCard();
+      const snumber = data.serialNumber.slice(10);
+      const wdates = await getWorker(snumber);
+  
+      if (wdates.error) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Tarjeta no registrada',
+          showConfirmButton: false,
+          timer: 1800
+        })
+      } else {
+        await setDevice(data.device.slice(0, -2));
+        await setCard(snumber);
+        await setCredencial(wdates.trab_credencial);
+        await setnomTrabajador(wdates.nombre);
+        await setPinValue(wdates.trab_tarjeta_pin);
+        await setCard(wdates.trab_ser_tarjeta.slice(8));
+      }
 
-    if (wdates.error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Tarjeta no registrada',
-        showConfirmButton: false,
-        timer: 1800
-      })
-    } else {
-      await setDevice(data.device.slice(0, -2));
-      await setCard(snumber);
-      await setCredencial(wdates.trab_credencial);
-      await setnomTrabajador(wdates.nombre);
-      await setPinValue(wdates.trab_tarjeta_pin);
-      await setCard(wdates.trab_ser_tarjeta.slice(8));
+    } catch (error) {
+        throw error
     }
   };
 
@@ -79,23 +85,24 @@ export const Pin = () => {
         Swal.showLoading();
       },
     });
+    cleanInputs();
   };
 
-  useEffect(() => {
-    socket.on('status-device', (device) =>{
-      console.log(device);
-      switch (device.code) {
-        case '2':
-          cleanInputs();
-          break;
-          case '3':
-            readDates();
-            break;
-        default:
-          break;
-      }
-    });
-  }, [socket])
+  // useEffect(() => {
+  //   socket.on('status-device', (device) =>{
+  //     console.log(device);
+  //     switch (device.code) {
+  //       case '2':
+  //         cleanInputs();
+  //         break;
+  //         case '3':
+  //           readDates();
+  //           break;
+  //       default:
+  //         break;
+  //     }
+  //   });
+  // }, [socket])
 
 
   return (
@@ -163,6 +170,13 @@ export const Pin = () => {
               </div>
               <div className="flex justify-content-center">
                 
+                <Button
+                  label="Leer"
+                  className="p-button-raised border-round m-2"
+                  onClick={readDates}
+                  icon="pi pi-id-card"
+                />
+
                 <Button
                   label="Cambiar Pin"
                   className="p-button-raised border-round m-2"
