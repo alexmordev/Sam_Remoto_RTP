@@ -19,6 +19,7 @@ import { Card } from "primereact/card";
 import Swal from "sweetalert2";
 import isLoading from "../../helpers/IsLoading";
 import errHandler from "../../helpers/ErrHandler";
+import { SocketContext } from "../../context/SocketContext";
 
 
 export const RehabPage = () => {
@@ -26,6 +27,8 @@ export const RehabPage = () => {
     const [card, setCard] = useState("");
     const [credencial, setCredencial] = useState("");
     const [nomTrabajador, setnomTrabajador] = useState("");
+
+    const { socket } = useContext( SocketContext );
 
     const interceptor = (
         <div className="h-screen w-screen  flex align-items-center justify-content-center">
@@ -39,23 +42,26 @@ export const RehabPage = () => {
           <p className="text-green-500 text-3xl font-semibold pt-6 pl-4" >Detectando Antena</p>
             </div>
         </div>
-    )
+    );
+
     const setRehab = async () => {
-        Swal.fire({
-            title: `Rehabilitando Tarjeta`,
-            text: "Espere un momento por favor...",
-            timerProgressBar: true,
-            didOpen:()=>{
-              Swal.showLoading()
-              Rehabilitate()
-                .then( success=> isLoading(success) )
-                .catch( err=> errHandler( ) ) 
-            }
-          })
+      Swal.fire({
+        title: `Rehabilitando Tarjeta`,
+        text: "Espere un momento por favor...",
+        timerProgressBar: true,
+        didOpen:()=>{
+          Swal.showLoading()
+          Rehabilitate()
+            .then( success=> isLoading(success) )
+            .catch( err=> errHandler( ) ) 
+        }
+      })
+
+      cleanInputs();
+    }
 
     useEffect(() => {
       socket.on('status-device', (device) =>{
-        console.log(device);
         switch (device.code) {
           case '2':
             cleanInputs();
@@ -103,26 +109,31 @@ export const RehabPage = () => {
           }
       };
 
+      const validarDatos = () => {
+        if (card !== "" && 
+            credencial !== "" && 
+            nomTrabajador !== "" && 
+            device !== "") {
+            setRehab();
+        } else{
+    
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Proceso invalido',
+            showConfirmButton: false,
+            timer: 1800
+          })
+    
+        }
+      }
+
     const cleanInputs = () => {
         setDevice('');
         setCard('');
         setCredencial('');
         setnomTrabajador('');
     }
-    
-    const rehabilitar = async () => {
-        const rehabilitate = await Rehabilitate();
-        Swal.fire({
-          title: `Rehabilitando`,
-          timer: 1000,
-          timerProgressBar: true,
-          didOpen: () => {
-            Swal.showLoading();
-          },
-        });
-        cleanInputs();
-      };
-
 
     return (
         <Container>
@@ -175,16 +186,9 @@ export const RehabPage = () => {
                 <div className="flex justify-content-center">
                     
                   <Button
-                    label="Leer"
-                    className="p-button-raised border-round m-2"
-                    onClick={readDates}
-                    icon="pi pi-id-card"
-                  />
-
-                  <Button
                   label="Rehabilitar"
                   className="p-button-raised border-round m-2"
-                  onClick={rehabilitar}
+                  onClick={validarDatos}
                   icon="pi pi-check"
                   />
                   
@@ -193,4 +197,5 @@ export const RehabPage = () => {
             </div>
         </Container>
     );
+  
 }

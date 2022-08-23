@@ -1,28 +1,25 @@
 // http://app.rtp.gob.mx/api/get_card/946ABD4C
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import {  useNavigate } from "react-router-dom";
+import {SpinnerDotted} from "spinners-react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Container } from "../../Components/Container/Container";
-import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate";
-// import GetRequest from "../../calypsoComands/utils/GetRequest";
-// import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
-import Swal from "sweetalert2";
+import GetRequest from "../../calypsoComands/utils/GetRequest";
+import ChangePinSequence from "../../calypsoComands/changePinProcess/changePinProcess";
 import { readDeviceCard } from "./../../calypsoComands/readDeviceCard/readDeviceCard";
 
 // Importaciones de helpers
-import { VerifyDevice } from "../../helpers/VerifyDevice";
 import { getWorker } from "../../helpers/getWorker";
-
-//Importaciones de terceros
-import { SpinnerDotted } from "spinners-react";
-import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
-
-import { Card } from "primereact/card";
+import errHandler from "../../helpers/ErrHandler";
 import isLoading from "../../helpers/IsLoading";
 
-// import isLoading from "../../helpers/IsLoading";
+//Importaciones de terceros
+import { Card } from "primereact/card";
+import Swal from 'sweetalert2'
+import { useContext } from "react";
+import { SocketContext } from "../../context/SocketContext";
 
 export const Pin = () => {  
   const [device, setDevice] = useState("");
@@ -30,19 +27,19 @@ export const Pin = () => {
   const [credencial, setCredencial] = useState("");
   const [nomTrabajador, setnomTrabajador] = useState("");
   const [pinValue, setPinValue] = useState("");
+  const navigate = useNavigate();
 
   const { socket } = useContext( SocketContext );
 
   useEffect(() => {
     socket.on('status-device', (device) =>{
-      console.log(device);
       switch (device.code) {
         case '2':
           cleanInputs();
           break;
-          case '3':
-            readDates();
-            break;
+        case '3':
+          readDates();
+          break;
         default:
           break;
       }
@@ -50,8 +47,22 @@ export const Pin = () => {
     return () => socket.off('status-device');
   }, [socket])
 
+  const interceptor = (
+
+    <div className="h-screen w-screen  flex align-items-center justify-content-center">
+      <div className="flex flex-column">
+        <SpinnerDotted 
+          size={300} 
+          thickness={80} 
+          color={"#38ad48"} 
+          speed={60}
+          />
+      <p className="text-green-500 text-3xl font-semibold pt-6 pl-4" >Detectando Antena</p>
+        </div>
+    </div>
+  )
+
   const readDates = async () => {
-      
       const data = await readDeviceCard();
       const snumber = data.serialNumber.slice(10);
       const wdates = await getWorker(snumber);
@@ -75,12 +86,36 @@ export const Pin = () => {
           timer: 1800
         })
       } else {
-        await setDevice(data.device.slice(0, -2));
-        await setCard(snumber);
-        await setCredencial(wdates.trab_credencial);
-        await setnomTrabajador(wdates.nombre);
-        await setPinValue(wdates.trab_tarjeta_pin);
-        await setCard(wdates.trab_ser_tarjeta.slice(8));
+
+        const currentDF = await GetRequest("/selectCurrentDF");
+
+        if( currentDF.status !== "Correct Execution" ){
+          try {
+            await setDevice(data.device.slice(0, -2));
+            await setCard(snumber);
+            await setCredencial(wdates.trab_credencial);
+            await setnomTrabajador(wdates.nombre);
+            await setPinValue(wdates.trab_tarjeta_pin);
+            await setCard(wdates.trab_ser_tarjeta.slice(8));
+          }
+          catch(err){
+            throw err;
+          }
+        }else{
+          Swal.fire({
+            title: "Es necesario Rehabilitar",
+            text: "Tu aplicación de Transporte está bloqueada",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Ir a Rehabilitar!'
+          }).then((result) => {
+            if (result.isConfirmed) {  
+              navigate('/rehabilitate');
+            }
+          })
+        }
       }
   };
 
@@ -92,35 +127,40 @@ export const Pin = () => {
     setPinValue('');
   }
 
-  const setPin = async () => {
-    const getchangePinProcess = await changePinProcess(pinValue);
+  const setPin = () => {
     Swal.fire({
-      title: `Cambiando Pin`,
-      timer: 1000,
+      title: `Estableciendo Pin`,
+      text: "Espere un momento por favor...",
       timerProgressBar: true,
-      didOpen: () => {
-        Swal.showLoading();
-      },
-    });
+      didOpen:()=>{
+        Swal.showLoading()
+        ChangePinSequence(pinValue)
+          .then( success=> isLoading(success) )
+          .catch( err=> errHandler(err)) 
+      }
+    })
     cleanInputs();
   };
 
-  // useEffect(() => {
-  //   socket.on('status-device', (device) =>{
-  //     console.log(device);
-  //     switch (device.code) {
-  //       case '2':
-  //         cleanInputs();
-  //         break;
-  //         case '3':
-  //           readDates();
-  //           break;
-  //       default:
-  //         break;
-  //     }
-  //   });
-  // }, [socket])
+  const validarDatos = () => {
+    if (card !== "" && 
+        credencial !== "" && 
+        nomTrabajador !== "" && 
+        pinValue !== "" && 
+        device !== "") {
+      setPin();
+    } else{
 
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Proceso invalido',
+        showConfirmButton: false,
+        timer: 1800
+      })
+
+    }
+  }
 
   return (
     
@@ -186,18 +226,11 @@ export const Pin = () => {
                 </div>
               </div>
               <div className="flex justify-content-center">
-                
-                <Button
-                  label="Leer"
-                  className="p-button-raised border-round m-2"
-                  onClick={readDates}
-                  icon="pi pi-id-card"
-                />
 
                 <Button
                   label="Cambiar Pin"
                   className="p-button-raised border-round m-2"
-                  onClick={setPin}
+                  onClick={validarDatos}
                   icon="pi pi-check"
                 />
               </div>
