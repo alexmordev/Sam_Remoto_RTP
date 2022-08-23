@@ -1,12 +1,13 @@
 // http://app.rtp.gob.mx/api/get_card/946ABD4C
 
-import React, { useEffect, useState } from "react";
-
-// Importaciones de componentes
+import React, { useState } from "react";
+import { InputText } from "primereact/inputtext";
+import { Button } from "primereact/button";
 import { Container } from "../../Components/Container/Container";
-
-// Importaciones de comandos
-import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
+import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate";
+// import GetRequest from "../../calypsoComands/utils/GetRequest";
+// import changePinProcess from "../../calypsoComands/changePinProcess/changePinProcess";
+import Swal from "sweetalert2";
 import { readDeviceCard } from "./../../calypsoComands/readDeviceCard/readDeviceCard";
 
 // Importaciones de helpers
@@ -19,10 +20,9 @@ import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 
 import { Card } from "primereact/card";
-import Swal from 'sweetalert2'
-import { useContext } from "react";
-import { SocketContext } from "../../context/SocketContext";
+import isLoading from "../../helpers/IsLoading";
 
+// import isLoading from "../../helpers/IsLoading";
 
 export const Pin = () => {  
   const [device, setDevice] = useState("");
@@ -207,6 +207,4 @@ export const Pin = () => {
         </Container>
 
   );
-
-    
-}; 
+};

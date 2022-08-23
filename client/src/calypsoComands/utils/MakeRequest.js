@@ -1,12 +1,16 @@
 const token = JSON.parse( localStorage.getItem( 'token' ));
 
 const MakeRequest = async(url, object)=>{
+    // console.log(url);
     const res = await fetch(url,{
         method:"POST",
         body:JSON.stringify(object),
-        headers: new Headers ({
-            'Authorization': `jwt ${token}`
-        })
+        // headers: new Headers ({
+        //     'Authorization': `jwt ${token}`
+        // })
+        headers:{
+            'Content-Type': 'application/json'
+        }
     })
 
     if(!res)

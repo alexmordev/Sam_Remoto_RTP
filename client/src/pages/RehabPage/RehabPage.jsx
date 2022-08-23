@@ -7,7 +7,6 @@ import { Container } from "../../Components/Container/Container";
 import Rehabilitate from "../../calypsoComands/rehabilitateProcess/Rehabilitate";
 import { readDeviceCard } from "./../../calypsoComands/readDeviceCard/readDeviceCard";
 
-
 // Importaciones de helpers
 import { VerifyDevice } from "../../helpers/VerifyDevice";
 import { getWorker } from "../../helpers/getWorker";
@@ -17,9 +16,9 @@ import {SpinnerDotted} from "spinners-react";
 import { InputText } from "primereact/inputtext";
 import { Button } from "primereact/button";
 import { Card } from "primereact/card";
-import Swal from 'sweetalert2'
-import { SocketContext } from "../../context/SocketContext";
-
+import Swal from "sweetalert2";
+import isLoading from "../../helpers/IsLoading";
+import errHandler from "../../helpers/ErrHandler";
 
 
 export const RehabPage = () => {
@@ -28,7 +27,31 @@ export const RehabPage = () => {
     const [credencial, setCredencial] = useState("");
     const [nomTrabajador, setnomTrabajador] = useState("");
 
-    const { socket } = useContext( SocketContext );
+    const interceptor = (
+        <div className="h-screen w-screen  flex align-items-center justify-content-center">
+          <div className="flex flex-column">
+            <SpinnerDotted 
+              size={300} 
+              thickness={80} 
+              color={"#38ad48"} 
+              speed={60}
+              />
+          <p className="text-green-500 text-3xl font-semibold pt-6 pl-4" >Detectando Antena</p>
+            </div>
+        </div>
+    )
+    const setRehab = async () => {
+        Swal.fire({
+            title: `Rehabilitando Tarjeta`,
+            text: "Espere un momento por favor...",
+            timerProgressBar: true,
+            didOpen:()=>{
+              Swal.showLoading()
+              Rehabilitate()
+                .then( success=> isLoading(success) )
+                .catch( err=> errHandler( ) ) 
+            }
+          })
 
     useEffect(() => {
       socket.on('status-device', (device) =>{
@@ -105,8 +128,8 @@ export const RehabPage = () => {
         <Container>
             <div className="flex justify-content-center pb-6">
                 <Card
-                title="REHABILITAR"
-                className="flex justify-content-center col-12 md:col-12 lg:col-6 px-0 pb-0 pt-0"
+                    title="REHABILITAR"
+                    className="flex justify-content-center col-12 md:col-12 lg:col-6 px-0 pb-0 pt-0"
                 >
                 <div className="grid p-fluid">
                     <div className="field col-12 md:col-4 py-0">
@@ -170,5 +193,4 @@ export const RehabPage = () => {
             </div>
         </Container>
     );
-
 }

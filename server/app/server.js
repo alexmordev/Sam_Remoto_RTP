@@ -38,7 +38,12 @@ class Server {
   middleware() {
 
     this.app.use(express.json());
-    this.app.use( cors(corsOptions) );
+    this.app.use( cors({
+      cors: {
+        origin: "*",
+        credentials: true
+      }
+    }) );
     this.app.use(express.urlencoded({ extended: false }));
   }
 

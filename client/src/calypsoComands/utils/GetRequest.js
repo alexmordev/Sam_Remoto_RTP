@@ -1,23 +1,13 @@
-// const GetRequest = async(url)=>{
-//     const res = await fetch(url)
-//     if(!res)
-//       throw new Error("WARN", res.status);
-//     const data = await res.json();
-//     return data;
-// }
-// module.exports = GetRequest;
-
-
-
 const GetRequest = async(url)=>{
-
-  try {
+  try{
     const res = await fetch(url)
+    if(!res)
+      throw new Error("WARN", res.status);
     const data = await res.json();
     return data;
-  } catch (error) {
-    throw error
+}
+  catch(err){
+    throw err
   }
-
 }
 module.exports = GetRequest;
