@@ -1,6 +1,5 @@
 'use strict';
 const {response, Devices,SendCommand} = require('../utils/Dependencies');
-
 const SendingCommand= async ( card, device )=>{
   try{
     const start = Date.now();
@@ -8,7 +7,17 @@ const SendingCommand= async ( card, device )=>{
     const getSerialNumber = selectApp.Response.indexOf( 'C7' );
     const serialNumber = selectApp.Response.slice(getSerialNumber + 2,  getSerialNumber+ 20)
     const timer = Date.now() - start;
-    return ({serialNumber, selectApp, device, Time: timer})
+    return(
+      {
+        "command": "SelectApplication", 
+        "request": selectApp.Request,
+        "response": selectApp.Response,
+        "status": selectApp.Status,
+        serialNumber,
+        "device": device,
+        "time": timer 
+      }
+    )
   }
   catch(err){
     throw err

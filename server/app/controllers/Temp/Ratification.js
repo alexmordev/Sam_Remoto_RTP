@@ -6,7 +6,15 @@ const SendingCommand= async ( card )=>{
       const start = Date.now();
       const ratification = await SendCommand( card, `0084000004` );
       const timer = Date.now() - start;
-      return ({ratification,Time: timer})
+      return(
+        {
+            "command": "ratification", 
+            "request": ratification.Request,
+            "response": ratification.Response,
+            "status": ratification.Status,
+            "time": timer 
+        }
+    )
     }
     catch(err){
       throw err

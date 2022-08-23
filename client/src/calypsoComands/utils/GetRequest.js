@@ -10,7 +10,6 @@
 
 
 const GetRequest = async(url)=>{
-
   try {
     const res = await fetch(url)
     const data = await res.json();
@@ -18,6 +17,5 @@ const GetRequest = async(url)=>{
   } catch (error) {
     throw error
   }
-
 }
 module.exports = GetRequest;

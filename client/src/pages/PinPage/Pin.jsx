@@ -23,7 +23,7 @@ import { Button } from "primereact/button";
 
 import { Card } from "primereact/card";
 import Swal from 'sweetalert2'
-
+import isLoading from "../../helpers/IsLoading";
 
 // const connectSocket = () =>{
 //   const socket = io('http://localhost:5000', { transports: ["websocket"] })
@@ -37,7 +37,6 @@ export const Pin = () => {
   const [nomTrabajador, setnomTrabajador] = useState("");
   const [pinValue, setPinValue] = useState("");
   // const [ socket ] = useState( connectSocket() );
-
   const readDates = async () => {
     try {
       
@@ -190,6 +189,4 @@ export const Pin = () => {
         </Container>
 
   );
-
-    
 }; 
