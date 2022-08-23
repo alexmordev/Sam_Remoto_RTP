@@ -101,7 +101,7 @@ export const Pin2 = () => {
   const readData = async () => {
     const currentDF = await GetRequest("/selectCurrentDF");
     // console.log(currentDF);
-    if( currentDF.status === "Correct Execution" ){
+    if( currentDF.status !== "Correct Execution" ){
       try {
         const data = await readDeviceCard();
         await setDevice(data.device.slice(0, -2));
