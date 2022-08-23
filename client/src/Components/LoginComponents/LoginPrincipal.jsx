@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from "../../auth/context/AuthContext";
 import Swal from 'sweetalert2';
+import { parseToken } from "../../helpers/parseToken";
 
 export const LoginPrincipal = () => {
   const { login } = useContext(AuthContext)
@@ -30,7 +31,7 @@ export const LoginPrincipal = () => {
       );
       login("email", "password")
       localStorage.setItem('token', JSON.stringify(data.token));
-
+      parseToken(data.token);
       navigate('/homepage');
     } catch (error) {
       document.getElementById("msj_error").innerText= "Usuario y/o contraseña incorrecta";

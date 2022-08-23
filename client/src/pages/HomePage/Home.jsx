@@ -8,13 +8,9 @@ import { parseToken } from "../../helpers/parseToken";
 
 export const Home = () => {
 
-    const token = JSON.parse( localStorage.getItem( 'token' ));
-    const data = parseToken(token);
-    localStorage.setItem("id",data.user.id )
-    localStorage.setItem("name",data.user.name )
     
-    let variable = token
-    
+  
+
     
 
   return (
