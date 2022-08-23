@@ -1,6 +1,7 @@
 const { sequelize } = require('../models/index');
 const { contadores } = require('../models/index')
 const { sam_card } = require('../models/index');
+const { user } = require('../models/index')
 
 const consultaContador = async (req, res) => {
   const { page = 0, size = 10 } = req.query;
@@ -10,7 +11,8 @@ const consultaContador = async (req, res) => {
     offset: (+page) * (+size)
   }
   const { count, rows } = await contadores.findAndCountAll(options)
-  res.json({ Contadores: 'success', total: count, categories: rows });
+  res.json({ Contadores: 'success', total: count, categories: rows, Usuario:user.name});
+  console.log({Contadores: 'success', total: count, categories: rows, Usuario:user.name});
 }
 
 const consultSam = async (req, res) => {

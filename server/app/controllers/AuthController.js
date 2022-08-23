@@ -30,7 +30,7 @@ module.exports = {
                     })
 
                     res.json({  token, })
-                    logger.info( ` Usuario con id '${user.id}'*** autenticado  ` )
+                    logger.info( ` Usuario con id '${user.name}'*** autenticado  ` )
 
                 } else {
                     res.status(401).json({ message: 'Contraseña incorrecta',error_Http:error_Http.unauthorized })

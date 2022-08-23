@@ -3,14 +3,7 @@ const { contadores } = require('../models/index')
 const {error_Http} = require('../helpers/erroresHttp')
 const counters = require('../helpers/counters')
 
-// console.log(counters.contadores);
-
 const muestra_Counters = counters.contadores
-
-// for (let i = 0; i < muestra_Counters.length; i++) {
-
-//     console.log(muestra_Counters[i]);
-// }
 
 const insertContadores = async (req, res) => {
     
