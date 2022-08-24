@@ -13,14 +13,16 @@ import { Routes, Route } from "react-router-dom";
 import { Home } from "./pages/HomePage/Home";
 import { Login } from "./pages/LoginPage/Login";
 import { SamCounter } from "./pages/SamCounters/SamCounter";
-import { Pin } from "./pages/PinPage/Pin";
 import { PrivateRoute } from "./auth/PrivateRoute";
-import { Pin2 } from "./pages/PinPage/Pin2";
-import { VistaPrueba } from "./pages/VistaPrueba";
+import { Pin } from "./pages/PinPage/Pin";
 import { RehabPage } from "./pages/RehabPage/RehabPage";
+import { SocketProvider } from "./context/SocketContext";
+
 
 
 function App() {
+  
+
   return (
     <Routes>  //Route 1
       <Route path="/" element={<Login />} />
@@ -40,22 +42,22 @@ function App() {
 
       <Route path="/rehabilitate" element={
         <PrivateRoute>
-          <RehabPage />
+          <SocketProvider>
+            <RehabPage />
+          </SocketProvider>
         </PrivateRoute>
         
       } />
 
       <Route path="/app" element={
         <PrivateRoute>
-          <Pin2/>
+          <SocketProvider>
+            <Pin />
+          </SocketProvider>
         </PrivateRoute>
         
       } />
 
-      <Route path="/prueba" element={
-          <VistaPrueba/>
-        
-      } />
 
     </Routes>
   );

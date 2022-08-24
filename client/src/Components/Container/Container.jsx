@@ -7,6 +7,7 @@ export const Container = (props) => {
     <div className="layout-wrapper layout-wrapper-light">
       <Header />
       <div className="px-3 py-2">
+
         {props.children}
       </div>
       <Footer />

@@ -5,22 +5,25 @@ const Devices = smartcard.Devices;
 
 
 const VerifyDevice = ( req, res ) => {    
-    
-    const devices = new Devices();
-
-    devices.on('device-desactivated', event => {
-        req.json({
-            'status': 0,
-            'msg': 'Antena Desconectada'
+    try {
+        
+        const devices = new Devices();
+        devices.on('device-desactivated', event => {
+            req.json({
+                'status': 0,
+                'msg': 'Antena Desconectada'
+            });
         });
-    });
-    
-    devices.on('device-activated', event => {
-        res.json({
-            'status': 1,
-            'msg': 'Antena Conectada'
+        devices.on('device-activated', event => {
+            res.json({
+                'status': 1,
+                'msg': 'Antena Conectada'
+            })
         })
-    })
+        
+    } catch (error) {
+        throw error
+    }
 }
     
 module.exports = {

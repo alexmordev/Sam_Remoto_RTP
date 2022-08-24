@@ -4,9 +4,14 @@ import { AuthProvider } from "../../auth/context/AuthProvider";
 
 import { BarChart } from "./BarChart";
 import { LineChart } from "./LineChart";
-
+import { parseToken } from "../../helpers/parseToken";
 
 export const Home = () => {
+
+    
+  
+
+    
 
   return (
     <AuthProvider>
