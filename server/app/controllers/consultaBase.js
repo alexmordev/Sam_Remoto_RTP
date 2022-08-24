@@ -17,9 +17,9 @@ const consultaContador = async (req, res) => {
       model : user
     }
   })
-  // console.log(atributes)
+
   res.json({ Contadores: 'success', total: count, categories: rows});
-  // console.log({Contadores: 'success', total: count, categories: rows, Usuario:user.name});
+
 }
 
 const consultSam = async (req, res) => {
