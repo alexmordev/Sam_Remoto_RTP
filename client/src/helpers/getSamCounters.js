@@ -1,7 +1,6 @@
 
 export const getSamCounters = async() => {
     
-
     const token = JSON.parse( localStorage.getItem( 'token' ));
     const url = `${process.env.REACT_APP_DOMINIO}/api/consultaContador`;
 

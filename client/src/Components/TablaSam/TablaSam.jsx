@@ -19,9 +19,12 @@ export const TablaSam = () => {
       const {categories} = await getSamCounters();
       for (let index = 0; index < categories.length; index++) {
         let fecha = categories[index].createdAt.substring(0,10)
-        let hora = categories[index].createdAt.substring(11,16)
+        let hora = categories[index].createdAt.substring(11,19)
         let fechaHora = `${fecha} ${hora}`
         let element = {
+          "id":         categories[index].id, 
+          "sam":        categories[index].sam, 
+          "tarjeta":    categories[index].tarjeta, 
           "c00":        categories[index].c00,
           "c01":        categories[index].c01,
           "c02":        categories[index].c02,
@@ -49,17 +52,8 @@ export const TablaSam = () => {
           "c24":        categories[index].c24,
           "c25":        categories[index].c25,
           "c26":        categories[index].c26,
-          "createdAt":  fechaHora, 
-          "estatus":    categories[index].estatus, 
-          "fecha_hora": categories[index].fecha_hora, 
-          "id":         categories[index].id, 
-          "id_user":    categories[index].id_user, 
-          "movimiento": categories[index].movimiento, 
-          "sam":        categories[index].sam, 
-          "tarjeta":    categories[index].tarjeta, 
-          "updatedAt":  categories[index].updatedAt, 
+          "Fecha_creacion":  fechaHora, 
         }
-        // setProducts([...products, element ]);
         setProducts( pro => [ ...pro, element ] );
       };
     };
@@ -106,37 +100,39 @@ export const TablaSam = () => {
                   currentPageReportTemplate="Showing {first} to {last} of {totalRecords}" 
                   rows={10} rowsPerPageOptions={[8,10,12]}
                   className	="w-auto" size="large"> 
-              <Column field="id"       header="id"></Column>
-              <Column field="sam"      header="SAM"></Column>
-              <Column field="tarjeta"  header="Tarjeta"></Column>
-              <Column field="c00"      header="C00"></Column>
-              <Column field="c01"      header="C01"></Column>
-              <Column field="c02"      header="C02"></Column>
-              <Column field="c03"      header="C03"></Column>
-              <Column field="c04"      header="C04"></Column>
-              <Column field="c05"      header="C05"></Column>
-              <Column field="c06"      header="C06"></Column>
-              <Column field="c07"      header="C07"></Column>
-              <Column field="c08"      header="C08"></Column>
-              <Column field="c09"      header="C09"></Column>
-              <Column field="c10"      header="C10"></Column>
-              <Column field="c11"      header="C11"></Column>
-              <Column field="c12"      header="C12"></Column>
-              <Column field="c13"      header="C13"></Column>
-              <Column field="c14"      header="C14"></Column>
-              <Column field="c15"      header="C15"></Column>
-              <Column field="c16"      header="C16"></Column>
-              <Column field="c17"      header="C17"></Column>
-              <Column field="c18"      header="C18"></Column>
-              <Column field="c19"      header="C19"></Column>
-              <Column field="c20"      header="C20"></Column>
-              <Column field="c21"      header="C21"></Column>
-              <Column field="c22"      header="C22"></Column>
-              <Column field="c23"      header="C23"></Column>
-              <Column field="c24"      header="C24"></Column>
-              <Column field="c25"      header="C25"></Column>
-              <Column field="c26"      header="C26"></Column>
-              <Column field="createdAt" style={{width: '20%'}} header="Fecha_Creacion"></Column>
+              <Column field="id"              header="id"></Column>
+              <Column field="sam"             header="SAM"></Column>
+              <Column field="tarjeta"         header="Tarjeta"></Column>
+              <Column field="c00"             header="C00"></Column>
+              <Column field="c01"             header="C01"></Column>
+              <Column field="c02"             header="C02"></Column>
+              <Column field="c03"             header="C03"></Column>
+              <Column field="c04"             header="C04"></Column>
+              <Column field="c05"             header="C05"></Column>
+              <Column field="c06"             header="C06"></Column>
+              <Column field="c07"             header="C07"></Column>
+              <Column field="c08"             header="C08"></Column>
+              <Column field="c09"             header="C09"></Column>
+              <Column field="c10"             header="C10"></Column>
+              <Column field="c11"             header="C11"></Column>
+              <Column field="c12"             header="C12"></Column>
+              <Column field="c13"             header="C13"></Column>
+              <Column field="c14"             header="C14"></Column>
+              <Column field="c15"             header="C15"></Column>
+              <Column field="c16"             header="C16"></Column>
+              <Column field="c17"             header="C17"></Column>
+              <Column field="c18"             header="C18"></Column>
+              <Column field="c19"             header="C19"></Column>
+              <Column field="c20"             header="C20"></Column>
+              <Column field="c21"             header="C21"></Column>
+              <Column field="c22"             header="C22"></Column>
+              <Column field="c23"             header="C23"></Column>
+              <Column field="c24"             header="C24"></Column>
+              <Column field="c25"             header="C25"></Column>
+              <Column field="c26"             header="C26"></Column>
+              {/* <Column field="secuencia "      header="Secuencia"></Column> */}
+              {/* <Column field="Nombre"          header="Nombre"></Column> */}
+              <Column field="Fecha_creacion"  header="Fecha_Creacion"></Column>
           </DataTable>
     </div>
   )
