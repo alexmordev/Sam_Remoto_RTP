@@ -22,6 +22,7 @@ import { useContext } from "react";
 import { SocketContext } from "../../context/SocketContext";
 
 export const Pin = () => {  
+  const [online, setOnline] = useState(false)
   const [device, setDevice] = useState("");
   const [card, setCard] = useState("");
   const [credencial, setCredencial] = useState("");
@@ -32,20 +33,31 @@ export const Pin = () => {
   const { socket } = useContext( SocketContext );
 
   useEffect(() => {
-    socket.on('status-device', (device) =>{
-      switch (device.code) {
-        case '2':
-          cleanInputs();
-          break;
-        case '3':
-          readDates();
-          break;
-        default:
-          break;
+    
+    socket.on('status-device', ( data ) => {
+      console.log(data.code);
+      if (data.code === '0') {
+        console.log('Ando desconectada')
+        setOnline(false);
+      } else if (data.code !== 0) {
+        setOnline(true);
+        actionCard(data.code);
+        console.log('Ando conectada');
       }
-    });
+    })
+
     return () => socket.off('status-device');
+
   }, [socket])
+  
+  const actionCard = ( prop ) => {
+    if (prop === '3') {
+      readDates();
+    } else if (prop === '2') {
+      cleanInputs();
+    }
+  }
+
 
   const interceptor = (
 
@@ -62,13 +74,14 @@ export const Pin = () => {
     </div>
   )
 
+  
   const readDates = async () => {
       const data = await readDeviceCard();
       const snumber = data.serialNumber.slice(10);
       const wdates = await getWorker(snumber);
-
+      
       if (wdates === '0') {
-
+        
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
@@ -86,9 +99,9 @@ export const Pin = () => {
           timer: 1800
         })
       } else {
-
+        
         const currentDF = await GetRequest("/selectCurrentDF");
-
+        
         if( currentDF.status !== "Correct Execution" ){
           try {
             await setDevice(data.device.slice(0, -2));
@@ -117,16 +130,16 @@ export const Pin = () => {
           })
         }
       }
-  };
+    };
 
-  const cleanInputs = () => {
-    setDevice('');
+    const cleanInputs = () => {
+      setDevice('');
     setCard('');
     setCredencial('');
     setnomTrabajador('');
     setPinValue('');
   }
-
+  
   const setPin = () => {
     Swal.fire({
       title: `Estableciendo Pin`,
@@ -135,22 +148,22 @@ export const Pin = () => {
       didOpen:()=>{
         Swal.showLoading()
         ChangePinSequence(pinValue)
-          .then( success=> isLoading(success) )
-          .catch( err=> errHandler(err)) 
+        .then( success=> isLoading(success) )
+        .catch( err=> errHandler(err)) 
       }
     })
     cleanInputs();
   };
-
+  
   const validarDatos = () => {
     if (card !== "" && 
-        credencial !== "" && 
-        nomTrabajador !== "" && 
-        pinValue !== "" && 
-        device !== "") {
+    credencial !== "" && 
+    nomTrabajador !== "" && 
+    pinValue !== "" && 
+    device !== "") {
       setPin();
     } else{
-
+      
       Swal.fire({
         icon: 'error',
         title: 'Error',
@@ -158,12 +171,11 @@ export const Pin = () => {
         showConfirmButton: false,
         timer: 1800
       })
-
+      
     }
   }
-
-  return (
-    
+  
+  const vista = (
     <Container>
           <div className="flex justify-content-center pb-6">
             <Card
@@ -238,6 +250,17 @@ export const Pin = () => {
           </div>
           
         </Container>
+  );
+
+
+  return (
+    
+    <>
+    {/* {console.log('Online: ',online)} */}
+    { online ? vista: interceptor }
+    {/* { vista} */}
+
+    </>
 
   );
 };
