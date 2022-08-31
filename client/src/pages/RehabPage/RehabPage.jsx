@@ -63,17 +63,17 @@ export const RehabPage = () => {
     useEffect(() => {
       socket.on('status-device', (device) =>{
         switch (device.code) {
-          case '2':
+          case '0':
             cleanInputs();
             break;
-            case '3':
+            case '1':
               readDates();
               break;
           default:
             break;
         }
       });
-      return () => socket.off('status-device');
+      return () => socket.off('status-card');
     }, [socket])
 
 
