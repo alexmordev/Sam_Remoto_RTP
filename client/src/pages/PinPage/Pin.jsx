@@ -59,18 +59,19 @@ export const Pin = () => {
 
 
   const interceptor = (
-
-    <div className="h-screen w-screen  flex align-items-center justify-content-center">
-      <div className="flex flex-column">
-        <SpinnerDotted 
-          size={300} 
-          thickness={80} 
-          color={"#38ad48"} 
-          speed={60}
-          />
-      <p className="text-green-500 text-3xl font-semibold pt-6 pl-4" >Detectando Antena</p>
-        </div>
-    </div>
+    <Container>
+      <div className="h-screen w-screen  flex align-items-center justify-content-center">
+        <div className="flex flex-column">
+          <SpinnerDotted 
+            size={300} 
+            thickness={80} 
+            color={"#38ad48"} 
+            speed={60}
+            />
+        <p className="text-green-500 text-3xl font-semibold pt-6 pl-4" >Detectando Antena</p>
+          </div>
+      </div>
+    </Container>
   )
 
   
@@ -255,9 +256,7 @@ export const Pin = () => {
   return (
     
     <>
-    {/* {console.log('Online: ',online)} */}
     { online ? vista: interceptor }
-    {/* { vista} */}
 
     </>
 

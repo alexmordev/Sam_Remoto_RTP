@@ -23,6 +23,7 @@ import { SocketContext } from "../../context/SocketContext";
 
 
 export const RehabPage = () => {
+    const [online, setOnline] = useState(false)
     const [device, setDevice] = useState("");
     const [card, setCard] = useState("");
     const [credencial, setCredencial] = useState("");
@@ -31,6 +32,7 @@ export const RehabPage = () => {
     const { socket } = useContext( SocketContext );
 
     const interceptor = (
+      <Container>
         <div className="h-screen w-screen  flex align-items-center justify-content-center">
           <div className="flex flex-column">
             <SpinnerDotted 
@@ -42,6 +44,7 @@ export const RehabPage = () => {
           <p className="text-green-500 text-3xl font-semibold pt-6 pl-4" >Detectando Antena</p>
             </div>
         </div>
+      </Container>
     );
 
     const setRehab = async () => {
@@ -61,20 +64,31 @@ export const RehabPage = () => {
     }
 
     useEffect(() => {
-      socket.on('status-device', (device) =>{
-        switch (device.code) {
-          case '0':
-            cleanInputs();
-            break;
-            case '1':
-              readDates();
-              break;
-          default:
-            break;
-        }
-      });
-      return () => socket.off('status-card');
+
+      socket.on('status-device', ( data ) => {
+      console.log(data.code);
+      if (data.code === '0') {
+        console.log('Ando desconectada')
+        setOnline(false);
+      } else if (data.code !== 0) {
+        setOnline(true);
+        actionCard(data.code);
+        console.log('Ando conectada');
+      }
+    })
+
+    return () => socket.off('status-device');
+
     }, [socket])
+
+    const actionCard = ( prop ) => {
+      if (prop === '3') {
+        readDates();
+      } else if (prop === '2') {
+        cleanInputs();
+      }
+    }
+  
 
 
     const readDates = async () => {
@@ -135,8 +149,8 @@ export const RehabPage = () => {
         setnomTrabajador('');
     }
 
-    return (
-        <Container>
+    const vista = (
+      <Container>
             <div className="flex justify-content-center pb-6">
                 <Card
                     title="REHABILITAR"
@@ -196,6 +210,12 @@ export const RehabPage = () => {
                 </Card>
             </div>
         </Container>
+    )
+
+    return (
+      <>
+        { online ? vista: interceptor }
+      </>
     );
   
 }
