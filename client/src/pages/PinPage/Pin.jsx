@@ -10,6 +10,7 @@ import GetRequest from "../../calypsoComands/utils/GetRequest";
 import ChangePinSequence from "../../calypsoComands/changePinProcess/changePinProcess";
 import { readDeviceCard } from "./../../calypsoComands/readDeviceCard/readDeviceCard";
 
+
 // Importaciones de helpers
 import { getWorker } from "../../helpers/getWorker";
 import errHandler from "../../helpers/ErrHandler";
