@@ -4,7 +4,8 @@ import { authReducer } from './authReducer'
 import { types } from '../../types/types'
 
 const init = () => {
-  const user = JSON.parse(localStorage.getItem('user'));
+  // const user = JSON.parse(localStorage.getItem('user'));
+  const user = JSON.parse(localStorage.getItem('token'));
 
   return {
     logged: !!user,
@@ -33,6 +34,7 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     localStorage.removeItem('user');
+    localStorage.removeItem('token');
     const action = { type: types.logout };
     dispatch(action);
   }
