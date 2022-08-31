@@ -29,7 +29,6 @@ export const Pin = () => {
   const [nomTrabajador, setnomTrabajador] = useState("");
   const [pinValue, setPinValue] = useState("");
   const navigate = useNavigate();
-
   const { socket } = useContext( SocketContext );
 
   useEffect(() => {
