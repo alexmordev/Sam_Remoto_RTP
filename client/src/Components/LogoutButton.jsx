@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../auth/context/AuthContext'
 
 export const LogoutButton = () => {
+
   
   const nombre = localStorage.getItem( 'name' );
 
