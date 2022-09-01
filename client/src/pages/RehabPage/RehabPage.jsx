@@ -31,10 +31,11 @@ export const RehabPage = () => {
     const [nomTrabajador, setnomTrabajador] = useState("");
     const { socket } = useContext( SocketContext );
 
-
+  
 
   useEffect(() => {
     socket.on('status-device', ( data ) => {
+      console.log('useEffect disparo');
       console.log(data.code);
       if (data.code === '0') {
         setOnline(false);
@@ -46,6 +47,17 @@ export const RehabPage = () => {
     return () => socket.off('status-device');
   }, [socket])
 
+  useEffect(() => {
+    async function validando () {
+      const resp = await VerifyDevice();
+
+      if (resp === 1) {
+          setOnline(true);
+      } 
+    }
+    validando();
+  }, [])  
+
   const actionCard = ( prop ) => {
     if (prop === '3') {
       readDates();
@@ -53,6 +65,8 @@ export const RehabPage = () => {
       cleanInputs();
     }
   }
+
+  
 
   const interceptor = (
     <Container>
@@ -70,7 +84,10 @@ export const RehabPage = () => {
     </Container>
   );
 
+  
+
   const readDates = async () => {
+    console.log('readDates disparo');
     const data = await readDeviceCard();
     const snumber = data.serialNumber.slice(10);
     const wdates = await getWorker(snumber);
@@ -195,6 +212,12 @@ export const RehabPage = () => {
               <div className="flex justify-content-center">
                   
                 <Button
+                label="Leer"
+                className="p-button-raised border-round m-2"
+                onClick={readDates}
+                icon="pi pi-check"
+                />
+                <Button
                 label="Rehabilitar"
                 className="p-button-raised border-round m-2"
                 onClick={validarDatos}
@@ -209,6 +232,7 @@ export const RehabPage = () => {
 
     return (
       <>
+        {/* { vista} */}
         { online ? vista: interceptor }
       </>
     );

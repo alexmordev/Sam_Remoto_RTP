@@ -22,6 +22,7 @@ import {SpinnerDotted} from "spinners-react";
 import { InputText } from "primereact/inputtext";
 import { Card } from "primereact/card";
 import Swal from 'sweetalert2'
+import { VerifyDevice } from "../../helpers/VerifyDevice";
 
 export const Pin = () => {  
   const [online, setOnline] = useState(false)
@@ -32,6 +33,23 @@ export const Pin = () => {
   const [pinValue, setPinValue] = useState("");
   const navigate = useNavigate();
   const { socket } = useContext( SocketContext );
+
+  
+  const cleanInputs = () => {
+    setDevice('');
+    setCard('');
+    setCredencial('');
+    setnomTrabajador('');
+    setPinValue('');
+  };
+
+  const actionCard = ( prop ) => {
+    if (prop === '3') {
+      readDates();
+    } else if (prop === '2') {
+      cleanInputs();
+    }
+  };
 
   useEffect(() => {
     socket.on('status-device', ( data ) => {
@@ -46,13 +64,17 @@ export const Pin = () => {
     return () => socket.off('status-device');
   }, [socket]);
   
-  const actionCard = ( prop ) => {
-    if (prop === '3') {
-      readDates();
-    } else if (prop === '2') {
-      cleanInputs();
+  useEffect(() => {
+    async function validando () {
+      const resp = await VerifyDevice();
+
+      if (resp === 1) {
+          setOnline(true);
+      } 
     }
-  };
+    validando();
+  }, [])  
+
 
   const interceptor = (
     <Container>
@@ -69,6 +91,7 @@ export const Pin = () => {
       </div>
     </Container>
   );
+
   
   const readDates = async () => {
       const data = await readDeviceCard();
@@ -141,13 +164,6 @@ export const Pin = () => {
     cleanInputs();
   };
 
-  const cleanInputs = () => {
-    setDevice('');
-    setCard('');
-    setCredencial('');
-    setnomTrabajador('');
-    setPinValue('');
-  };
   
   const validarDatos = () => {
     if (card !== "" && 

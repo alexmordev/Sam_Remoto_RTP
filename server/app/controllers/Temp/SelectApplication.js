@@ -20,27 +20,36 @@ const SendingCommand= async ( card, device )=>{
     )
   }
   catch(err){
-    throw err
+    console.log("first")
   }
 }
-const SelectApplication = (req, res = response)=>{
-  const devices = new Devices();
-  devices.on('device-activated', (event) => {   
-    const samReader = event.devices[0];
-    const deviceName= samReader.name
-    samReader.on('card-inserted', (event) => {
-      const card = event.card;
-      SendingCommand( card, deviceName )
-      .then(success => {
-          res.json(success);
-      })
-      .catch(error =>{
-          console.group('Error')
-          console.log(error);
-          console.groupEnd();
-      })
-    });           
+const SelectApplication = (req, res = response, next)=>{
+  try{
+    const devices = new Devices();
+    devices.once('device-activated', (event) => {   
+      const samReader = event.devices[0];
+      const deviceName= samReader.name
+      samReader.once('card-inserted', (event) => {
+        const card = event.card;
+
+        SendingCommand( card, deviceName)
+        .then(succ => res.json( succ ))
+       
+      });
+      samReader.once('card-removed', event => {
+        console.log("event.card.device._events");
+        // samReader.off(event.card.device._events)
+      });           
+    });
+    devices.once('error', event => {
+      
+      // next(event)
+
   });
+  
+  }catch(err){
+  }
+
 };
 module.exports = {
   SelectApplication
