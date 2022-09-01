@@ -20,7 +20,7 @@ export const TablaSam = () => {
 
   const getData = async () => {
     const { categories } = await getSamCounters();
-    console.log(categories);
+    // console.log(categories);
     for (let index = 0; index < categories.length; index++) {
       
       let secuencia = (categories[index].secuencia)? categories[index].secuencia : 'Sin secuencia' 

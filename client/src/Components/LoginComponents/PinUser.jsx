@@ -5,7 +5,7 @@ import { InputText } from 'primereact/inputtext';
 
 
 export const PinUser = () => {
-    console.log('Estoy en PIN :)');
+    // console.log('Estoy en PIN :)');
     return (
 
       

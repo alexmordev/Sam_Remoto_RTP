@@ -1,26 +1,28 @@
 // http://app.rtp.gob.mx/api/get_card/946ABD4C
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import {  useNavigate } from "react-router-dom";
-import {SpinnerDotted} from "spinners-react";
-import { InputText } from "primereact/inputtext";
-import { Button } from "primereact/button";
-import { Container } from "../../Components/Container/Container";
+
+// Importaciones de comandos
 import GetRequest from "../../calypsoComands/utils/GetRequest";
 import ChangePinSequence from "../../calypsoComands/changePinProcess/changePinProcess";
 import { readDeviceCard } from "./../../calypsoComands/readDeviceCard/readDeviceCard";
 
+// Importaciones de componentes
+import { Container } from "../../Components/Container/Container";
+import { SocketContext } from "../../context/SocketContext";
 
 // Importaciones de helpers
 import { getWorker } from "../../helpers/getWorker";
-import errHandler from "../../helpers/ErrHandler";
 import isLoading from "../../helpers/IsLoading";
+import errHandler from "../../helpers/ErrHandler";
 
 //Importaciones de terceros
+import { Button } from "primereact/button";
+import {SpinnerDotted} from "spinners-react";
+import { InputText } from "primereact/inputtext";
 import { Card } from "primereact/card";
 import Swal from 'sweetalert2'
-import { useContext } from "react";
-import { SocketContext } from "../../context/SocketContext";
+import { VerifyDevice } from "../../helpers/VerifyDevice";
 
 export const Pin = () => {  
   const [online, setOnline] = useState(false)
@@ -32,31 +34,46 @@ export const Pin = () => {
   const navigate = useNavigate();
   const { socket } = useContext( SocketContext );
 
-  useEffect(() => {
-    
-    socket.on('status-device', ( data ) => {
-      console.log(data.code);
-      if (data.code === '0') {
-        console.log('Ando desconectada')
-        setOnline(false);
-      } else if (data.code !== 0) {
-        setOnline(true);
-        actionCard(data.code);
-        console.log('Ando conectada');
-      }
-    })
-
-    return () => socket.off('status-device');
-
-  }, [socket])
   
+  const cleanInputs = () => {
+    setDevice('');
+    setCard('');
+    setCredencial('');
+    setnomTrabajador('');
+    setPinValue('');
+  };
+
   const actionCard = ( prop ) => {
     if (prop === '3') {
       readDates();
     } else if (prop === '2') {
       cleanInputs();
     }
-  }
+  };
+
+  useEffect(() => {
+    socket.on('status-device', ( data ) => {
+      // console.log(data.code);
+      if (data.code === '0') {
+        setOnline(false);
+      } else if (data.code !== 0) {
+        setOnline(true);
+        actionCard(data.code);
+      }
+    })
+    return () => socket.off('status-device');
+  }, [socket]);
+  
+  useEffect(() => {
+    async function validando () {
+      const resp = await VerifyDevice();
+
+      if (resp === 1) {
+          setOnline(true);
+      } 
+    }
+    validando();
+  }, [])  
 
 
   const interceptor = (
@@ -69,11 +86,11 @@ export const Pin = () => {
             color={"#38ad48"} 
             speed={60}
             />
-        <p className="text-green-500 text-3xl font-semibold pt-6 pl-4" >Detectando Antena</p>
-          </div>
+          <p className="text-green-500 text-3xl font-semibold pt-6 pl-4" >Detectando Antena</p>
+        </div>
       </div>
     </Container>
-  )
+  );
 
   
   const readDates = async () => {
@@ -103,14 +120,13 @@ export const Pin = () => {
         
         const currentDF = await GetRequest("/selectCurrentDF");
         
-        if( currentDF.status !== "Correct Execution" ){
+        if( currentDF.status === "Correct Execution" ){
           try {
             await setDevice(data.device.slice(0, -2));
-            await setCard(snumber);
+            await setCard(wdates.trab_ser_tarjeta.slice(8));
             await setCredencial(wdates.trab_credencial);
             await setnomTrabajador(wdates.nombre);
             await setPinValue(wdates.trab_tarjeta_pin);
-            await setCard(wdates.trab_ser_tarjeta.slice(8));
           }
           catch(err){
             throw err;
@@ -131,16 +147,8 @@ export const Pin = () => {
           })
         }
       }
-    };
+  };
 
-    const cleanInputs = () => {
-      setDevice('');
-    setCard('');
-    setCredencial('');
-    setnomTrabajador('');
-    setPinValue('');
-  }
-  
   const setPin = () => {
     Swal.fire({
       title: `Estableciendo Pin`,
@@ -155,6 +163,7 @@ export const Pin = () => {
     })
     cleanInputs();
   };
+
   
   const validarDatos = () => {
     if (card !== "" && 
@@ -174,7 +183,7 @@ export const Pin = () => {
       })
       
     }
-  }
+  };
   
   const vista = (
     <Container>
@@ -257,8 +266,7 @@ export const Pin = () => {
   return (
     
     <>
-    { online ? vista: interceptor }
-
+      { online ? vista: interceptor }
     </>
 
   );
