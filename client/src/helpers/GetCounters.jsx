@@ -13,7 +13,7 @@ const GetCounters = async() => {
             })
         });
     const result = await resp.json();
-    console.log('El result: ', result)
+    // console.log('El result: ', result)
     return result
 }
 

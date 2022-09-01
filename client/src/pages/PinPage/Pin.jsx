@@ -53,7 +53,7 @@ export const Pin = () => {
 
   useEffect(() => {
     socket.on('status-device', ( data ) => {
-      console.log(data.code);
+      // console.log(data.code);
       if (data.code === '0') {
         setOnline(false);
       } else if (data.code !== 0) {

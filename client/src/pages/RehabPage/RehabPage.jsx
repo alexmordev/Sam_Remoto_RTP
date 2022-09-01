@@ -35,8 +35,8 @@ export const RehabPage = () => {
 
   useEffect(() => {
     socket.on('status-device', ( data ) => {
-      console.log('useEffect disparo');
-      console.log(data.code);
+      // console.log('useEffect disparo');
+      // console.log(data.code);
       if (data.code === '0') {
         setOnline(false);
       } else if (data.code !== 0) {
@@ -87,7 +87,7 @@ export const RehabPage = () => {
   
 
   const readDates = async () => {
-    console.log('readDates disparo');
+    // console.log('readDates disparo');
     const data = await readDeviceCard();
     const snumber = data.serialNumber.slice(10);
     const wdates = await getWorker(snumber);
