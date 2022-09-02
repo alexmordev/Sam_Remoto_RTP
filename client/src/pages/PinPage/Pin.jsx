@@ -119,8 +119,9 @@ export const Pin = () => {
       } else {
         
         const currentDF = await GetRequest("/selectCurrentDF");
+        console.log(currentDF.applicationStatus.slice(-1));
         
-        if( currentDF.status === "Correct Execution" ){
+        if( currentDF.applicationStatus.slice(-1) !== 1 ){
           try {
             await setDevice(data.device.slice(0, -2));
             await setCard(wdates.trab_ser_tarjeta.slice(8));

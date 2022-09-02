@@ -26,22 +26,22 @@ const SendingCommand= async ( card, device )=>{
 const SelectApplication = (req, res = response, next)=>{
   try{
     const devices = new Devices();
-    devices.once('device-activated', (event) => {   
+    devices.on('device-activated', (event) => {   
       const samReader = event.devices[0];
       const deviceName= samReader.name
-      samReader.once('card-inserted', (event) => {
+      samReader.on('card-inserted', (event) => {
         const card = event.card;
 
         SendingCommand( card, deviceName)
         .then(succ => res.json( succ ))
        
       });
-      samReader.once('card-removed', event => {
+      samReader.on('card-removed', event => {
         console.log("event.card.device._events");
         // samReader.off(event.card.device._events)
       });           
     });
-    devices.once('error', event => {
+    devices.on('error', event => {
       
       // next(event)
 

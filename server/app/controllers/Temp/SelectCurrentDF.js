@@ -17,9 +17,9 @@ const SendingCommand= async ( card )=>{
 
 const SelectCurrentDF = async(req, res = response)=>{
   const devices = new Devices();
-  devices.on('device-activated', (event) => {
+  devices.once('device-activated', (event) => {
     const samReader = event.devices[0];
-    samReader.on('card-inserted', (event) => {
+    samReader.once('card-inserted', (event) => {
       const card = event.card;
       SendingCommand( card )
       .then(success => {
@@ -35,7 +35,7 @@ const SelectCurrentDF = async(req, res = response)=>{
       })
     });
   });
-  devices.on('device-deactivated', event => {
+  devices.once('device-deactivated', event => {
     console.log(`Device '${event.device}' deactivated, devices: [${event.devices}]`);
   });
 

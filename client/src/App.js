@@ -15,6 +15,7 @@ import { SamCounter } from "./pages/SamCounters/SamCounter";
 import { PrivateRoute } from "./auth/PrivateRoute";
 import { Pin } from "./pages/PinPage/Pin";
 import { RehabPage } from "./pages/RehabPage/RehabPage";
+// import { RehabPage } from "./pages/RehabPage/RehabPage";
 import { SocketProvider } from "./context/SocketContext";
 
 

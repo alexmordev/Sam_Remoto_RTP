@@ -19,14 +19,16 @@ const Rehabilitate = async() => {
     const closeSecure = await PostRequest('/closeSecureSession', {"digestClose":`${digestClose.response.slice(0,-4)}`});
     
     const authenticate = await PostRequest(`${url}/digestAuthenticate`, {"signature":`${closeSecure.response.slice(0,-4)}`});
-    const saveCounters = await MakeRequest( 'http://dev-node.rtp.gob.mx:5000/insert/counters', 
+    // console.log('entro aqui......');
+    // console.log(localStorage.getItem( 'id' ));
+    const saveCounters = await MakeRequest( `${url}/insert/counters`, 
       {
         "cardSN": `${applicationSN.serialNumber.slice(2)}`,
-        "sequence": "REHABILITATE",
-        "userId": "USER"
+        "secuencia": "REHABILITATE",
+        "userId": `${localStorage.getItem( 'id' )}`
       } 
     );
-    const ratificaton = await GetRequest( '/ratification' ) 
+    const ratificaton = await GetRequest( '/ratification' );
   
     const secuence = [
       applicationSN, 

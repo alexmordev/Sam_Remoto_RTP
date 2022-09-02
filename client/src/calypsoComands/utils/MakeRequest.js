@@ -5,12 +5,10 @@ const MakeRequest = async(url, object)=>{
     const res = await fetch(url,{
         method:"POST",
         body:JSON.stringify(object),
-        // headers: new Headers ({
-        //     'Authorization': `jwt ${token}`
-        // })
-        headers:{
-            'Content-Type': 'application/json'
-        }
+        headers: new Headers ({
+            'Content-Type': 'application/json',
+            'Authorization': `jwt ${token}`
+        })
     })
 
     if(!res)

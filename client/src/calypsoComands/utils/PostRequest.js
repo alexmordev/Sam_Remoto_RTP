@@ -1,11 +1,14 @@
+const token = JSON.parse( localStorage.getItem( 'token' ));
+
 const PostRequest = async(url,object)=>{
     try{
         const res = await fetch(url,{
             method:'POST',
             body:JSON.stringify(object),
-            headers:{
-                'Content-Type': 'application/json'
-            }
+            headers: new Headers ({
+                'Content-Type': 'application/json',
+                'Authorization': `jwt ${token}`
+            })
         })
         if(!res)
             throw new Error("WARN", res.status);
